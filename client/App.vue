@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <b-loading :is-full-page="true" :active="!endpointsLoaded" :can-cancel="false"></b-loading>
-    <span id="main-content" v-if="endpointsLoaded">
+    <b-modal :active="!loggedIn" :can-cancel="false" has-modal-card>
+      <login-form v-bind="formProps" @submit="clickLogin" />
+    </b-modal>
+    <span id="main-content" v-if="endpointsLoaded && loggedIn">
       <!-- background iframe -->
       <iframe id="demo-iframe" :src="model.iframe"></iframe>
 
@@ -26,7 +29,7 @@
               {{ model.menuTitle }}
             </p>
 
-            <a class="card-header-icon">
+            <a class="card-header-icon contact-close-icon">
               <b-icon icon="close" />
             </a></div>
 
@@ -58,20 +61,32 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import LoginForm from './components/login-form.vue'
 
 export default {
+  components: {
+    LoginForm
+  },
+
   data () {
     return {
       production: process.env.NODE_ENV === 'production',
       showContactPanel: false,
+      // showLoginModal: false,
+      loggedIn: false,
+      formProps: {
+        name: 'Coty Condry',
+        phone: '4088951541',
+        email: 'ccondry@cisco.com'
+      },
       model: {
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
         menuSubtitle: `We're here to help`,
-        // iframe: 'https://toolbox.cdxdemo.net/users/matthmcc/Ashley%20Furniture%20HomeStore%20_%20Home%20Furniture%20&%20Decor.html',
-        iframe: '',
+        iframe: 'https://toolbox.cdxdemo.net/users/matthmcc/Ashley%20Furniture%20HomeStore%20_%20Home%20Furniture%20&%20Decor.html',
+        // iframe: '',
         color1: '#0000aa',
-        color2: '#0000dd',
+        color2: '#00ffdd',
         advisorEnabled: true,
         advisorImage: 'https://static.cxdemo.net/images/ming_advisor.png',
         advisorHeading: 'Expert Advisor',
@@ -127,6 +142,8 @@ export default {
     this.getEndpoints()
     // update view now - probably remove this later for production
     this.updateView(this.model)
+    // get user info
+    this.showLoginModal = true
   },
 
   computed: {
@@ -218,6 +235,12 @@ export default {
       'getEndpoints',
       'getSession'
     ]),
+    clickLogin (event) {
+      console.log('clickLogin', event)
+      if (this.formProps.name && this.formProps.phone && this.formProps.email) {
+        this.loggedIn = true
+      }
+    },
     updateView (model) {
       // set color 1
       window.document.documentElement.style.setProperty('--color-1', model.color1)
@@ -234,6 +257,19 @@ export default {
     },
     clickSms (event) {
       console.log('clickSms', event)
+      this.$dialog.prompt({
+        message: `Enter your mobile number and we will text you`,
+        inputAttrs: {
+          placeholder: 'Enter your mobile phone number'
+        },
+        confirmText: 'Text Me',
+        onConfirm: (value) => this.$toast.open({
+          duration: 15000,
+          message: `We are sending a text message to ${value}. Please respond to
+          this text message to begin chatting with one of our experts.`,
+          type: 'is-success'
+        })
+      })
     },
     clickCall (event) {
       console.log('clickCall', event)
@@ -243,6 +279,19 @@ export default {
     },
     clickEmail (event) {
       console.log('clickEmail', event)
+      this.$dialog.prompt({
+        message: `Enter your email address number and we will text you`,
+        inputAttrs: {
+          placeholder: 'Enter your mobile phone number'
+        },
+        confirmText: 'Text Me',
+        onConfirm: (value) => this.$toast.open({
+          duration: 15000,
+          message: `We are sending a text message to ${value}. Please respond to
+          this text message to begin chatting with one of our experts.`,
+          type: 'is-success'
+        })
+      })
     },
     clickTask (event) {
       console.log('clickTask', event)
@@ -368,6 +417,9 @@ body {
     border-right: none !important;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
+    .contact-icon {
+      color: var(--color-1);
+    }
     .content {
       width: 100%;
       h4 {
@@ -384,16 +436,22 @@ body {
 .contact-item:hover {
   border-left:4px solid var(--color-2);
   padding-left:0;
+  .contact-icon {
+    color: var(--color-2);
+  }
 }
 
 .contact-icon {
   padding-left: 0.5em;
   padding-right: 1em;
   max-width: 4em;
+}
+
+.contact-close-icon {
   color: var(--color-1);
 }
 
-.contact-icon:hover {
+.contact-close-icon:hover {
   color: var(--color-2);
 }
 
