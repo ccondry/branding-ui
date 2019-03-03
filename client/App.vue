@@ -1,10 +1,13 @@
 <template>
   <div id="app">
     <b-loading :is-full-page="true" :active="!endpointsLoaded" :can-cancel="false"></b-loading>
-    <b-modal :active="!loggedIn" :can-cancel="false" has-modal-card>
-      <login-form v-bind="formProps" @submit="clickLogin" />
+    <!-- <b-modal :active="!loggedIn" :can-cancel="false" has-modal-card>
+      <login-form v-bind="loginFormData" @submit="clickLogin" />
+    </b-modal> -->
+    <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
+      <email-form v-bind="emailFormData" @submit="clickSubmitEmail" />
     </b-modal>
-    <span id="main-content" v-if="endpointsLoaded && loggedIn">
+    <span id="main-content" v-if="endpointsLoaded">
       <!-- background iframe -->
       <iframe id="demo-iframe" :src="model.iframe"></iframe>
 
@@ -61,11 +64,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import LoginForm from './components/login-form.vue'
+import EmailForm from './components/email-form.vue'
 
 export default {
   components: {
-    LoginForm
+    EmailForm
   },
 
   data () {
@@ -73,11 +76,12 @@ export default {
       production: process.env.NODE_ENV === 'production',
       showContactPanel: false,
       // showLoginModal: false,
-      loggedIn: false,
-      formProps: {
+      // loggedIn: false,
+      showEmailModal: false,
+      emailFormData: {
         name: 'Coty Condry',
-        phone: '4088951541',
-        email: 'ccondry@cisco.com'
+        email: 'ccondry@cisco.com',
+        body: 'help me'
       },
       model: {
         contactButtonText: 'Talk to an Expert',
@@ -235,11 +239,8 @@ export default {
       'getEndpoints',
       'getSession'
     ]),
-    clickLogin (event) {
-      console.log('clickLogin', event)
-      if (this.formProps.name && this.formProps.phone && this.formProps.email) {
-        this.loggedIn = true
-      }
+    clickLogin () {
+      console.log('clickLogin')
     },
     updateView (model) {
       // set color 1
@@ -249,8 +250,18 @@ export default {
       // set the number of active options, to change the top property of the contact panel
       window.document.documentElement.style.setProperty('--active-options', this.contactOptions.length)
     },
-    waitText () {
-      return '2 minutes'
+    clickSubmitEmail () {
+      // clicked submit on the email modal form
+      console.log('clickSubmitEmail')
+      // close the modal
+      this.showEmailModal = false
+      // pop toaster notification
+      this.$toast.open({
+        duration: 15000,
+        message: `We have received your email and an expert will respond as
+        soon as possible.`,
+        type: 'is-primary'
+      })
     },
     clickChat (event) {
       console.log('clickChat', event)
@@ -267,7 +278,7 @@ export default {
           duration: 15000,
           message: `We are sending a text message to ${value}. Please respond to
           this text message to begin chatting with one of our experts.`,
-          type: 'is-success'
+          type: 'is-primary'
         })
       })
     },
@@ -278,20 +289,10 @@ export default {
       console.log('clickCallback', event)
     },
     clickEmail (event) {
+      // clicked email option from contact panel
       console.log('clickEmail', event)
-      this.$dialog.prompt({
-        message: `Enter your email address number and we will text you`,
-        inputAttrs: {
-          placeholder: 'Enter your mobile phone number'
-        },
-        confirmText: 'Text Me',
-        onConfirm: (value) => this.$toast.open({
-          duration: 15000,
-          message: `We are sending a text message to ${value}. Please respond to
-          this text message to begin chatting with one of our experts.`,
-          type: 'is-success'
-        })
-      })
+      // open the email modal
+      this.showEmailModal = true
     },
     clickTask (event) {
       console.log('clickTask', event)
