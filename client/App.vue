@@ -32,19 +32,17 @@
             </span>
           </div>
 
-          <footer v-if="model.chatEnabled" class="card-footer contact-item">
-            <a @click="clickChat" class="card-footer-item contact-icon">
-              <b-icon icon="message-processing" />
-            </a>
-            <a @click="clickChat" class="card-footer-item">
+          <footer v-for="item of items" class="card-footer contact-item">
+            <a @click="item.click" class="card-footer-item">
+              <b-icon class="contact-icon" :icon="item.icon" />
               <div class="content">
-                <h4>{{ model.chatHeading }}<small> - {{ waitText(model.chatWaitTime) }}</small></h4>
-                <p class="contact-subtext">{{ model.chatText }}</p>
+                <h4>{{ item.heading }}<small v-if="item.waitTime"> - {{ item.waitTime }}</small></h4>
+                <p class="contact-subtext">{{ item.subtext }}</p>
               </div>
             </a>
           </footer>
 
-          <footer v-if="model.smsEnabled" class="card-footer contact-item">
+          <!-- <footer v-if="model.smsEnabled" class="card-footer contact-item">
             <a @click="clickChat" class="card-footer-item contact-icon">
               <b-icon icon="message-processing" />
             </a>
@@ -54,7 +52,7 @@
                 <p class="contact-subtext">{{ model.smsText }}</p>
               </div>
             </a>
-          </footer>
+          </footer> -->
 
           <!--
                       <div v-if="!(model.chat && model.chat.history && model.chat.history.enabled === false)" class="ibm-chat-btn cmr-block ibm-chat-available" @click="clickChatHistory">
@@ -127,13 +125,20 @@ export default {
         advisorHeading: 'Expert Advisor',
         advisorText: `We're here to help`,
         chatEnabled: true,
+        chatIcon: 'message-processing',
         chatHeading: 'Chat Now',
-        chatText: 'An expert will chat with you live in your browser',
-        chatWaitTime: '2',
+        chatText: 'An expert will chat with you live in your browser asdf',
+        chatWaitTime: '1 min wait time',
         smsEnabled: true,
+        smsIcon: 'message-processing',
         smsHeading: 'Text Us',
         smsText: '+1 817-949-1884',
-        smsWaitTime: '2'
+        smsWaitTime: '1 min wait time',
+        callEnabled: true,
+        callIcon: 'phone-forward',
+        callHeading: 'Call Us',
+        callText: '+1 919-474-1884',
+        callWaitTime: '1 min wait time'
       }
     }
   },
@@ -151,7 +156,42 @@ export default {
       'endpoints',
       'endpointsLoaded',
       'instancesLoaded'
-    ])
+    ]),
+    items () {
+      const chat = {
+        click: this.clickChat,
+        icon: this.model.chatIcon,
+        heading: this.model.chatHeading,
+        subtext: this.model.chatText,
+        waitTime: this.model.chatWaitTime
+      }
+      const sms = {
+        click: this.clickSms,
+        icon: this.model.smsIcon,
+        heading: this.model.smsHeading,
+        subtext: this.model.smsText,
+        waitTime: this.model.smsWaitTime
+      }
+      const call = {
+        click: this.clickCall,
+        icon: this.model.callIcon,
+        heading: this.model.callHeading,
+        subtext: this.model.callText,
+        waitTime: this.model.callWaitTime
+      }
+
+      const ret = []
+      if (this.model.chatEnabled) {
+        ret.push(chat)
+      }
+      if (this.model.smsEnabled) {
+        ret.push(sms)
+      }
+      if (this.model.callEnabled) {
+        ret.push(call)
+      }
+      return ret
+    }
   },
 
   methods: {
@@ -165,6 +205,8 @@ export default {
       window.document.documentElement.style.setProperty('--color-1', model.color1)
       // set color 2
       window.document.documentElement.style.setProperty('--color-2', model.color2)
+      // --active-options
+      window.document.documentElement.style.setProperty('--active-options', this.items.length)
     },
     waitText () {
       return '2 minutes'
@@ -222,20 +264,33 @@ body {
   transform: rotate(-90deg);
   -webkit-transform-origin: 100% 100%;
   transform-origin: 100% 100%;
-  color: var(--color-1);
+  color: white;
+  background-color: var(--color-1);
+  border-color: var(--color-1);
+}
+
+#contact-toggle-button:hover {
   background-color: var(--color-2);
   border-color: var(--color-2);
 }
 
 #contact-panel {
-  top: 35%;
+  // calculate height based on how many options are enabled
+  top: calc(20px + 20% - var(--active-options) * 20px);
   width: 30%;
   right: 0 !important;
   position: fixed;
-  // -webkit-transform: rotate(-90deg);
-  // transform: rotate(-90deg);
   -webkit-transform-origin: 100% 100%;
   transform-origin: 100% 100%;
+  // slide the drawer out
+  -webkit-transition:right .5s ease;
+  transition:right .5s ease;
+  .card {
+    // nice rounded corners
+    border-radius: 1em;
+    // hide anything that flows over the rounded corners
+    overflow: hidden;
+  }
 }
 
 .contact-content {
@@ -271,6 +326,8 @@ body {
 }
 
 .contact-icon {
+  padding-left: 0.5em;
+  padding-right: 1em;
   max-width: 4em;
   color: var(--color-1);
 }
@@ -280,6 +337,7 @@ body {
 }
 
 .contact-subtext {
+  max-width: 95%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
