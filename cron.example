@@ -1,0 +1,1 @@
+*/2 * * * * /bin/sh -c 'cd /opt/dcloud/vertical-toolbox-ui && ./update.sh' 2>&1 | /usr/bin/logger -t cron-update-vertical-toolbox-ui

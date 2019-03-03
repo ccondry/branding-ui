@@ -1,0 +1,10 @@
+{
+  "cumulus": {
+    "description": "default Cumulus PCS dcloud script",
+    "params": {}
+  },
+  "user_lchilds_1": {
+    "description": "",
+    "params": {}
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "menu": {
+    "buttonText": "Talk to an Expert",
+    "title": "Need help?",
+    "text": {
+      "minute": "min",
+      "hour": "hour",
+      "no": "no",
+      "waitTime": "wait time"
+    }
+  },
+  "emailAddresses": [
+    "cumulus@cdxdemo.net",
+    "support@cdxdemo.net"
+  ],
+  "title": "Chase Bank",
+  "favicon": "https://www.google.com/s2/favicons?domain=chase.com",
+  "sms": {
+    "heading": "Text Us",
+    "enabled": true,
+    "waitTime": "2",
+    "number": "+12142736887"
+  },
+  "style": {
+    "--color-1": "#0b63ac",
+    "--color-2": "#2b83cc"
+  },
+  "iframe": {
+    "enabled": false,
+    "src": "https://cxdemo.net/users/ccondry/chase.html"
+  },
+  "chat": {
+    "heading": "Chat Now",
+    "text": "An expert will chat with you live",
+    "enabled": true,
+    "waitTime": "2",
+    "entryPointId": "1005",
+    "bot": {
+      "enabled": true,
+      "version": "3.0",
+      "aiToken": "a88ffa6256174c198e62e882d68af6fa"
+    },
+    "history": {
+      "enabled": true,
+      "heading": "Chat History",
+      "text": "View your chat history"
+    }
+  },
+  "email": {
+    "heading": "Email an Expert",
+    "text": "An expert will respond to your email",
+    "enabled": true,
+    "waitTimeMin": "720",
+    "waitTimeMax": "1440",
+    "to": "support@cdxdemo.net",
+    "subject": "I have a question",
+    "body": "how can i get support?"
+  },
+  "video": {
+    "heading": "Live Video Assistance",
+    "text": "An expert will help you live over video",
+    "enabled": true,
+    "waitTime": "6"
+  },
+  "call": {
+    "heading": "Call Us",
+    "enabled": true,
+    "waitTime": "2",
+    "sip": true,
+    "prefix": ""
+  },
+  "inbound": {
+    "number": "+12145703370"
+  },
+  "callback": {
+    "heading": "We'll Call You",
+    "text": "Receive a call back from an expert",
+    "enabled": true,
+    "waitTime": "8",
+    "feedId": "100003",
+    "title": "Callback",
+    "name": "Michael Littlefoot",
+    "description": "Callback",
+    "cvs": [
+      {
+        "name": "user_user.CTID",
+        "value": "5005"
+      },
+      {
+        "name": "user_user.PQID",
+        "value": "5006"
+      }
+    ]
+  },
+  "task": {
+    "heading": "Route a Task",
+    "text": "An expert will handle your task",
+    "enabled": true,
+    "scriptSelector": "Dynamic_Task",
+    "feedId": "100000",
+    "title": "Credit Alert",
+    "description": "New Credit Alert",
+    "mediaType": "web",
+    "cvs": [
+      {
+        "name": "user_user.CTID",
+        "value": "5005"
+      },
+      {
+        "name": "user_user.PQID",
+        "value": "5005"
+      }
+    ]
+  },
+  "tracking": {
+    "heading": "Add Tracking Info",
+    "text": "An expert will receive tracking info from you",
+    "enabled": true
+  },
+  "cobrowse": {
+    "heading": "Cobrowse",
+    "text": "An expert will cobrowse with you live",
+    "enabled": false,
+    "waitTime": "12"
+  },
+  "advisor": {
+    "enabled": true,
+    "heading": "Expert Advisor",
+    "text": "We're here to help"
+  }
+}

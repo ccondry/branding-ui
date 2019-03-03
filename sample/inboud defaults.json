@@ -1,0 +1,82 @@
+{
+  "6016": {
+    "demo": "cumulus",
+    "params": {}
+  },
+  "6017": {
+    "demo": "agent",
+    "params": {}
+  },
+  "6018": {
+    "demo": "pq_training",
+    "params": {}
+  },
+  "6019": {
+    "demo": "agent",
+    "params": {}
+  },
+  "6020": {
+    "demo": "agent",
+    "params": {}
+  },
+  "6021": {
+    "demo": "agent",
+    "params": {}
+  },
+  "6022": {
+    "demo": "agent",
+    "params": {}
+  },
+  "6023": {
+    "demo": "agent",
+    "params": {}
+  },
+  "7019": {
+    "demo": "agent",
+    "params": {}
+  },
+  "7704": {
+    "demo": "rem",
+    "description": "Remote Expert Mobile",
+    "params": {
+      "eccArray": [
+        {
+          "name": "user.microapp.ToExtVXML",
+          "index": 0,
+          "value": "application=CumulusViQ;"
+        },
+        {
+          "name": "user.microapp.ToExtVXML",
+          "index": 1,
+          "value": "v1=60000;v2=60001;v3=60002;v4=60003;v5=60004;v6=60005"
+        }
+      ]
+    }
+  },
+  "7705": {
+    "demo": "rem",
+    "description": "Remote Expert Mobile",
+    "params": {
+      "eccArray": [
+        {
+          "name": "user.microapp.ToExtVXML",
+          "index": 0,
+          "value": "application=CumulusViQ;"
+        },
+        {
+          "name": "user.microapp.ToExtVXML",
+          "index": 1,
+          "value": "v1=60000;v2=60001;v3=60002;v4=60003;v5=60004;v6=60005"
+        }
+      ]
+    }
+  },
+  "7800": {
+    "demo": "cumulus",
+    "params": {}
+  },
+  "7899": {
+    "demo": "ccondry",
+    "params": {}
+  }
+}
