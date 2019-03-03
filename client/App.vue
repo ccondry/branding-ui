@@ -225,6 +225,24 @@ export default {
     },
     clickChat (event) {
       console.log('clickChat', event)
+    },
+    clickSms (event) {
+      console.log('clickSms', event)
+    },
+    clickCall (event) {
+      console.log('clickCall', event)
+    },
+    clickCallback (event) {
+      console.log('clickCallback', event)
+    },
+    clickEmail (event) {
+      console.log('clickEmail', event)
+    },
+    clickTask (event) {
+      console.log('clickTask', event)
+    },
+    clickCobrowse (event) {
+      console.log('clickCobrowse', event)
     }
   },
 
