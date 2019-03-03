@@ -16,7 +16,7 @@
           @click="showContactPanel = true">
           <strong>{{ model.contactButtonText }}</strong></button>
 
-          <p class="card-header-title" v-show="props.open">
+          <p class="card-header-title contact-title" v-show="props.open">
             {{ model.menuTitle }}
           </p>
 
@@ -25,13 +25,14 @@
           </a></div>
 
           <div class="card-content contact-content" v-if="model.advisorEnabled">
-            <img :src="model.advisorImage" style="height: 124px;">
-            <span style="float: right;">
+            <img :src="model.advisorImage" style="height: 7em;">
+            <span style="float: right; font-size: 1.8em;">
               <p>{{ model.advisorHeading }}</p>
               <p>{{ model.advisorText }}</p>
             </span>
           </div>
 
+          <!-- render each contact option -->
           <footer v-for="item of items" class="card-footer contact-item">
             <a @click="item.click" class="card-footer-item">
               <b-icon class="contact-icon" :icon="item.icon" />
@@ -41,62 +42,6 @@
               </div>
             </a>
           </footer>
-
-          <!-- <footer v-if="model.smsEnabled" class="card-footer contact-item">
-            <a @click="clickChat" class="card-footer-item contact-icon">
-              <b-icon icon="message-processing" />
-            </a>
-            <a @click="clickChat" class="card-footer-item">
-              <div class="content">
-                <h4>{{ model.smsHeading }}<small> - {{ waitText(model.smsWaitTime) }}</small></h4>
-                <p class="contact-subtext">{{ model.smsText }}</p>
-              </div>
-            </a>
-          </footer> -->
-
-          <!--
-                      <div v-if="!(model.chat && model.chat.history && model.chat.history.enabled === false)" class="ibm-chat-btn cmr-block ibm-chat-available" @click="clickChatHistory">
-                        <h2>{{ model.chat.history.heading || 'Chat History' }}</h2>
-                        <p>{{ model.chat.history.text || 'Show your chat history' }}</p>
-                      </div>
-                      <div v-if="model.sms && model.sms.enabled" class="ibm-chat-btn cmr-block ibm-chat-available" @click="clickText">
-                        <h2>{{ model.sms.heading || 'Text Us' }}<small> - {{ waitText(model.sms.waitTime) }} </small></h2>
-                        <p>{{ formattedSmsNumber }}</p>
-                      </div>
-                      <div v-if="model.call && model.call.enabled" id="phone-container" class="cmr-phone-container cmr-block" @click="clickCall">
-                        <h2>{{ model.call.heading || 'Call Us' }}<small> - {{ waitText(model.call.waitTime) }} </small></h2>
-                        <p>{{ formattedDemoDnis }}</p>
-                      </div>
-                      <div v-if="model.callback && model.callback.enabled" class="cmr-callback-container cmr-block" @click="clickCallback">
-                        <h2>{{ model.callback.heading || 'We\'ll Call You' }}<small> - {{ waitText(model.callback.waitTime) }}</small></h2>
-                        <p>{{ model.callback.text || 'Receive a call back from an expert.' }}</p>
-                      </div>
-                      <div v-if="model.email && model.email.enabled" id="cmr-email-container" class="cmr-email-container cmr-block" @click="clickEmail">
-                        <h2>{{ model.email.heading || 'Email an expert' }}<small> - {{ waitText([model.email.waitTimeMin, model.email.waitTimeMax]) }}</small></h2>
-                        <p>{{ model.email.text || 'An expert will respond to your email.' }}</p>
-                      </div>
-                      <div v-if="model.task && model.task.enabled" class="cmr-task-container cmr-block" @click="clickTask">
-                        <h2>{{ model.task.heading || 'Route a Task' }}</h2>
-                        <p>{{ model.task.text || 'An expert will handle your task.' }}</p>
-                      </div>
-                      <div v-if="model.tracking && model.tracking.enabled" class="cmr-tracking-container cmr-block" @click="clickTracking">
-                        <h2>{{ model.tracking.heading || 'Add Tracking Info' }}</h2>
-                        <p>{{ model.tracking.text || 'An expert will receive tracking info from you.' }}</p>
-                      </div>
-                      <div v-if="model.cobrowse && model.cobrowse.enabled" class="cmr-cobrowse-container cmr-block" @click="clickCobrowse">
-                        <h2>{{ model.cobrowse.heading || 'Cobrowse' }}<small> - {{ waitText(0) }}</small></h2>
-                        <p>{{ model.cobrowse.text || 'An expert will cobrowse with you live.' }}</p>
-                      </div>
-                      <div v-if="model.video && model.video.enabled" class="cmr-video-container cmr-block" @click="clickVideo">
-                        <h2>{{ model.video.heading || 'Live Video Assistance' }}<small> - {{ waitText(model.video.waitTime) }}</small></h2>
-                        <p>{{ model.video.text || 'An expert will help you live over video.' }}</p>
-                      </div>
-                      <div v-if="model.menu && model.menu.custom" v-show="model.menu.custom" :class="model.menu.custom.class" @click="clickCustom">
-                        <h2>{{ model.menu.custom.header }}<small> - {{ waitText(model.menu.custom.waitTime) }}</small></h2>
-                        <p>{{ model.menu.custom.text }}</p>
-                      </div>
-                    -->
-
 
         </b-collapse>
       </div>
@@ -124,21 +69,48 @@ export default {
         advisorImage: 'https://static.cxdemo.net/images/ming_advisor.png',
         advisorHeading: 'Expert Advisor',
         advisorText: `We're here to help`,
+        // chat
         chatEnabled: true,
         chatIcon: 'message-processing',
         chatHeading: 'Chat Now',
-        chatText: 'An expert will chat with you live in your browser asdf',
+        chatText: 'An expert will chat with you live',
         chatWaitTime: '1 min wait time',
+        // sms
         smsEnabled: true,
         smsIcon: 'message-processing',
         smsHeading: 'Text Us',
         smsText: '+1 817-949-1884',
         smsWaitTime: '1 min wait time',
+        // call
         callEnabled: true,
-        callIcon: 'phone-forward',
+        callIcon: 'phone',
         callHeading: 'Call Us',
         callText: '+1 919-474-1884',
-        callWaitTime: '1 min wait time'
+        callWaitTime: '8 min wait time',
+        // callback
+        callbackEnabled: true,
+        callbackIcon: 'phone-forward',
+        callbackHeading: `We'll Call You`,
+        callbackText: 'Receive a call back from an expert',
+        callbackWaitTime: '8 min wait time',
+        // email
+        emailEnabled: true,
+        emailIcon: 'email',
+        emailHeading: 'Email an Expert',
+        emailText: 'An expert will respond to your email',
+        emailWaitTime: '12-24 hour wait time',
+        // task
+        taskEnabled: true,
+        taskIcon: 'clipboard-check',
+        taskHeading: 'Request',
+        taskText: 'An expert will handle your task',
+        taskWaitTime: '',
+        // cobrowse
+        cobrowseEnabled: true,
+        cobrowseIcon: 'lan-connect',
+        cobrowseHeading: 'Cobrowse',
+        cobrowseText: 'An expert will cobrowse with you live',
+        cobrowseWaitTime: '8 min wait time'
       }
     }
   },
@@ -179,6 +151,34 @@ export default {
         subtext: this.model.callText,
         waitTime: this.model.callWaitTime
       }
+      const callback = {
+        click: this.clickCallback,
+        icon: this.model.callbackIcon,
+        heading: this.model.callbackHeading,
+        subtext: this.model.callbackText,
+        waitTime: this.model.callbackWaitTime
+      }
+      const email = {
+        click: this.clickEmail,
+        icon: this.model.emailIcon,
+        heading: this.model.emailHeading,
+        subtext: this.model.emailText,
+        waitTime: this.model.emailWaitTime
+      }
+      const task = {
+        click: this.clickTask,
+        icon: this.model.taskIcon,
+        heading: this.model.taskHeading,
+        subtext: this.model.taskText,
+        waitTime: this.model.taskWaitTime
+      }
+      const cobrowse = {
+        click: this.clickCobrowse,
+        icon: this.model.cobrowseIcon,
+        heading: this.model.cobrowseHeading,
+        subtext: this.model.cobrowseText,
+        waitTime: this.model.cobrowseWaitTime
+      }
 
       const ret = []
       if (this.model.chatEnabled) {
@@ -189,6 +189,18 @@ export default {
       }
       if (this.model.callEnabled) {
         ret.push(call)
+      }
+      if (this.model.callbackEnabled) {
+        ret.push(callback)
+      }
+      if (this.model.emailEnabled) {
+        ret.push(email)
+      }
+      if (this.model.taskEnabled) {
+        ret.push(task)
+      }
+      if (this.model.cobrowseEnabled) {
+        ret.push(cobrowse)
       }
       return ret
     }
@@ -276,7 +288,7 @@ body {
 
 #contact-panel {
   // calculate height based on how many options are enabled
-  top: calc(20px + 20% - var(--active-options) * 20px);
+  top: calc(4em + 20% - var(--active-options) * 20px);
   width: 30%;
   right: 0 !important;
   position: fixed;
@@ -293,9 +305,16 @@ body {
   }
 }
 
+.contact-title {
+  font-size: 1.5em;
+  font-weight: normal !important;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+
 .contact-content {
-  padding-top: 4px !important;
-  padding-bottom: 0px !important;
+  padding-top: 0.4em !important;
+  padding-bottom: 0.0em !important;
 }
 
 .contact-item {
@@ -307,6 +326,8 @@ body {
   // }
   .card-footer-item {
     border-right: none !important;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
     .content {
       width: 100%;
       h4 {
