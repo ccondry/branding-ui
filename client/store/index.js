@@ -15,7 +15,6 @@ const store = new Vuex.Store({
   getters,
   modules,
   state: {
-    ldapDomain: config.lab.upnDomain,
     endpointsLoaded: false,
     endpoints: config.app.endpoints,
     // dcloud PCCE instant demo session instances
