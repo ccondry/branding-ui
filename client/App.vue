@@ -2,49 +2,56 @@
   <div id="app">
     <b-loading :is-full-page="true" :active="!endpointsLoaded" :can-cancel="false"></b-loading>
     <span id="main-content" v-if="endpointsLoaded">
+      <!-- background iframe -->
       <iframe id="demo-iframe" :src="model.iframe"></iframe>
-      <div id="contact-panel" v-if="showContactPanel">
-        <b-collapse class="card">
-          <div
-          slot="trigger"
-          slot-scope="props"
-          class="card-header"
-          role="button">
 
-          <button id="contact-toggle-button" class="button"
-          v-show="!props.open"
-          @click="showContactPanel = true">
-          <strong>{{ model.contactButtonText }}</strong></button>
+      <!-- talk to an expert button (open drawer) -->
+      <transition name="slide">
+        <button id="contact-toggle-button" class="button"
+        v-show="!showContactPanel"
+        @click="showContactPanel = true">
+        <strong>{{ model.contactButtonText }}</strong></button>
+      </transition>
 
-          <p class="card-header-title contact-title" v-show="props.open">
-            {{ model.menuTitle }}
-          </p>
+      <!-- contact panel -->
+      <transition name="slide">
+        <div id="contact-panel" v-show="showContactPanel">
+          <b-collapse class="card">
+            <div
+            class="card-header"
+            role="button"
+            @click="showContactPanel = false">
 
-          <a class="card-header-icon" v-show="props.open">
-            <b-icon icon="close" />
-          </a></div>
+            <p class="card-header-title contact-title">
+              {{ model.menuTitle }}
+            </p>
 
-          <div class="card-content contact-content" v-if="model.advisorEnabled">
-            <img :src="model.advisorImage" style="height: 7em;">
-            <span style="float: right; font-size: 1.8em;">
-              <p>{{ model.advisorHeading }}</p>
-              <p>{{ model.advisorText }}</p>
-            </span>
-          </div>
+            <a class="card-header-icon">
+              <b-icon icon="close" />
+            </a></div>
 
-          <!-- render each contact option -->
-          <footer v-for="item of contactOptions" class="card-footer contact-item">
-            <a @click="item.click" class="card-footer-item">
-              <b-icon class="contact-icon" :icon="item.icon" />
-              <div class="content">
-                <h4>{{ item.heading }}<small v-if="item.waitTime"> - {{ item.waitTime }}</small></h4>
-                <p class="contact-subtext">{{ item.subtext }}</p>
-              </div>
-            </a>
-          </footer>
+            <div class="card-content contact-content" v-if="model.advisorEnabled">
+              <img :src="model.advisorImage" style="height: 7em;">
+              <span style="float: right; font-size: 1.8em;">
+                <p>{{ model.advisorHeading }}</p>
+                <p>{{ model.advisorText }}</p>
+              </span>
+            </div>
 
-        </b-collapse>
-      </div>
+            <!-- render each contact option -->
+            <footer v-for="item of contactOptions" class="card-footer contact-item">
+              <a @click="item.click" class="card-footer-item">
+                <b-icon class="contact-icon" :icon="item.icon" />
+                <div class="content">
+                  <h4>{{ item.heading }}<small v-if="item.waitTime"> - {{ item.waitTime }}</small></h4>
+                  <p class="contact-subtext">{{ item.subtext }}</p>
+                </div>
+              </a>
+            </footer>
+
+          </b-collapse>
+        </div>
+      </transition>
     </span>
   </div>
 </template>
@@ -56,7 +63,7 @@ export default {
   data () {
     return {
       production: process.env.NODE_ENV === 'production',
-      showContactPanel: true,
+      showContactPanel: false,
       model: {
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
@@ -312,14 +319,30 @@ body {
   -webkit-transform-origin: 100% 100%;
   transform-origin: 100% 100%;
   // slide the drawer out
-  -webkit-transition:right .5s ease;
-  transition:right .5s ease;
+  // -webkit-transition:right .5s ease;
+  // transition:right .5s ease;
   .card {
     // nice rounded corners
     border-radius: 1em;
     // hide anything that flows over the rounded corners
     overflow: hidden;
   }
+}
+
+// slide the drawer out
+.slide-enter-active {
+  transition: 0.5s;
+}
+.slide-enter {
+  transform: translate(100%, 0);
+}
+
+// slide the drawer back in
+.slide-leave-active {
+  transition: 0.5s;
+}
+.slide-leave-to {
+  transform: translate(100%, 0);
 }
 
 .contact-title {
