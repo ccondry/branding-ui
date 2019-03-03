@@ -33,7 +33,7 @@
           </div>
 
           <!-- render each contact option -->
-          <footer v-for="item of items" class="card-footer contact-item">
+          <footer v-for="item of contactOptions" class="card-footer contact-item">
             <a @click="item.click" class="card-footer-item">
               <b-icon class="contact-icon" :icon="item.icon" />
               <div class="content">
@@ -129,7 +129,7 @@ export default {
       'endpointsLoaded',
       'instancesLoaded'
     ]),
-    items () {
+    contactOptions () {
       const chat = {
         click: this.clickChat,
         icon: this.model.chatIcon,
@@ -209,16 +209,15 @@ export default {
   methods: {
     ...mapActions([
       'getEndpoints',
-      'getSession',
-      'getInstances'
+      'getSession'
     ]),
     updateView (model) {
       // set color 1
       window.document.documentElement.style.setProperty('--color-1', model.color1)
       // set color 2
       window.document.documentElement.style.setProperty('--color-2', model.color2)
-      // --active-options
-      window.document.documentElement.style.setProperty('--active-options', this.items.length)
+      // set the number of active options, to change the top property of the contact panel
+      window.document.documentElement.style.setProperty('--active-options', this.contactOptions.length)
     },
     waitText () {
       return '2 minutes'
