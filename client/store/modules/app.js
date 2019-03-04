@@ -63,9 +63,9 @@ const actions = {
     try {
       console.log('getting endpoints for branding-ui')
       // get endpoints from API server
-      const response = await load(getters.instance, getters.jwt, getters.endpoints.endpoints)
+      const response = await load(getters.endpoints.endpoints)
       // set the endpoints data in state
-      await commit(types.SET_ENDPOINTS, response.data)
+      commit(types.SET_ENDPOINTS, response.data)
       // mark endpoints as loaded
       commit(types.SET_ENDPOINTS_LOADED, true)
     } catch (e) {

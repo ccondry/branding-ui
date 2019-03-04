@@ -86,6 +86,12 @@ import CallbackForm from './components/callback-form.vue'
 import CallForm from './components/call-form.vue'
 
 export default {
+  created () {
+    // get query string and put the object into this component's data
+    let uri = window.location.search.substring(1)
+    this.qs = new window.URLSearchParams(uri)
+  },
+
   components: {
     EmailForm,
     SmsForm,
@@ -96,6 +102,7 @@ export default {
 
   data () {
     return {
+      qs: {},
       requestTypes: [{
         value: 'bill',
         text: 'Report Bill Issue'
@@ -105,8 +112,6 @@ export default {
       }],
       production: process.env.NODE_ENV === 'production',
       showContactPanel: false,
-      // showLoginModal: false,
-      // loggedIn: false,
       showEmailModal: false,
       showSmsModal: false,
       showTaskModal: false,
@@ -116,10 +121,10 @@ export default {
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
         menuSubtitle: `We're here to help`,
-        iframe: 'https://toolbox.cdxdemo.net/users/matthmcc/Ashley%20Furniture%20HomeStore%20_%20Home%20Furniture%20&%20Decor.html',
-        // iframe: '',
-        color1: '#0000aa',
-        color2: '#00ffdd',
+        // iframe: 'https://toolbox.cdxdemo.net/users/matthmcc/Ashley%20Furniture%20HomeStore%20_%20Home%20Furniture%20&%20Decor.html',
+        iframe: '',
+        color1: '#2357af',
+        color2: '#4881e2',
         advisorEnabled: true,
         advisorImage: 'https://static.cxdemo.net/images/ming_advisor.png',
         advisorHeading: 'Expert Advisor',
@@ -170,23 +175,25 @@ export default {
     }
   },
 
-  mounted () {
+  async mounted () {
     // set dCloud session ID and datacenter from query parameters
-    if (this.$route.query.session) {
-      this.setSessionId(this.$route.query.session)
+    if (this.qs.get('session')) {
+      this.setSessionId(this.qs.get('session'))
     }
-    if (this.$route.query.datacenter) {
-      this.setDatacenter(this.$route.query.datacenter)
+    if (this.qs.get('datacenter')) {
+      this.setDatacenter(this.qs.get('datacenter'))
     }
-    if (this.$route.query.userId) {
-      this.setUserId(this.$route.query.userId)
+    if (this.qs.get('userId')) {
+      this.setUserId(this.qs.get('userId'))
     }
     // load URL endpoints list from the API server
-    this.getEndpoints()
+    console.log('getting endpoints...')
+    await this.getEndpoints()
+    // load dcloud session info
+    console.log('getting session info...')
+    await this.getSessionInfo()
     // update view now - probably remove this later for production
     this.updateView(this.model)
-    // get user info
-    this.showLoginModal = true
   },
 
   computed: {
@@ -194,10 +201,10 @@ export default {
       'loading',
       'endpoints',
       'endpointsLoaded',
-      'instancesLoaded',
       'chatBotEnabled',
       'isUccx',
-      'isUpstream'
+      'isUpstream',
+      'configuration'
     ]),
     contactOptions () {
       const chat = {
@@ -279,7 +286,7 @@ export default {
   methods: {
     ...mapActions([
       'getEndpoints',
-      'getSession',
+      'getSessionInfo',
       'setUserId',
       'setSessionId',
       'setDatacenter'
@@ -430,6 +437,12 @@ export default {
   watch: {
     model (val) {
       this.updateView(val)
+    },
+    configuration (val) {
+      // configuration info loaded - merge into model
+      for (const key of Object.keys(val)) {
+        this.$set(this.model, key, val[key])
+      }
     }
   }
 }
