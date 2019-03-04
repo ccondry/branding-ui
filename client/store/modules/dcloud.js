@@ -22,14 +22,18 @@ const getters = {
   // is the configured multichannel type Upstream Works?
   isUpstream: (state, getters) => getters.configuration.multichannel === 'upstream',
   // is the configured multichannel type ECE?
-  isEce: (state, getters) => !getters.configuration.multichannel || getters.configuration.multichannel === 'ece'
+  isEce: (state, getters) => !getters.configuration.multichannel || getters.configuration.multichannel === 'ece',
+  // brand
+  brand: (state, getters) => getters.configuration.brand,
+  brandConfig: state => state.brandConfig
 }
 
 const state = {
   sessionId: '',
   datacenter: '',
   userId: '',
-  sessionInfo: {}
+  sessionInfo: {},
+  brandConfig: ''
 }
 
 const mutations = {
@@ -44,6 +48,9 @@ const mutations = {
   },
   [types.SET_SESSION_INFO] (state, data) {
     state.sessionInfo = data
+  },
+  [types.SET_BRAND_CONFIG] (state, data) {
+    state.brandConfig = data
   }
 }
 
@@ -84,6 +91,33 @@ const actions = {
       })
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'sessionInfo', value: false})
+    }
+  },
+  async getBrand ({getters, commit, dispatch}, showNotification = true) {
+    try {
+      dispatch('setLoading', {group: 'dcloud', type: 'brand', value: true})
+      console.log('loading brand config for', getters.brand, '...')
+      const query = {
+        brand: getters.brand
+      }
+      const response = await load(getters.endpoints.brand.path, query)
+      console.log('load dcloud brand configuration for', getters.brand, response)
+      commit(types.SET_BRAND_CONFIG, response.data)
+      if (showNotification) {
+        Toast.open({
+          message: 'load dCloud brand configuration for ' + getters.brand + ' succeeded',
+          type: 'is-success'
+        })
+      }
+    } catch (e) {
+      console.log('error loading brand', getters.brand, e)
+      Toast.open({
+        duration: 5000,
+        message: 'load dCloud brand configuration for ' + getters.brand + ' failed: ' + e.message,
+        type: 'is-danger'
+      })
+    } finally {
+      dispatch('setLoading', {group: 'dcloud', type: 'brand', value: false})
     }
   }
 }

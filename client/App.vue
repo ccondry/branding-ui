@@ -192,6 +192,9 @@ export default {
     // load dcloud session info
     console.log('getting session info...')
     await this.getSessionInfo()
+    // load brand configuration
+    console.log('getting brand configuration info...')
+    await this.getBrand()
     // update view now - probably remove this later for production
     this.updateView(this.model)
   },
@@ -204,7 +207,8 @@ export default {
       'chatBotEnabled',
       'isUccx',
       'isUpstream',
-      'configuration'
+      'configuration',
+      'brand'
     ]),
     contactOptions () {
       const chat = {
@@ -289,7 +293,8 @@ export default {
       'getSessionInfo',
       'setUserId',
       'setSessionId',
-      'setDatacenter'
+      'setDatacenter',
+      'getBrand'
     ]),
     updateView (model) {
       // set color 1
