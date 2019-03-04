@@ -245,10 +245,12 @@ export default {
         return
       }
     }
-    // brand ID is good - continue
-    // load brand configuration
-    console.log('getting brand configuration info...')
-    await this.getBrand()
+    if (this.brand) {
+      // brand ID has a value assigned - continue
+      // load brand configuration
+      console.log('getting brand configuration info...')
+      await this.getBrand()
+    }
   },
 
   computed: {
