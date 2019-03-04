@@ -12,19 +12,21 @@ const getters = {
   // dCloud session information, including configuraiton
   sessionInfo: state => state.sessionInfo,
   // dCloud session configuration
-  configuration: (state, getters) => getters.sessionInfo.configuration || {},
+  sessionConfig: (state, getters) => getters.sessionInfo.configuration || {},
   // is chat bot enabled?
-  chatBotEnabled: (state, getters) => getters.configuration.chatBotEnabled,
+  chatBotEnabled: (state, getters) => getters.sessionConfig.chatBotEnabled,
   // is this a UCCX demo?
   isUccx: (state, getters) => getters.sessionInfo.demo === 'uccx',
   // is this a PCCE demo?
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
+  // is this a an instant demo?
+  isInstantDemo: (state, getters) => getters.sessionInfo.instant === true,
   // is the configured multichannel type Upstream Works?
-  isUpstream: (state, getters) => getters.configuration.multichannel === 'upstream',
+  isUpstream: (state, getters) => getters.sessionConfig.multichannel === 'upstream',
   // is the configured multichannel type ECE?
-  isEce: (state, getters) => !getters.configuration.multichannel || getters.configuration.multichannel === 'ece',
+  isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // brand
-  brand: (state, getters) => getters.configuration.brand,
+  brand: (state, getters) => getters.sessionConfig.brand,
   brandConfig: state => state.brandConfig
 }
 

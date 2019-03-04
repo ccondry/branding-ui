@@ -19,7 +19,7 @@
     </b-modal>
 
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
-      <call-form />
+      <call-form :dnis="model.callText"/>
     </b-modal>
 
     <span id="main-content" v-if="endpointsLoaded">
@@ -139,13 +139,13 @@ export default {
         smsEnabled: true,
         smsIcon: 'message-processing',
         smsHeading: 'Text Us',
-        smsText: '+1 817-949-1884',
+        smsText: '+1 817-755-6260',
         smsWaitTime: '1 min wait time',
         // call
         callEnabled: true,
         callIcon: 'phone',
         callHeading: 'Call Us',
-        callText: '+1 919-474-1884',
+        callText: '+1 919-555-5776',
         callWaitTime: '8 min wait time',
         // callback
         callbackEnabled: true,
@@ -176,12 +176,30 @@ export default {
   },
 
   async mounted () {
+    // update view now - probably remove this later for production
+    this.updateView(this.model)
     // set dCloud session ID and datacenter from query parameters
     if (this.qs.get('session')) {
       this.setSessionId(this.qs.get('session'))
+    } else {
+      // session ID not set - show error and stop loading
+      this.$toast.open({
+        duration: 15000,
+        message: `Please specify a session ID in the URL query parameters as "session".`,
+        type: 'is-danger'
+      })
+      return
     }
     if (this.qs.get('datacenter')) {
       this.setDatacenter(this.qs.get('datacenter'))
+    } else {
+      // datacenter not set - show error and stop loading
+      this.$toast.open({
+        duration: 15000,
+        message: `Please specify a datacenter in the URL query parameters as "datacenter".`,
+        type: 'is-danger'
+      })
+      return
     }
     if (this.qs.get('userId')) {
       this.setUserId(this.qs.get('userId'))
@@ -192,11 +210,45 @@ export default {
     // load dcloud session info
     console.log('getting session info...')
     await this.getSessionInfo()
+    if (!this.brand) {
+      // no brand set. show relevant error message to user.
+      if (this.isInstantDemo) {
+        // instant demo
+        if (this.userId) {
+          // userId is set
+          this.$toast.open({
+            duration: 15000,
+            message: `Your instant demo configuration does not have a brand
+            selected. Please select one on the Brand page of the dCloud Instant
+            Demo Toolbox.`,
+            type: 'is-danger'
+          })
+        } else {
+          // userId is not set
+          this.$toast.open({
+            duration: 15000,
+            message: `Your dCloud session is an instant demo session, but your
+            user ID was not specified in the URL query parameters. Please use
+            the link on the Brand Demo page of the dCloud Instant Demo Toolbox.`,
+            type: 'is-danger'
+          })
+          return
+        }
+      } else {
+        // scheduled demo
+        this.$toast.open({
+          duration: 15000,
+          message: `Your dCloud session doesn't have a brand configured. Please
+          choose one from the Session Configuration Toolbox in your dCloud demo.`,
+          type: 'is-danger'
+        })
+        return
+      }
+    }
+    // brand ID is good - continue
     // load brand configuration
     console.log('getting brand configuration info...')
     await this.getBrand()
-    // update view now - probably remove this later for production
-    this.updateView(this.model)
   },
 
   computed: {
@@ -207,8 +259,12 @@ export default {
       'chatBotEnabled',
       'isUccx',
       'isUpstream',
-      'configuration',
-      'brand'
+      'sessionInfo',
+      'sessionConfig',
+      'brand',
+      'brandConfig',
+      'isInstantDemo',
+      'userId'
     ]),
     contactOptions () {
       const chat = {
@@ -441,12 +497,26 @@ export default {
 
   watch: {
     model (val) {
+      console.log('model changed')
       this.updateView(val)
     },
-    configuration (val) {
+    sessionInfo (val) {
+      console.log('sessionInfo changed')
+      // session config loaded - update phone number and SMS number
+      this.$set(this.model, 'smsText', val.sms.international)
+      this.$set(this.model, 'callText', val.phone.international)
+    },
+    brandConfig (val) {
+      console.log('brandConfig changed')
       // configuration info loaded - merge into model
       for (const key of Object.keys(val)) {
-        this.$set(this.model, key, val[key])
+        // ignore id and owner keys
+        if (['_id', 'id', 'owner'].includes(key)) {
+          continue
+        } else {
+          // set model value for each config value
+          this.$set(this.model, key, val[key])
+        }
       }
     }
   }

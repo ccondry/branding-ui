@@ -8,7 +8,7 @@
         <div class="content">
           <p>
             You can reach one of our experts by phone at
-            <strong>+1 919-474-5775</strong>
+            <strong>{{ dnis }}</strong>
           </p>
         </div>
       </section>
@@ -19,6 +19,12 @@
     </div>
   </form>
 </template>
+
+<script>
+export default {
+  props: ['dnis']
+}
+</script>
 
 <style lang="scss">
 .animation-content {
