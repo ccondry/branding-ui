@@ -65,6 +65,7 @@ export default {
   width: 50%
 }
 .modal-card-foot {
+  // pull the footer buttons to the right
   justify-content: flex-end !important;
 }
 </style>

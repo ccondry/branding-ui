@@ -1,11 +1,13 @@
+// this software package
 export const pkg = state => state.pkg
 export const app = state => state.app
+// what kind of device is viewing this website
 export const device = state => state.app.device
 export const effect = state => state.app.effect
-export const authEnabled = state => true
+// loading and working status objects. used for tracking status of REST API operations
 export const loading = state => state.loading
 export const working = state => state.working
-export const endpoints = state => state.endpoints
-export const endpointsLoaded = state => state.endpointsLoaded
-export const sessionId = state => state.app.sessionId
-export const datacenter = state => state.app.datacenter
+// REST API endpoints
+export const endpoints = state => state.app.endpoints
+// are the REST API endpoints loaded yet?
+export const endpointsLoaded = state => state.app.endpointsLoaded

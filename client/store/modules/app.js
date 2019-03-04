@@ -1,6 +1,7 @@
 import * as types from '../mutation-types'
-import {load} from '../../utils'
 import {Toast} from 'buefy'
+import {load} from '../../utils'
+import config from '../../config'
 
 const getters = {
 }
@@ -17,8 +18,8 @@ const state = {
   effect: {
     translate3d: true
   },
-  sessionId: '',
-  datacenter: ''
+  endpointsLoaded: false,
+  endpoints: config.app.endpoints
 }
 
 const mutations = {
@@ -45,37 +46,17 @@ const mutations = {
     }
   },
 
-  [types.SET_SESSION] (state, data) {
-    state.sessionId = data.sessionId
-    state.datacenter = data.datacenter
+  [types.SET_ENDPOINTS] (state, data) {
+    state.endpoints = data
+  },
+
+  [types.SET_ENDPOINTS_LOADED] (state, data) {
+    console.log('state.endpointsLoaded =', data)
+    state.endpointsLoaded = data
   }
 }
 
 const actions = {
-  setInstance ({commit}, data) {
-    commit(types.SET_INSTANCE, data)
-  },
-  async getSession ({getters, commit, dispatch}, showNotification = true) {
-    try {
-      dispatch('setLoading', {group: 'app', type: 'session', value: true})
-      console.log('loading dcloud session info...')
-      const response = await load(getters.instance, getters.jwt, getters.endpoints.session)
-      console.log('load dcloud session info:', response)
-      commit(types.SET_SESSION, response.data)
-      if (showNotification) {
-        dispatch('successNotification', 'Successfully loaded dCloud session info')
-      }
-    } catch (e) {
-      console.log('error loading defaults', e)
-      Toast.open({
-        // duration: 5000,
-        message: 'load dCloud session info' + ' failed: ' + e.message,
-        type: 'is-danger'
-      })
-    } finally {
-      dispatch('setLoading', {group: 'app', type: 'session', value: false})
-    }
-  },
   async getEndpoints ({getters, commit, dispatch}, showNotification = true) {
     // mark loading started
     dispatch('setLoading', {group: 'app', type: 'endpoints', value: true})

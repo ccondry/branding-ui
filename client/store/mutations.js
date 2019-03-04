@@ -12,13 +12,6 @@ const mutations = {
   [types.SET_INSTANCES_LOADED] (state, data) {
     state.instancesLoaded = data
   },
-  [types.SET_ENDPOINTS] (state, data) {
-    state.endpoints = data
-  },
-  [types.SET_ENDPOINTS_LOADED] (state, data) {
-    console.log('state.endpointsLoaded =', data)
-    state.endpointsLoaded = data
-  },
   [types.SET_WORKING] (state, data) {
     // if state container for this group is not existing, create it
     if (!state.working[data.group]) {

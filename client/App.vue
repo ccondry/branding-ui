@@ -1,9 +1,6 @@
 <template>
   <div id="app">
     <b-loading :is-full-page="true" :active="!endpointsLoaded" :can-cancel="false"></b-loading>
-    <!-- <b-modal :active="!loggedIn" :can-cancel="false" has-modal-card>
-      <login-form v-bind="loginFormData" @submit="clickLogin" />
-    </b-modal> -->
 
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
       <email-form @submit="clickSubmitEmail" />
@@ -15,6 +12,14 @@
 
     <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
       <task-form @submit="clickSubmitTask" :request-types="requestTypes" />
+    </b-modal>
+
+    <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
+      <callback-form @submit="clickSubmitCallback" />
+    </b-modal>
+
+    <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
+      <call-form />
     </b-modal>
 
     <span id="main-content" v-if="endpointsLoaded">
@@ -77,12 +82,16 @@ import { mapGetters, mapActions } from 'vuex'
 import EmailForm from './components/email-form.vue'
 import SmsForm from './components/sms-form.vue'
 import TaskForm from './components/task-form.vue'
+import CallbackForm from './components/callback-form.vue'
+import CallForm from './components/call-form.vue'
 
 export default {
   components: {
     EmailForm,
     SmsForm,
-    TaskForm
+    TaskForm,
+    CallbackForm,
+    CallForm
   },
 
   data () {
@@ -101,6 +110,8 @@ export default {
       showEmailModal: false,
       showSmsModal: false,
       showTaskModal: false,
+      showCallbackModal: false,
+      showCallModal: false,
       model: {
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
@@ -160,6 +171,16 @@ export default {
   },
 
   mounted () {
+    // set dCloud session ID and datacenter from query parameters
+    if (this.$route.query.session) {
+      this.setSessionId(this.$route.query.session)
+    }
+    if (this.$route.query.datacenter) {
+      this.setDatacenter(this.$route.query.datacenter)
+    }
+    if (this.$route.query.userId) {
+      this.setUserId(this.$route.query.userId)
+    }
     // load URL endpoints list from the API server
     this.getEndpoints()
     // update view now - probably remove this later for production
@@ -173,7 +194,10 @@ export default {
       'loading',
       'endpoints',
       'endpointsLoaded',
-      'instancesLoaded'
+      'instancesLoaded',
+      'chatBotEnabled',
+      'isUccx',
+      'isUpstream'
     ]),
     contactOptions () {
       const chat = {
@@ -255,11 +279,11 @@ export default {
   methods: {
     ...mapActions([
       'getEndpoints',
-      'getSession'
+      'getSession',
+      'setUserId',
+      'setSessionId',
+      'setDatacenter'
     ]),
-    clickLogin () {
-      console.log('clickLogin')
-    },
     updateView (model) {
       // set color 1
       window.document.documentElement.style.setProperty('--color-1', model.color1)
@@ -307,8 +331,43 @@ export default {
         type: 'is-primary'
       })
     },
+    clickSubmitCallback (data) {
+      // clicked submit on the callback modal form
+      console.log('clickSubmitCallback', data)
+      // close the modal
+      this.showCallbackModal = false
+      // pop toaster notification
+      this.$toast.open({
+        duration: 15000,
+        message: `An expert will be calling you shortly. Your estimated wait
+        time is 2 minutes.`,
+        type: 'is-primary'
+      })
+    },
     clickChat (event) {
+      // clicked chat option from contact panel
       console.log('clickChat', event)
+      if (this.chatBotEnabled) {
+        // use chat bot
+        this.showChatBot()
+      } else {
+        if (this.isUccx) {
+          // UCCX demo
+          // run chat bot with bot turned off for CCX
+          this.showChatBot()
+        } else {
+          // not UCCX demo - default to PCCE demo
+          // check if upstream or ECE
+          if (this.isUpstream) {
+            // pop Upstream chat window
+            this.popUpstreamChatWindow()
+          } else {
+            // default to ECE chat, if not Upstream
+            // pop ECE chat window
+            this.popEceChatWindow()
+          }
+        }
+      }
     },
     clickSms (event) {
       // clicked SMS option from contact panel
@@ -331,10 +390,16 @@ export default {
       // })
     },
     clickCall (event) {
+      // clicked call option from contact panel
       console.log('clickCall', event)
+      // open the call modal
+      this.showCallModal = true
     },
     clickCallback (event) {
+      // clicked callback option from contact panel
       console.log('clickCallback', event)
+      // open the callback modal
+      this.showCallbackModal = true
     },
     clickEmail (event) {
       // clicked email option from contact panel
@@ -350,6 +415,15 @@ export default {
     },
     clickCobrowse (event) {
       console.log('clickCobrowse', event)
+    },
+    showChatBot (data) {
+      console.log('showChatBot', data)
+    },
+    popEceChatWindow (data) {
+      console.log('showChatBot', data)
+    },
+    popUpstreamChatWindow (data) {
+      console.log('popUpstreamChatWindow', data)
     }
   },
 
