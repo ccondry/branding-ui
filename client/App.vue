@@ -4,9 +4,19 @@
     <!-- <b-modal :active="!loggedIn" :can-cancel="false" has-modal-card>
       <login-form v-bind="loginFormData" @submit="clickLogin" />
     </b-modal> -->
+
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
-      <email-form v-bind="emailFormData" @submit="clickSubmitEmail" />
+      <email-form @submit="clickSubmitEmail" />
     </b-modal>
+
+    <b-modal :active.sync="showSmsModal" :can-cancel="true" has-modal-card width="960">
+      <sms-form @submit="clickSubmitSms" />
+    </b-modal>
+
+    <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
+      <task-form @submit="clickSubmitTask" :request-types="requestTypes" />
+    </b-modal>
+
     <span id="main-content" v-if="endpointsLoaded">
       <!-- background iframe -->
       <iframe id="demo-iframe" :src="model.iframe"></iframe>
@@ -65,24 +75,32 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import EmailForm from './components/email-form.vue'
+import SmsForm from './components/sms-form.vue'
+import TaskForm from './components/task-form.vue'
 
 export default {
   components: {
-    EmailForm
+    EmailForm,
+    SmsForm,
+    TaskForm
   },
 
   data () {
     return {
+      requestTypes: [{
+        value: 'bill',
+        text: 'Report Bill Issue'
+      }, {
+        value: 'test',
+        text: 'Report test Issue'
+      }],
       production: process.env.NODE_ENV === 'production',
       showContactPanel: false,
       // showLoginModal: false,
       // loggedIn: false,
       showEmailModal: false,
-      emailFormData: {
-        name: 'Coty Condry',
-        email: 'ccondry@cisco.com',
-        body: 'help me'
-      },
+      showSmsModal: false,
+      showTaskModal: false,
       model: {
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
@@ -250,9 +268,9 @@ export default {
       // set the number of active options, to change the top property of the contact panel
       window.document.documentElement.style.setProperty('--active-options', this.contactOptions.length)
     },
-    clickSubmitEmail () {
+    clickSubmitEmail (data) {
       // clicked submit on the email modal form
-      console.log('clickSubmitEmail')
+      console.log('clickSubmitEmail', data)
       // close the modal
       this.showEmailModal = false
       // pop toaster notification
@@ -263,24 +281,54 @@ export default {
         type: 'is-primary'
       })
     },
+    clickSubmitSms (data) {
+      // clicked submit on the SMS modal form
+      console.log('clickSubmitSms', data)
+      // close the modal
+      this.showSmsModal = false
+      // pop toaster notification
+      this.$toast.open({
+        duration: 15000,
+        message: `We have sent you a text message. Reply to this message to
+        beging chatting with one of our experts.`,
+        type: 'is-primary'
+      })
+    },
+    clickSubmitTask (data) {
+      // clicked submit on the task request modal form
+      console.log('clickSubmitTask', data)
+      // close the modal
+      this.showTaskModal = false
+      // pop toaster notification
+      this.$toast.open({
+        duration: 15000,
+        message: `We have received your task request and an expert will begin
+        working on that as soon as possible.`,
+        type: 'is-primary'
+      })
+    },
     clickChat (event) {
       console.log('clickChat', event)
     },
     clickSms (event) {
+      // clicked SMS option from contact panel
       console.log('clickSms', event)
-      this.$dialog.prompt({
-        message: `Enter your mobile number and we will text you`,
-        inputAttrs: {
-          placeholder: 'Enter your mobile phone number'
-        },
-        confirmText: 'Text Me',
-        onConfirm: (value) => this.$toast.open({
-          duration: 15000,
-          message: `We are sending a text message to ${value}. Please respond to
-          this text message to begin chatting with one of our experts.`,
-          type: 'is-primary'
-        })
-      })
+      // open the SMS modal
+      this.showSmsModal = true
+      // this.$dialog.prompt({
+      //   message: `Enter your mobile number and we will text you`,
+      //   inputAttrs: {
+      //     placeholder: 'Enter your mobile phone number'
+      //   },
+      //   confirmText: 'Text Me',
+      //   canCancel: true,
+      //   onConfirm: (value) => this.$toast.open({
+      //     duration: 15000,
+      //     message: `We are sending a text message to ${value}. Please respond to
+      //     this text message to begin chatting with one of our experts.`,
+      //     type: 'is-primary'
+      //   })
+      // })
     },
     clickCall (event) {
       console.log('clickCall', event)
@@ -295,7 +343,10 @@ export default {
       this.showEmailModal = true
     },
     clickTask (event) {
+      // clicked task option from contact panel
       console.log('clickTask', event)
+      // open the task modal
+      this.showTaskModal = true
     },
     clickCobrowse (event) {
       console.log('clickCobrowse', event)
