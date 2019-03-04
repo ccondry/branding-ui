@@ -312,10 +312,10 @@ export default {
 
 <style lang="scss">
 
-@import '~bulma';
-
-$fa-font-path: '~font-awesome/fonts/';
-@import '~font-awesome/scss/font-awesome';
+// @import '~bulma';
+//
+// $fa-font-path: '~font-awesome/fonts/';
+// @import '~font-awesome/scss/font-awesome';
 
 html {
   background-color: darkgrey;
