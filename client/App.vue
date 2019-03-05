@@ -206,10 +206,10 @@ export default {
     }
     // load URL endpoints list from the API server
     console.log('getting endpoints...')
-    await this.getEndpoints()
+    await this.getEndpoints(false)
     // load dcloud session info
     console.log('getting session info...')
-    await this.getSessionInfo()
+    await this.getSessionInfo(false)
     if (!this.brand) {
       // no brand set. show relevant error message to user.
       if (this.isInstantDemo) {
@@ -249,7 +249,7 @@ export default {
       // brand ID has a value assigned - continue
       // load brand configuration
       console.log('getting brand configuration info...')
-      await this.getBrand()
+      await this.getBrand(false)
     }
   },
 
