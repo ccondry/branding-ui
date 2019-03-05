@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-loading :is-full-page="true" :active="!endpointsLoaded" :can-cancel="false"></b-loading>
+    <b-loading :is-full-page="true" :active="!loaded" :can-cancel="false"></b-loading>
 
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
       <email-form @submit="clickSubmitEmail" />
@@ -29,7 +29,7 @@
       <!-- talk to an expert button (open drawer) -->
       <transition name="slide">
         <button id="contact-toggle-button" class="button"
-        v-show="!showContactPanel"
+        v-show="!showContactPanel && loaded"
         @click="showContactPanel = true">
         <strong>{{ model.contactButtonText }}</strong></button>
       </transition>
@@ -102,6 +102,7 @@ export default {
 
   data () {
     return {
+      loaded: false,
       qs: {},
       requestTypes: [{
         value: 'bill',
