@@ -232,7 +232,8 @@ export default {
             duration: 5 * 60 * 1000,
             message: `Your dCloud session is an instant demo session, but your
             user ID was not specified in the URL query parameters. Please use
-            the link on the Brand Demo page of the dCloud Instant Demo Toolbox.`,
+            the link on the Brand Demo page of the dCloud Instant Demo Toolbox,
+            and then refresh this page.`,
             type: 'is-danger'
           })
           return
@@ -242,7 +243,8 @@ export default {
         this.$toast.open({
           duration: 5 * 60 * 1000,
           message: `Your dCloud session doesn't have a brand configured. Please
-          choose one from the Session Configuration Toolbox in your dCloud demo.`,
+          choose one from the Session Configuration Toolbox in your dCloud demo,
+          and then refresh this page.`,
           type: 'is-danger'
         })
         return
