@@ -118,6 +118,8 @@ export default {
       showCallbackModal: false,
       showCallModal: false,
       model: {
+        pageTitle: ''
+        favicon: '',
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
         menuSubtitle: `We're here to help`,
@@ -494,6 +496,25 @@ export default {
     },
     popUpstreamChatWindow (data) {
       console.log('popUpstreamChatWindow', data)
+    },
+    changeFavicon (data) {
+      // change the favorite icon
+      /*
+      * Dynamically changing favicons with JavaScript
+      * Works in all A-grade browsers except Safari and Internet Explorer
+      * Demo: http://mathiasbynens.be/demo/dynamic-favicons
+      */
+      var link = document.createElement('link')
+      var oldLink = document.getElementById('dynamic-favicon')
+      link.id = 'dynamic-favicon'
+      link.rel = 'shortcut icon'
+      link.href = src
+      if (oldLink) {
+        console.log('removing old favicon', oldLink)
+        document.head.removeChild(oldLink)
+      }
+      console.log('adding favicon code to HTML head', link)
+      document.head.appendChild(link)
     }
   },
 
@@ -520,6 +541,11 @@ export default {
           this.$set(this.model, key, val[key])
         }
       }
+      // change the favicon
+      this.changeFavicon(val.favicon)
+
+      // change the title
+      document.title = val.pageTitle
     }
   }
 }
