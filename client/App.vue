@@ -26,7 +26,7 @@
       <!-- background iframe -->
       <iframe id="demo-iframe" :src="model.iframe"></iframe>
 
-      <!-- talk to an expert button (open drawer) -->
+      <!-- talk to an expert button (button to open contact panel) -->
       <transition name="slide">
         <button id="contact-toggle-button" class="button"
         v-show="!showContactPanel && loaded"
