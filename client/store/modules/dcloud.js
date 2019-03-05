@@ -100,7 +100,7 @@ const actions = {
       dispatch('setLoading', {group: 'dcloud', type: 'brand', value: true})
       console.log('loading brand config for', getters.brand, '...')
       const query = {
-        brand: getters.brand
+        id: getters.brand
       }
       const response = await load(getters.endpoints.brand.path, query)
       console.log('load dcloud brand configuration for', getters.brand, response)
