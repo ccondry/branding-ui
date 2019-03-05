@@ -504,7 +504,7 @@ export default {
     popUpstreamChatWindow (data) {
       console.log('popUpstreamChatWindow', data)
     },
-    changeFavicon (data) {
+    changeFavicon (src) {
       // change the favorite icon
       /*
       * Dynamically changing favicons with JavaScript
