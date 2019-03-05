@@ -366,6 +366,10 @@ export default {
       window.document.documentElement.style.setProperty('--color-2', model.color2)
       // set the number of active options, to change the top property of the contact panel
       window.document.documentElement.style.setProperty('--active-options', this.contactOptions.length)
+      // change the favicon
+      this.changeFavicon(model.favicon)
+      // change the title
+      document.title = model.pageTitle
     },
     clickSubmitEmail (data) {
       // clicked submit on the email modal form
@@ -544,11 +548,8 @@ export default {
           this.$set(this.model, key, val[key])
         }
       }
-      // change the favicon
-      this.changeFavicon(val.favicon)
-
-      // change the title
-      document.title = val.pageTitle
+      // brand has now loaded
+      this.loaded = true
     }
   }
 }
