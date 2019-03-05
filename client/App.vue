@@ -119,7 +119,7 @@ export default {
       showCallbackModal: false,
       showCallModal: false,
       model: {
-        pageTitle: '',
+        title: '',
         favicon: '',
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
@@ -369,7 +369,7 @@ export default {
       // change the favicon
       this.changeFavicon(model.favicon)
       // change the title
-      document.title = model.pageTitle
+      document.title = model.title
     },
     clickSubmitEmail (data) {
       // clicked submit on the email modal form
