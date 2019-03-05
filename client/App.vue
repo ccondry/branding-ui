@@ -187,7 +187,7 @@ export default {
     } else {
       // session ID not set - show error and stop loading
       this.$toast.open({
-        duration: 15000,
+        duration: 5 * 60 * 1000,
         message: `Please specify a session ID in the URL query parameters as "session".`,
         type: 'is-danger'
       })
@@ -198,7 +198,7 @@ export default {
     } else {
       // datacenter not set - show error and stop loading
       this.$toast.open({
-        duration: 15000,
+        duration: 5 * 60 * 1000,
         message: `Please specify a datacenter in the URL query parameters as "datacenter".`,
         type: 'is-danger'
       })
@@ -220,16 +220,16 @@ export default {
         if (this.userId) {
           // userId is set
           this.$toast.open({
-            duration: 15000,
+            duration: 5 * 60 * 1000,
             message: `Your instant demo configuration does not have a brand
             selected. Please select one on the Brand page of the dCloud Instant
-            Demo Toolbox.`,
+            Demo Toolbox, and then refresh this page.`,
             type: 'is-danger'
           })
         } else {
           // userId is not set
           this.$toast.open({
-            duration: 15000,
+            duration: 5 * 60 * 1000,
             message: `Your dCloud session is an instant demo session, but your
             user ID was not specified in the URL query parameters. Please use
             the link on the Brand Demo page of the dCloud Instant Demo Toolbox.`,
@@ -240,7 +240,7 @@ export default {
       } else {
         // scheduled demo
         this.$toast.open({
-          duration: 15000,
+          duration: 5 * 60 * 1000,
           message: `Your dCloud session doesn't have a brand configured. Please
           choose one from the Session Configuration Toolbox in your dCloud demo.`,
           type: 'is-danger'
