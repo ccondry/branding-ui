@@ -119,7 +119,7 @@ export default {
       showCallbackModal: false,
       showCallModal: false,
       model: {
-        pageTitle: ''
+        pageTitle: '',
         favicon: '',
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
