@@ -527,7 +527,7 @@ export default {
 
   watch: {
     model (val) {
-      console.log('model changed')
+      console.log('model changed - update view')
       this.updateView(val)
     },
     sessionInfo (val) {
@@ -537,14 +537,14 @@ export default {
       this.$set(this.model, 'callText', val.phone.international)
     },
     brandConfig (val) {
-      console.log('brandConfig changed')
+      console.log('brandConfig changed - copying changes to local model')
       // configuration info loaded - merge into model
       for (const key of Object.keys(val)) {
         // ignore id and owner keys
         if (['_id', 'id', 'owner'].includes(key)) {
           continue
         } else {
-          // set model value for each config value
+          // set model value for each brand config value
           this.$set(this.model, key, val[key])
         }
       }
