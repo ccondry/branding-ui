@@ -21,17 +21,19 @@ const actions = {
       dispatch('setWorking', {group: 'dcloud', type: 'callback', value: true})
       console.debug('starting', type, data, '...')
       // send email request to REST API
-      await dispatch('postData', {
+      const response = await dispatch('postData', {
         endpoint: getters.endpoints.callback.path,
         data
       })
       // success
       console.info(type, 'succeeded')
       // pop toast notification for user
+      let minutes = Math.floor(response.data.ewt / 60)
+      if (minutes === 0) minutes = 1
       Toast.open({
         duration: 15000,
         message: `An expert will be calling you shortly. Your estimated wait
-        time is 2 minutes.`,
+        time is ${minutes} minute${minutes === 1 ? '' : 's'}.`,
         type: 'is-primary'
       })
     } catch (e) {
