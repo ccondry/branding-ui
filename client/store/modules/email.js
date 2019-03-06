@@ -28,7 +28,7 @@ const actions = {
       // success
       console.info(type, 'succeeded')
       // pop toast notification for user
-      this.$toast.open({
+      Toast.open({
         duration: 15000,
         message: `We have received your email and an expert will respond as
         soon as possible.`,
