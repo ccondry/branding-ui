@@ -125,6 +125,10 @@ const actions = {
   async sendEmail ({getters, commit, dispatch}, data) {
     const type = 'Send email'
     try {
+      // attach dCloud session information
+      data.session = getters.sessionId
+      data.datacenter = getters.datacenter
+      data.userId = getters.userId
       // set working state
       dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
       console.debug('starting', type, data, '...')
