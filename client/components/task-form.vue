@@ -17,6 +17,14 @@
           required />
         </b-field>
 
+        <b-field label="Your Phone Number">
+          <b-input
+          v-model="formData.phone"
+          type="phone"
+          placeholder="5551112222"
+          required />
+        </b-field>
+
         <b-field label="Your Email Address">
           <b-input
           v-model="formData.email"
@@ -53,7 +61,8 @@ export default {
       formData: {
         name: '',
         email: '',
-        task: null
+        task: null,
+        phone: ''
       }
     }
   }
