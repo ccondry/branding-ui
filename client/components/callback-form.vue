@@ -25,6 +25,7 @@
 
         <b-field label="Your Message">
           <b-input
+          type="textarea"
           v-model="formData.message"
           placeholder="Message"
           required />
