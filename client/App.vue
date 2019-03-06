@@ -548,7 +548,9 @@ export default {
     popEceCallbackWindow () {
       console.log('popEceCallbackWindow')
       // create url
+      // rainbow template
       let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/callback/rainbow/call.html?subActivity=Callback&entryPointId=1002&templateName=rainbow&languageCode=en&countryCode=US&ver=v11`
+      // cumulus template
       // let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/callback/cumulus/call.html?subActivity=Callback&entryPointId=1002&templateName=cumulus&languageCode=en&countryCode=US&ver=v11`
       console.log('ECE callback URL:', url)
       let w = 400
