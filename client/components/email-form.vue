@@ -21,7 +21,14 @@
           required />
         </b-field>
 
-        <b-field label="Your Question">
+        <b-field label="Subject">
+          <b-input
+          v-model="formData.subject"
+          placeholder=""
+          required />
+        </b-field>
+
+        <b-field label="Message">
           <b-input
           type="textarea"
           v-model="formData.body"
@@ -45,6 +52,7 @@ export default {
       formData: {
         name: '',
         email: '',
+        subject: '',
         body: ''
       }
     }

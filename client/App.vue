@@ -432,14 +432,18 @@ export default {
       // clicked chat option from contact panel
       console.log('clickChat', event)
       if (this.chatBotEnabled) {
-        // use chat bot
+        // hide contact panel menu and show chat bot
         this.showChatBot = true
+        // set chat bot iframe to the chat bot URL
         this.chatIframe = `https://mm-chat.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
       } else {
         if (this.isUccx) {
           // UCCX demo
           // run chat bot with bot turned off for CCX
+          // hide contact panel menu and show chat bot
           this.showChatBot = true
+          // set chat bot iframe to the chat bot URL
+          this.chatIframe = `https://mm-chat.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
         } else {
           // not UCCX demo - default to PCCE demo
           // check if upstream or ECE
@@ -517,11 +521,36 @@ export default {
         })
       }
     },
-    popEceChatWindow (data) {
-      console.log('showChatBot', data)
+    popEceChatWindow () {
+      console.log('popEceChatWindow')
+      // create url
+      // let url = `${this.endpoints.eceProxy.path}/${this.datacenter}-${this.sessionId}`
+      // url += `/system/templates/chat/kiwi/chat.html?subActivity=Chat&entryPointId=1001&templateName=kiwi&languageCode=en&countryCode=US&ver=v11`
+      // aqua template does not work through the reverse proxy
+      // https://${this.datacenter}-${this.session}.tunnel.cc-dcloud.com/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US
+      // url += `/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US`
+      // http://cceece.dcloud.cisco.com/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US
+      let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US`
+      console.log('ECE URL:', url)
+      let w = 400
+      let h = 600
+      let top = (window.screen.height / 2) - (h / 2)
+      let left = (window.screen.width / 2) - (w / 2)
+      // open popup
+      window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
+      // window.resize('400', '600')
     },
     popUpstreamChatWindow (data) {
       console.log('popUpstreamChatWindow', data)
+      let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/Home`
+      console.log('ECE URL:', url)
+      let w = 400
+      let h = 600
+      let top = (window.screen.height / 2) - (h / 2)
+      let left = (window.screen.width / 2) - (w / 2)
+      // open popup
+      window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
+      // window.resize('400', '600')
     },
     changeFavicon (src) {
       // change the favorite icon

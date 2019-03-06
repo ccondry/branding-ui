@@ -1,4 +1,4 @@
-import { Toast } from 'buefy/dist/components/toast'
+// import { Toast } from 'buefy/dist/components/toast'
 
 const getters = {
 }
@@ -10,44 +10,28 @@ const mutations = {
 }
 
 const actions = {
-  async sendSms ({getters, commit, dispatch}, data) {
-    const type = 'Send SMS'
-    try {
-      // attach dCloud session information
-      data.session = getters.sessionId
-      data.datacenter = getters.datacenter
-      data.userId = getters.userId
-      // set working state
-      dispatch('setWorking', {group: 'dcloud', type: 'sms', value: true})
-      console.debug('starting', type, data, '...')
-      // send email request to REST API
-      await dispatch('postData', {
-        endpoint: getters.endpoints.sms.path,
-        data
-      })
-      // success
-      console.info(type, 'succeeded')
-      // pop toaster notification for user
-      Toast.open({
-        duration: 15000,
-        message: `We have sent you a text message. Reply to this message to
-        beging chatting with one of our experts.`,
-        type: 'is-primary'
-      })
-    } catch (e) {
-      // failed
-      console.error(type, 'error:', getters.brand, e)
-      // pop toast notification for user
-      Toast.open({
-        duration: 15000,
-        message: type + ' failed: ' + e.message,
-        type: 'is-danger'
-      })
-    } finally {
+  sendSms ({getters, commit, dispatch}, data) {
+    // attach dCloud session information
+    data.session = getters.sessionId
+    data.datacenter = getters.datacenter
+    data.userId = getters.userId
+    // add config data
+    data.message = decodeURIComponent(getters.sessionConfig.smsDeflectionMessage)
+    // set working state
+    dispatch('setWorking', {group: 'dcloud', type: 'sms', value: true})
+    console.debug('starting send SMS:', data)
+    // send email request to REST API
+    dispatch('postData', {
+      endpoint: getters.endpoints.sms.path,
+      data,
+      success: `We have sent you a text message. Reply to this message to
+      beging chatting with one of our experts.`,
+      fail: 'Failed to send you a text message'
+    }).finally(() => {
       // reset working state
       dispatch('setWorking', {group: 'dcloud', type: 'sms', value: false})
-    }
-  }
+    })
+}
 }
 
 export default {

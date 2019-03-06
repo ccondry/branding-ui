@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 import { load, put, post, httpDelete } from '../utils'
-import {Toast} from 'buefy'
+import { Toast } from 'buefy/dist/components/toast'
 
 export const toggleSidebar = ({ commit }, data) => {
   if (data instanceof Object) {
@@ -107,11 +107,11 @@ export const postData = async function ({getters, commit, dispatch}, options) {
     console.log(`postData ${options.endpoint}`, options.data)
     const response = await post(options.endpoint, options.query, options.data)
     console.log(`post ${options.name}`, response)
-    if (options.showNotification) {
+    if (options.success) {
       Toast.open({
-        // duration: 5000,
-        message: options.name + ' succeeded',
-        type: 'is-success'
+        duration: 15000,
+        message: options.success,
+        type: 'is-primary'
       })
     }
     let data
@@ -129,8 +129,8 @@ export const postData = async function ({getters, commit, dispatch}, options) {
   } catch (e) {
     console.log(`error during POST ${options.name}`, e)
     Toast.open({
-      // duration: 5000,
-      message: options.name + ' failed: ' + e.message,
+      duration: 15000,
+      message: options.fail + ': ' + e.message,
       type: 'is-danger'
     })
   }
