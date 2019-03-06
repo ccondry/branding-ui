@@ -6,13 +6,27 @@
       </header>
       <section class="modal-card-body">
         <p class="content">
-          Enter your phone number and one of our experts will call you.
+          Enter your name and phone number and one of our experts will call you.
         </p>
+
+        <b-field label="Your Name">
+          <b-input
+          v-model="formData.name"
+          placeholder="Jane Smith"
+          required />
+        </b-field>
 
         <b-field label="Your Phone Number">
           <b-input
           v-model="formData.phone"
           placeholder="5551112222"
+          required />
+        </b-field>
+
+        <b-field label="Your Message">
+          <b-input
+          v-model="formData.message"
+          placeholder="Message"
           required />
         </b-field>
 
@@ -30,7 +44,9 @@ export default {
   data () {
     return {
       formData: {
-        phone: ''
+        name: '',
+        phone: '',
+        message: ''
       }
     }
   }
