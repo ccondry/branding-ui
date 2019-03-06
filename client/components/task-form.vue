@@ -6,8 +6,8 @@
       </header>
       <section class="modal-card-body">
         <p class="content">
-          Enter your name and email address and choose the task you would like
-          us to complete for you.
+          Enter your name, phone number, and email address, and choose the task
+          you would like us to complete for you.
         </p>
 
         <b-field label="Your Name">
