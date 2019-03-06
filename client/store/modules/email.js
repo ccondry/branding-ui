@@ -22,7 +22,7 @@ const actions = {
       console.debug('starting', type, data, '...')
       // send email request to REST API
       await dispatch('postData', {
-        endpoint: getters.endpoints.brand.email,
+        endpoint: getters.endpoints.email.path,
         data
       })
       // success
