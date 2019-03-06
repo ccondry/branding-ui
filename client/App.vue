@@ -376,13 +376,7 @@ export default {
       console.log('clickSubmitEmail', data)
       // close the modal
       this.showEmailModal = false
-      // pop toaster notification
-      this.$toast.open({
-        duration: 15000,
-        message: `We have received your email and an expert will respond as
-        soon as possible.`,
-        type: 'is-primary'
-      })
+      this.sendEmail(data)
     },
     clickSubmitSms (data) {
       // clicked submit on the SMS modal form

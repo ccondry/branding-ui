@@ -121,6 +121,31 @@ const actions = {
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'brand', value: false})
     }
+  },
+  async sendEmail ({getters, commit, dispatch}, data) {
+    const type = 'Send email'
+    try {
+      dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
+      console.debug('starting', type, data, '...')
+      await dispatch('postData', {
+        endpoint: getters.endpoints.brand.email,
+        data
+      })
+      console.info(type, 'succeeded:', response)
+      Toast.open({
+        message: type + ' succeeded',
+        type: 'is-success'
+      })
+    } catch (e) {
+      console.error(type, 'error:', getters.brand, e)
+      Toast.open({
+        duration: 5000,
+        message: type + ' failed: ' + e.message,
+        type: 'is-danger'
+      })
+    } finally {
+      dispatch('setWorking', {group: 'dcloud', type: 'email', value: false})
+    }
   }
 }
 
