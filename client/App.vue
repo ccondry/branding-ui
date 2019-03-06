@@ -360,7 +360,8 @@ export default {
       'getBrand',
       'sendEmail',
       'sendSms',
-      'sendCallback'
+      'sendCallback',
+      'sendTask'
     ]),
     updateView (model) {
       // set color 1
@@ -395,8 +396,8 @@ export default {
       console.log('clickSubmitTask', data)
       // close the modal
       this.showTaskModal = false
-      // send callback request
-      this.sendCallback(data)
+      // send task request
+      this.sendTask(data)
     },
     clickSubmitCallback (data) {
       // clicked submit on the callback modal form
