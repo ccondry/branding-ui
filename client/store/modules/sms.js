@@ -31,7 +31,7 @@ const actions = {
       // reset working state
       dispatch('setWorking', {group: 'dcloud', type: 'sms', value: false})
     })
-}
+  }
 }
 
 export default {
