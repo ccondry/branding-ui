@@ -24,7 +24,7 @@
 
     <span id="main-content" v-if="endpointsLoaded">
       <!-- background iframe -->
-      <iframe id="demo-iframe" :src="model.iframe"></iframe>
+      <iframe :src="model.iframe" class="demo-iframe"></iframe>
 
       <!-- talk to an expert button (button to open contact panel) -->
       <transition name="slide">
@@ -37,19 +37,34 @@
       <!-- contact panel -->
       <transition name="slide">
         <div id="contact-panel" v-show="showContactPanel">
-          <b-collapse class="card">
-            <div
-            class="card-header"
-            role="button"
-            @click="showContactPanel = false">
+          <!-- Chat Bot -->
+          <b-collapse class="card" v-show="showChatBot">
+            <div class="card-header" role="button" @click="showChatBot = false">
+              <p class="card-header-title contact-title">
+                {{ model.chatMenuTitle }}
+              </p>
 
-            <p class="card-header-title contact-title">
-              {{ model.menuTitle }}
-            </p>
+              <a class="card-header-icon contact-close-icon">
+                <b-icon icon="close" />
+              </a>
+            </div>
 
-            <a class="card-header-icon contact-close-icon">
-              <b-icon icon="close" />
-            </a></div>
+            <div class="card-content contact-content" style="height: 70vh;">
+              <iframe :src="chatIframe" class="demo-iframe" />
+            </div>
+          </b-collapse>
+          <!-- /Chat Bot -->
+          <!-- Contact Menu -->
+          <b-collapse class="card" v-show="!showChatBot">
+            <div class="card-header" role="button" @click="showContactPanel = false">
+              <p class="card-header-title contact-title">
+                {{ model.menuTitle }}
+              </p>
+
+              <a class="card-header-icon contact-close-icon">
+                <b-icon icon="close" />
+              </a>
+            </div>
 
             <div class="card-content contact-content" v-if="model.advisorEnabled">
               <img :src="model.advisorImage" style="height: 7em;">
@@ -71,6 +86,7 @@
             </footer>
 
           </b-collapse>
+          <!-- /Contact Menu -->
         </div>
       </transition>
     </span>
@@ -118,6 +134,7 @@ export default {
       showTaskModal: false,
       showCallbackModal: false,
       showCallModal: false,
+      showChatBot: false,
       model: {
         title: '',
         favicon: '',
@@ -133,6 +150,8 @@ export default {
         advisorHeading: 'Expert Advisor',
         advisorText: `We're here to help`,
         // chat
+        chatMenuTitle: 'Now Chatting',
+        chatIframe: '',
         chatEnabled: true,
         chatIcon: 'message-processing',
         chatHeading: 'Chat Now',
@@ -271,7 +290,9 @@ export default {
       'brand',
       'brandConfig',
       'isInstantDemo',
-      'userId'
+      'userId',
+      'datacenter',
+      'sessionId'
     ]),
     contactOptions () {
       const chat = {
@@ -412,12 +433,13 @@ export default {
       console.log('clickChat', event)
       if (this.chatBotEnabled) {
         // use chat bot
-        this.showChatBot()
+        this.showChatBot = true
+        this.chatIframe = `https://mm-chat.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
       } else {
         if (this.isUccx) {
           // UCCX demo
           // run chat bot with bot turned off for CCX
-          this.showChatBot()
+          this.showChatBot = true
         } else {
           // not UCCX demo - default to PCCE demo
           // check if upstream or ECE
@@ -560,7 +582,7 @@ body {
   height: 100%;
 }
 
-#demo-iframe {
+.demo-iframe {
   height: 100%;
   width: 100%;
   border: 0;
