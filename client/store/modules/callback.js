@@ -15,19 +15,15 @@ const actions = {
     data.session = getters.sessionId
     data.datacenter = getters.datacenter
     data.userId = getters.userId
-
-    // construct the task request object
-    // data.task = {
-    //   cv1: data.name,
-    //   cv2: data.task.text,
-    //   cv3: data.phone,
-    //   cv4: data.email,
-    //   description: data.task.text,
-    //   email: data.email,
-    //   name: data.name,
-    //   phone: data.phone,
-    //   title: data.task.text
-    // }
+    // construct callback object
+    data.callback = {
+      description: data.message,
+      mediaAddress: data.phone,
+      name: data.name,
+      tags: '',
+      title: data.message,
+      variables: []
+    }
 
     // set working state
     dispatch('setWorking', {group: 'dcloud', type: 'callback', value: true})
@@ -36,7 +32,7 @@ const actions = {
     // if (minutes === 0) minutes = 1
 
     dispatch('postData', {
-      endpoint: getters.endpoints.task.path,
+      endpoint: getters.endpoints.callback.path,
       data,
       success: `An expert will be calling you shortly. Your estimated wait
       time is 2 minutes.`,
