@@ -135,6 +135,7 @@ export default {
       showCallbackModal: false,
       showCallModal: false,
       showChatBot: false,
+      chatIframe: '',
       model: {
         title: '',
         favicon: '',
@@ -151,7 +152,6 @@ export default {
         advisorText: `We're here to help`,
         // chat
         chatMenuTitle: 'Now Chatting',
-        chatIframe: '',
         chatEnabled: true,
         chatIcon: 'message-processing',
         chatHeading: 'Chat Now',
@@ -500,9 +500,6 @@ export default {
     },
     clickCobrowse (event) {
       console.log('clickCobrowse', event)
-    },
-    showChatBot (data) {
-      console.log('showChatBot', data)
     },
     popEceChatWindow (data) {
       console.log('showChatBot', data)
