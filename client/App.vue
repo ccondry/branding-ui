@@ -357,7 +357,9 @@ export default {
       'setUserId',
       'setSessionId',
       'setDatacenter',
-      'getBrand'
+      'getBrand',
+      'sendEmail',
+      'sendSms'
     ]),
     updateView (model) {
       // set color 1
@@ -376,6 +378,7 @@ export default {
       console.log('clickSubmitEmail', data)
       // close the modal
       this.showEmailModal = false
+      // send the email
       this.sendEmail(data)
     },
     clickSubmitSms (data) {
@@ -383,13 +386,8 @@ export default {
       console.log('clickSubmitSms', data)
       // close the modal
       this.showSmsModal = false
-      // pop toaster notification
-      this.$toast.open({
-        duration: 15000,
-        message: `We have sent you a text message. Reply to this message to
-        beging chatting with one of our experts.`,
-        type: 'is-primary'
-      })
+      // send the SMS
+      this.sendSms(data)
     },
     clickSubmitTask (data) {
       // clicked submit on the task request modal form
