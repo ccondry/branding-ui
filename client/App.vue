@@ -49,7 +49,7 @@
               </a>
             </div>
 
-            <div class="card-content contact-content" style="height: 70vh;">
+            <div style="height: 70vh;">
               <iframe :src="chatIframe" class="demo-iframe" />
             </div>
           </b-collapse>
