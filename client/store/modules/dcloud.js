@@ -121,42 +121,6 @@ const actions = {
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'brand', value: false})
     }
-  },
-  async sendEmail ({getters, commit, dispatch}, data) {
-    const type = 'Send email'
-    try {
-      // attach dCloud session information
-      data.session = getters.sessionId
-      data.datacenter = getters.datacenter
-      data.userId = getters.userId
-      // set working state
-      dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
-      console.debug('starting', type, data, '...')
-      // send email request to REST API
-      await dispatch('postData', {
-        endpoint: getters.endpoints.brand.email,
-        data
-      })
-      // success
-      console.info(type, 'succeeded:', response)
-      // pop toast notification for user
-      Toast.open({
-        message: type + ' succeeded',
-        type: 'is-success'
-      })
-    } catch (e) {
-      // failed
-      console.error(type, 'error:', getters.brand, e)
-      // pop toast notification for user
-      Toast.open({
-        duration: 5000,
-        message: type + ' failed: ' + e.message,
-        type: 'is-danger'
-      })
-    } finally {
-      // reset working state
-      dispatch('setWorking', {group: 'dcloud', type: 'email', value: false})
-    }
   }
 }
 
