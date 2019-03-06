@@ -4,7 +4,7 @@ import App from './App.vue'
 import store from './store'
 import * as filters from './filters'
 
-import 'buefy/lib/buefy.css'
+import 'buefy/dist/buefy.css'
 
 Vue.use(Buefy)
 
