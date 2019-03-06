@@ -42,6 +42,14 @@
 
 <script>
 export default {
+  props: ['phone', 'name'],
+
+  mounted () {
+    // copy props to data
+    this.formData.phone = this.phone
+    this.formData.name = this.name
+  },
+
   data () {
     return {
       formData: {

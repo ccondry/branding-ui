@@ -3,19 +3,19 @@
     <b-loading :is-full-page="true" :active="!loaded" :can-cancel="false"></b-loading>
 
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
-      <email-form @submit="clickSubmitEmail" />
+      <email-form @submit="clickSubmitEmail" :name="name" :email="email" />
     </b-modal>
 
     <b-modal :active.sync="showSmsModal" :can-cancel="true" has-modal-card width="960">
-      <sms-form @submit="clickSubmitSms" />
+      <sms-form @submit="clickSubmitSms" :phone="phone" />
     </b-modal>
 
     <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
-      <task-form @submit="clickSubmitTask" :request-types="requestTypes" />
+      <task-form @submit="clickSubmitTask" :request-types="requestTypes" :name="name" :phone="phone" :email="email" />
     </b-modal>
 
     <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
-      <callback-form @submit="clickSubmitCallback" />
+      <callback-form @submit="clickSubmitCallback" :name="name" :phone="phone" />
     </b-modal>
 
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
@@ -118,6 +118,9 @@ export default {
 
   data () {
     return {
+      name: '',
+      phone: '',
+      email: '',
       loaded: false,
       qs: {},
       requestTypes: [{
@@ -397,6 +400,9 @@ export default {
       document.title = model.title
     },
     clickSubmitEmail (data) {
+      // update customer data cache
+      this.name = data.name
+      this.email = data.email
       // clicked submit on the email modal form
       console.log('clickSubmitEmail', data)
       // close the modal
@@ -405,6 +411,8 @@ export default {
       this.sendEmail(data)
     },
     clickSubmitSms (data) {
+      // update customer data cache
+      this.phone = data.phone
       // clicked submit on the SMS modal form
       console.log('clickSubmitSms', data)
       // close the modal
@@ -413,6 +421,10 @@ export default {
       this.sendSms(data)
     },
     clickSubmitTask (data) {
+      // update customer data cache
+      this.name = data.name
+      this.phone = data.phone
+      this.email = data.email
       // clicked submit on the task request modal form
       console.log('clickSubmitTask', data)
       // close the modal
@@ -421,6 +433,9 @@ export default {
       this.sendTask(data)
     },
     clickSubmitCallback (data) {
+      // update customer data cache
+      this.name = data.name
+      this.phone = data.phone
       // clicked submit on the callback modal form
       console.log('clickSubmitCallback', data)
       // close the modal

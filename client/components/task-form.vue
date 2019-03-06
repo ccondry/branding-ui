@@ -55,7 +55,15 @@
 
 <script>
 export default {
-  props: ['requestTypes'],
+  props: ['requestTypes', 'phone', 'email', 'name'],
+
+  mounted () {
+    // copy props to data
+    this.formData.phone = this.phone
+    this.formData.email = this.email
+    this.formData.name = this.name
+  },
+
   data () {
     return {
       formData: {
