@@ -26,7 +26,7 @@ const actions = {
         data
       })
       // success
-      console.info(type, 'succeeded:', response)
+      console.info(type, 'succeeded')
       // pop toaster notification for user
       Toast.open({
         duration: 15000,

@@ -26,7 +26,7 @@ const actions = {
         data
       })
       // success
-      console.info(type, 'succeeded:', response)
+      console.info(type, 'succeeded')
       // pop toast notification for user
       this.$toast.open({
         duration: 15000,
@@ -34,7 +34,6 @@ const actions = {
         soon as possible.`,
         type: 'is-primary'
       })
-
     } catch (e) {
       // failed
       console.error(type, 'error:', getters.brand, e)
