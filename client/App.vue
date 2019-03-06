@@ -608,7 +608,7 @@ body {
 #contact-panel {
   // calculate height based on how many options are enabled
   top: calc(4em + 20% - var(--active-options) * 20px);
-  width: 30%;
+  min-width: 450px;
   right: 0 !important;
   position: fixed;
   -webkit-transform-origin: 100% 100%;
