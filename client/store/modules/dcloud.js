@@ -1,6 +1,6 @@
 import * as types from '../mutation-types'
 import {load} from '../../utils'
-import {Toast} from 'buefy'
+import { Toast } from 'buefy/dist/components/toast'
 
 const getters = {
   // dCloud session ID

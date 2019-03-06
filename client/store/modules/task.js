@@ -10,15 +10,15 @@ const mutations = {
 }
 
 const actions = {
-  async sendEmail ({getters, commit, dispatch}, data) {
-    const type = 'Send email'
+  async sendTask ({getters, commit, dispatch}, data) {
+    const type = 'Send task'
     try {
       // attach dCloud session information
       data.session = getters.sessionId
       data.datacenter = getters.datacenter
       data.userId = getters.userId
       // set working state
-      dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
+      dispatch('setWorking', {group: 'dcloud', type: 'task', value: true})
       console.debug('starting', type, data, '...')
       // send email request to REST API
       await dispatch('postData', {
@@ -30,8 +30,8 @@ const actions = {
       // pop toast notification for user
       Toast.open({
         duration: 15000,
-        message: `We have received your email and an expert will respond as
-        soon as possible.`,
+        message: `We have received your task request and an expert will begin
+        working on that as soon as possible.`,
         type: 'is-primary'
       })
     } catch (e) {
@@ -45,7 +45,7 @@ const actions = {
       })
     } finally {
       // reset working state
-      dispatch('setWorking', {group: 'dcloud', type: 'email', value: false})
+      dispatch('setWorking', {group: 'dcloud', type: 'task', value: false})
     }
   }
 }

@@ -1,4 +1,4 @@
-import {Toast} from 'buefy'
+import { Toast } from 'buefy/dist/components/toast'
 
 const getters = {
 }

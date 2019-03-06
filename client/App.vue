@@ -359,7 +359,8 @@ export default {
       'setDatacenter',
       'getBrand',
       'sendEmail',
-      'sendSms'
+      'sendSms',
+      'sendCallback'
     ]),
     updateView (model) {
       // set color 1
@@ -394,26 +395,16 @@ export default {
       console.log('clickSubmitTask', data)
       // close the modal
       this.showTaskModal = false
-      // pop toaster notification
-      this.$toast.open({
-        duration: 15000,
-        message: `We have received your task request and an expert will begin
-        working on that as soon as possible.`,
-        type: 'is-primary'
-      })
+      // send callback request
+      this.sendCallback(data)
     },
     clickSubmitCallback (data) {
       // clicked submit on the callback modal form
       console.log('clickSubmitCallback', data)
       // close the modal
       this.showCallbackModal = false
-      // pop toaster notification
-      this.$toast.open({
-        duration: 15000,
-        message: `An expert will be calling you shortly. Your estimated wait
-        time is 2 minutes.`,
-        type: 'is-primary'
-      })
+      // send callback request
+      this.sendCallback(data)
     },
     clickChat (event) {
       // clicked chat option from contact panel

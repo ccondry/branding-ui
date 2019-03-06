@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import {Toast} from 'buefy'
+import { Toast } from 'buefy/dist/components/toast'
 import {load} from '../../utils'
 import config from '../../config'
 
