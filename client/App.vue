@@ -499,7 +499,23 @@ export default {
       this.showTaskModal = true
     },
     clickCobrowse (event) {
-      console.log('clickCobrowse', event)
+      console.log('click cobrowse button', event)
+      if (document.eGain) {
+        console.log('running document.eGain.cobrowse.startCobrowse()')
+        document.eGain.cobrowse.startCobrowse()
+      } else if (window.eGain) {
+        console.log('running window.eGain.cobrowse.startCobrowse()')
+        window.eGain.cobrowse.startCobrowse()
+      } else {
+        console.log('failed to start cobrowse - window.eGain and document.eGain are undefined.')
+        this.$toast.open({
+          duration: 15000,
+          message: `eGain Cobrowse library failed to load. If you are using a
+          browser outside of the demo workstation, please make sure you are
+          connected to your demo VPN.`,
+          type: 'is-danger'
+        })
+      }
     },
     popEceChatWindow (data) {
       console.log('showChatBot', data)
