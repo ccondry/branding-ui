@@ -3,7 +3,10 @@
     <b-loading :is-full-page="true" :active="!loaded && !showSessionInfoModal" :can-cancel="false"></b-loading>
 
     <b-modal :active.sync="showSessionInfoModal" :can-cancel="true" has-modal-card width="960">
-      <session-form @submit="clickSubmitSessionInfo" :datacenter="datacenter" :session-id="sessionId" :user-id="userId" />
+      <session-form @submit="clickSubmitSessionInfo"
+      :datacenter="datacenter"
+      :session-id="sessionId"
+      :user-id="userId" />
     </b-modal>
 
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
@@ -15,7 +18,11 @@
     </b-modal>
 
     <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
-      <task-form @submit="clickSubmitTask" :request-types="requestTypes" :name="name" :phone="phone" :email="email" />
+      <task-form @submit="clickSubmitTask"
+      :request-types="requestTypes"
+      :name="name"
+      :phone="phone"
+      :email="email" />
     </b-modal>
 
     <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
