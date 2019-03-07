@@ -83,6 +83,8 @@ const actions = {
       const response = await load(getters.endpoints.session.path, query)
       console.log('load dcloud session info:', response)
       commit(types.SET_SESSION_INFO, response.data)
+      // set error to null to remove UI error messages
+      commit(types.SET_SESSION_INFO_ERROR, null)
       if (showNotification) {
         Toast.open({
           message: 'load dCloud session info succeeded',
