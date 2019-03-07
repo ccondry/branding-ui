@@ -2,27 +2,37 @@
   <form @submit.prevent="$parent.close()">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">Call Us</p>
+        <p class="modal-card-title">{{ heading }}</p>
       </header>
       <section class="modal-card-body">
-        <div class="content">
-          <p>
-            You can reach one of our experts by phone at
-            <strong>{{ dnis }}</strong>
-          </p>
-        </div>
+        <p class="content" v-html="text" />
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">Cancel</button>
-        <button class="button is-success" @click="$parent.close()">OK</button>
+        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
+        <button class="button is-success" @click="$parent.close()">{{ okButton }}</button>
       </footer>
     </div>
   </form>
 </template>
 
 <script>
+import {formatUnicorn} from '../utils'
+
 export default {
-  props: ['dnis']
+  props: [
+    'dnis',
+    'modalText',
+    'heading',
+    'cancelButton',
+    'okButton'
+  ],
+  methods: {
+  },
+  computed: {
+    text () {
+      return formatUnicorn(this.modalText, this.dnis)
+    }
+  }
 }
 </script>
 

@@ -2,28 +2,26 @@
   <form @submit.prevent="$emit('submit', formData)">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">We'll Call You</p>
+        <p class="modal-card-title">{{ heading }}</p>
       </header>
       <section class="modal-card-body">
-        <p class="content">
-          Enter your name and phone number and one of our experts will call you.
-        </p>
+        <p class="content" v-html="modalText" />
 
-        <b-field label="Your Name">
+        <b-field :label="nameLabel">
           <b-input
           v-model="formData.name"
           placeholder="Jane Smith"
           required />
         </b-field>
 
-        <b-field label="Your Phone Number">
+        <b-field :label="phoneLabel">
           <b-input
           v-model="formData.phone"
           placeholder="5551112222"
           required />
         </b-field>
 
-        <b-field label="Your Message">
+        <b-field :label="messageLabel">
           <b-input
           type="textarea"
           v-model="formData.message"
@@ -33,8 +31,8 @@
 
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">Cancel</button>
-        <button class="button is-success" type="submit">Call Me</button>
+        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
+        <button class="button is-success" type="submit">{{ sendButton }}</button>
       </footer>
     </div>
   </form>
@@ -42,7 +40,17 @@
 
 <script>
 export default {
-  props: ['phone', 'name'],
+  props: [
+    'phone',
+    'name',
+    'heading',
+    'modalText',
+    'nameLabel',
+    'phoneLabel',
+    'messageLabel',
+    'cancelButton',
+    'sendButton'
+  ],
 
   mounted () {
     // copy props to data

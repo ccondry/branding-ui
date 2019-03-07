@@ -2,41 +2,38 @@
   <form @submit.prevent="$emit('submit', formData)">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">Submit Task Request</p>
+        <p class="modal-card-title">{{ heading }}</p>
       </header>
       <section class="modal-card-body">
-        <p class="content">
-          Enter your name, phone number, and email address, and choose the task
-          you would like us to complete for you.
-        </p>
+        <p class="content" v-html="modalText" />
 
-        <b-field label="Your Name">
+        <b-field :label="nameLabel">
           <b-input
           v-model="formData.name"
-          placeholder="Jane Smith"
+          placeholder=""
           required />
         </b-field>
 
-        <b-field label="Your Phone Number">
+        <b-field :label="phoneLabel">
           <b-input
           v-model="formData.phone"
           type="phone"
-          placeholder="5551112222"
+          placeholder=""
           required />
         </b-field>
 
-        <b-field label="Your Email Address">
+        <b-field :label="emailLabel">
           <b-input
           v-model="formData.email"
           type="email"
-          placeholder="jsmith@gmail.com"
+          placeholder=""
           required />
         </b-field>
 
-        <b-field label="Request Type">
+        <b-field :label="requestTypeLabel">
           <b-select
           required
-          placeholder="Select a Request Type"
+          placeholder=""
           v-model="formData.task">
           <option
           v-for="option in options"
@@ -47,8 +44,8 @@
 
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">Cancel</button>
-        <button class="button is-success" type="submit">Submit Request</button>
+        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
+        <button class="button is-success" type="submit">{{ sendButton }}</button>
       </footer>
     </div>
   </form>
@@ -56,7 +53,21 @@
 
 <script>
 export default {
-  props: ['options', 'phone', 'email', 'name'],
+  props: [
+    'options',
+    'phone',
+    'email',
+    'name',
+    'heading',
+    'modalText',
+    'phoneLabel',
+    'nameLabel',
+    'emailLabel',
+    'requestTypeLabel',
+    'messageLabel',
+    'cancelButton',
+    'sendButton'
+  ],
 
   mounted () {
     // copy props to data

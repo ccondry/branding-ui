@@ -2,18 +2,19 @@
   <form @submit.prevent="$emit('submit', formData)">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">Email Us</p>
+        <p class="modal-card-title">{{ heading }}</p>
       </header>
       <section class="modal-card-body">
+        <p class="content" v-html="modalText" />
 
-        <b-field label="Your Name">
+        <b-field :label="nameLabel">
           <b-input
           v-model="formData.name"
           placeholder="Jane Smith"
           required />
         </b-field>
 
-        <b-field label="Your Email Address">
+        <b-field :label="emailLabel">
           <b-input
           type="email"
           v-model="formData.email"
@@ -21,14 +22,14 @@
           required />
         </b-field>
 
-        <b-field label="Subject">
+        <b-field :label="subjectLabel">
           <b-input
           v-model="formData.subject"
           placeholder=""
           required />
         </b-field>
 
-        <b-field label="Message">
+        <b-field :label="messageLabel">
           <b-input
           type="textarea"
           v-model="formData.body"
@@ -38,8 +39,8 @@
 
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">Cancel</button>
-        <button class="button is-success" type="submit">Send</button>
+        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
+        <button class="button is-success" type="submit">{{ sendButton }}</button>
       </footer>
     </div>
   </form>
@@ -47,7 +48,18 @@
 
 <script>
 export default {
-  props: ['name', 'email'],
+  props: [
+    'name',
+    'email',
+    'heading',
+    'modalText',
+    'nameLabel',
+    'emailLabel',
+    'subjectLabel',
+    'messageLabel',
+    'cancelButton',
+    'sendButton'
+  ],
 
   mounted () {
     // copy props to data

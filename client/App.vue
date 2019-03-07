@@ -16,27 +16,69 @@
     </b-modal>
 
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
-      <email-form @submit="clickSubmitEmail" :name="name" :email="email" />
+      <email-form @submit="clickSubmitEmail"
+      :send-button="model.sendButton"
+      :cancel-button="model.cancelButton"
+      :heading="model.emailText"
+      :modal-text="model.emailModalText"
+      :email-label="model.emailLabel"
+      :name-label="model.nameLabel"
+      :message-label="model.messageLabel"
+      :subject-label="model.subjectLabel"
+      :name="name"
+      :email="email" />
     </b-modal>
 
     <b-modal :active.sync="showSmsModal" :can-cancel="true" has-modal-card width="960">
-      <sms-form @submit="clickSubmitSms" :phone="phone" />
+      <sms-form v-if="sessionInfo.sms"
+      :send-button="model.sendButton"
+      :cancel-button="model.cancelButton"
+      :dnis="sessionInfo.sms.international"
+      :phone-label="model.phoneLabel"
+      @submit="clickSubmitSms"
+      :modal-text="model.smsModalText"
+      :heading="model.smsText"
+      :phone="phone" />
     </b-modal>
 
     <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
       <task-form @submit="clickSubmitTask"
+      :send-button="model.sendButton"
+      :cancel-button="model.cancelButton"
+      :heading="model.taskText"
+      :modal-text="model.taskModalText"
       :options="model.taskOptions || [{text: 'Report a Problem'}]"
+      :email-label="model.emailLabel"
+      :phone-label="model.phoneLabel"
+      :name-label="model.nameLabel"
+      :message-label="model.messageLabel"
+      :request-type-label="model.requestTypeLabel"
       :name="name"
       :phone="phone"
       :email="email" />
     </b-modal>
 
     <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
-      <callback-form @submit="clickSubmitCallback" :name="name" :phone="phone" />
+      <callback-form @submit="clickSubmitCallback"
+      :send-button="model.sendButton"
+      :cancel-button="model.cancelButton"
+      :heading="model.callbackText"
+      :modal-text="model.callbackModalText"
+      :email-label="model.emailLabel"
+      :phone-label="model.phoneLabel"
+      :name-label="model.nameLabel"
+      :message-label="model.messageLabel"
+      :name="name"
+      :phone="phone" />
     </b-modal>
 
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
-      <call-form :dnis="model.callText"/>
+      <call-form v-if="sessionInfo.phone"
+      :ok-button="model.okButton"
+      :cancel-button="model.cancelButton"
+      :dnis="sessionInfo.phone.international"
+      :heading="model.callText"
+      :modal-text="model.callModalText" />
     </b-modal>
 
     <span id="main-content" v-if="endpointsLoaded">
@@ -170,6 +212,15 @@ export default {
         contactButtonText: 'Talk to an Expert',
         menuTitle: 'Need Help?',
         chatMenuTitle: 'Now Chatting',
+        phoneLabel: 'Your Phone Number',
+        nameLabel: 'Your Name',
+        emailLabel: 'Your Email Address',
+        subjectLabel: 'Subject',
+        messageLabel: 'Message',
+        requestTypeLabel: 'Request Type',
+        okButton: 'OK',
+        sendButton: 'Send',
+        cancelButton: 'Cancel',
         // advisor
         advisorEnabled: true,
         advisorImage: 'https://mm.cxdemo.net/static/images/cumulus/common/author1.png',
@@ -187,24 +238,31 @@ export default {
         smsHeading: 'Text Us',
         smsText: '{0}',
         smsWaitTime: '1 min wait time',
+        smsModalText: `Enter your mobile phone number and we will text you.
+          Reply to begin texting with one of our experts.`,
         // call
         callEnabled: true,
         callIcon: 'phone',
         callHeading: 'Call Us',
         callText: '{0}',
         callWaitTime: '8 min wait time',
+        callModalText: 'You can reach one of our experts by phone at <strong>{0}</strong>',
         // callback
         callbackEnabled: true,
         callbackIcon: 'phone-forward',
         callbackHeading: `We'll Call You`,
         callbackText: 'Receive a call back from an expert',
         callbackWaitTime: '8 min wait time',
+        callbackModalText: `Enter your name and phone number and one of our
+          experts will call you.`,
         // email
         emailEnabled: true,
         emailIcon: 'email',
         emailHeading: 'Email an Expert',
         emailText: 'An expert will respond to your email',
         emailWaitTime: '12-24 hour wait time',
+        emailModalText: `Enter your information and question and one of our
+          experts will email you back.`,
         // task
         taskEnabled: true,
         taskIcon: 'clipboard-check',
@@ -214,6 +272,8 @@ export default {
         taskOptions: [{
           text: 'Report a Problem'
         }],
+        taskModalText: `Enter your information and choose the task
+          you would like to submit to our experts.`,
         // cobrowse
         cobrowseEnabled: true,
         cobrowseIcon: 'lan-connect',
