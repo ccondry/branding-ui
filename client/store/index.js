@@ -17,11 +17,13 @@ const store = new Vuex.Store({
     pkg,
     working: {
       app: {},
-      session: {}
+      session: {},
+      dcloud: {}
     },
     loading: {
       app: {},
-      session: {}
+      session: {},
+      dcloud: {}
     }
   },
   mutations

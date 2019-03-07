@@ -1,11 +1,16 @@
 <template>
   <div id="app">
-    <b-loading :is-full-page="true" :active="!loaded && !showSessionInfoModal" :can-cancel="false"></b-loading>
+    <b-loading :is-full-page="true" :active="loading.dcloud.sessionInfo || loading.dcloud.brand" :can-cancel="false"></b-loading>
 
-    <b-modal :active.sync="showSessionInfoModal" :can-cancel="true" has-modal-card width="960">
-      <session-form @submit="clickSubmitSessionInfo"
+    <b-modal :active.sync="showSessionInfoModal" :can-cancel="false" has-modal-card width="960">
+      <session-form
+      @submit="clickSubmitSessionInfo"
+      :loading="loading.dcloud.sessionInfo"
       :datacenter="datacenter"
       :session-id="sessionId"
+      :is-instant-demo="isInstantDemo"
+      :session-info="sessionInfo"
+      :brand="brand"
       :user-id="userId" />
     </b-modal>
 
@@ -350,7 +355,7 @@ export default {
     clickSubmitSessionInfo (data) {
       // user submitted modal form with dCloud session information
       // hide the modal
-      this.showSessionInfoModal = false
+      // this.showSessionInfoModal = false
       // set data in state from the modal data
       this.setSessionId(data.sessionId)
       this.setDatacenter(data.datacenter)
@@ -590,33 +595,40 @@ export default {
         if (this.isInstantDemo) {
           // instant demo
           if (this.userId) {
-            // userId is set
-            this.$toast.open({
-              duration: 5 * 60 * 1000,
+            // instant demo, userId is set, but no brand configured
+            // display error message
+            this.$dialog.alert({
+              title: 'No Brand Configured',
               message: `Your instant demo configuration does not have a brand
-                selected. Please select one on the Brand page of the dCloud Instant
-                Demo Toolbox, and then refresh this page.`,
-              type: 'is-danger'
+                selected. Please select one on the
+                <a target="instant-toolbox" href="https://dcloud-collab-toolbox-${this.datacenter}.cisco.com/pcce/demos/brand">
+                <strong>PCCE Instant Demo Toolbox</strong></a>,
+                and then try again.`,
+              type: 'is-danger',
+              canCancel: false,
+              hasIcon: true,
+              icon: 'close-circle',
+              iconPack: 'mdi'
             })
           } else {
-            // userId is not set
-            this.$toast.open({
-              duration: 5 * 60 * 1000,
-              message: `Your dCloud session is an instant demo session, but your
-                user ID was not specified in the URL query parameters. Please use
-                the link on the Brand Demo page of the dCloud Instant Demo
-                Toolbox.`,
-              type: 'is-danger'
-            })
+            // instant demo, userId is not set - make sure session modal is shown
+            this.showSessionInfoModal = true
           }
         } else {
-          // scheduled demo
-          this.$toast.open({
-            duration: 5 * 60 * 1000,
+          // scheduled demo, but brand not configured - show error message
+          this.$dialog.alert({
+            title: 'dCloud Session Not Configured',
             message: `Your dCloud session doesn't have a brand configured. Please
-              choose one from the Session Configuration Toolbox in your dCloud demo,
-              and then refresh this page.`,
-            type: 'is-danger'
+              choose one from the
+              <a target="session-toolbox" href="https://branding.dcloud.cisco.com/configure">
+              <strong>Session Configuration Toolbox</strong>
+              </a>
+              while connected to your dCloud demo, and then try again.`,
+            type: 'is-danger',
+            canCancel: false,
+            hasIcon: true,
+            icon: 'close-circle',
+            iconPack: 'mdi'
           })
         }
       }
@@ -655,6 +667,8 @@ export default {
       this.processTextTemplates()
       // brand has now loaded
       this.loaded = true
+      // hide session modal
+      this.showSessionInfoModal = false
     },
     endpoints (val) {
       // endpoints loaded - check if session and datacenter are set
