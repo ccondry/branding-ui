@@ -140,21 +140,22 @@ export default {
       showChatBot: false,
       chatIframe: '',
       model: {
+        // basic config
         title: '',
         favicon: '',
-        contactButtonText: 'Talk to an Expert',
-        menuTitle: 'Need Help?',
-        menuSubtitle: `We're here to help`,
-        // iframe: 'https://toolbox.cdxdemo.net/users/matthmcc/Ashley%20Furniture%20HomeStore%20_%20Home%20Furniture%20&%20Decor.html',
         iframe: '',
         color1: '#2357af',
         color2: '#4881e2',
+        // advanced config
+        contactButtonText: 'Talk to an Expert',
+        menuTitle: 'Need Help?',
+        chatMenuTitle: 'Now Chatting',
+        // advisor
         advisorEnabled: true,
         advisorImage: 'https://mm.cxdemo.net/static/images/cumulus/common/author1.png',
         advisorHeading: 'Expert Advisor',
         advisorText: `We're here to help`,
         // chat
-        chatMenuTitle: 'Now Chatting',
         chatEnabled: true,
         chatIcon: 'message-processing',
         chatHeading: 'Chat Now',
