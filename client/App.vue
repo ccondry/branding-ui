@@ -100,6 +100,7 @@ import SmsForm from './components/sms-form.vue'
 import TaskForm from './components/task-form.vue'
 import CallbackForm from './components/callback-form.vue'
 import CallForm from './components/call-form.vue'
+import {formatUnicorn} from './utils'
 
 export default {
   created () {
@@ -165,13 +166,13 @@ export default {
         smsEnabled: true,
         smsIcon: 'message-processing',
         smsHeading: 'Text Us',
-        smsText: '+1 817-755-6260',
+        smsText: '{0}',
         smsWaitTime: '1 min wait time',
         // call
         callEnabled: true,
         callIcon: 'phone',
         callHeading: 'Call Us',
-        callText: '+1 919-555-5776',
+        callText: '{0}',
         callWaitTime: '8 min wait time',
         // callback
         callbackEnabled: true,
@@ -607,6 +608,12 @@ export default {
       }
       console.log('adding favicon code to HTML head', link)
       document.head.appendChild(link)
+    },
+    processTextTemplates () {
+      // session config loaded - process phone number and SMS number using
+      // template
+      this.$set(this.model, 'smsText', formatUnicorn(this.model.smsText, this.sessionInfo.sms.international))
+      this.$set(this.model, 'callText', formatUnicorn(this.model.callText, this.sessionInfo.phone.international))
     }
   },
 
@@ -617,9 +624,8 @@ export default {
     },
     sessionInfo (val) {
       console.log('sessionInfo changed')
-      // session config loaded - update phone number and SMS number
-      this.$set(this.model, 'smsText', val.sms.international)
-      this.$set(this.model, 'callText', val.phone.international)
+      // process any templates into the final text value
+      this.processTextTemplates()
     },
     brandConfig (val) {
       console.log('brandConfig changed - copying changes to local model')
@@ -633,6 +639,8 @@ export default {
           this.$set(this.model, key, val[key])
         }
       }
+      // process any templates into the final text value
+      this.processTextTemplates()
       // brand has now loaded
       this.loaded = true
     }
