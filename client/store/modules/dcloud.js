@@ -27,7 +27,8 @@ const getters = {
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // brand
   brand: (state, getters) => getters.sessionConfig.brand,
-  brandConfig: state => state.brandConfig
+  brandConfig: state => state.brandConfig,
+  sessionInfoError: state => state.sessionInfoError
 }
 
 const state = {
@@ -35,7 +36,8 @@ const state = {
   datacenter: '',
   userId: '',
   sessionInfo: {},
-  brandConfig: ''
+  brandConfig: '',
+  sessionInfoError: null
 }
 
 const mutations = {
@@ -53,6 +55,9 @@ const mutations = {
   },
   [types.SET_BRAND_CONFIG] (state, data) {
     state.brandConfig = data
+  },
+  [types.SET_SESSION_INFO_ERROR] (state, data) {
+    state.sessionInfoError = data
   }
 }
 
@@ -80,17 +85,18 @@ const actions = {
       commit(types.SET_SESSION_INFO, response.data)
       if (showNotification) {
         Toast.open({
-          message: 'load dCloud session info' + ' succeeded',
+          message: 'load dCloud session info succeeded',
           type: 'is-success'
         })
       }
     } catch (e) {
-      console.log('error loading defaults', e)
-      Toast.open({
-        duration: 5000,
-        message: 'load dCloud session info' + ' failed: ' + e.message,
-        type: 'is-danger'
-      })
+      console.log('error loading dcloud session info', e)
+      // Toast.open({
+      //   duration: 5000,
+      //   message: 'load dCloud session info failed: ' + e.message,
+      //   type: 'is-danger'
+      // })
+      commit(types.SET_SESSION_INFO_ERROR, e.response)
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'sessionInfo', value: false})
     }

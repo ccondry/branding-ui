@@ -10,6 +10,7 @@
       :session-id="sessionId"
       :is-instant-demo="isInstantDemo"
       :session-info="sessionInfo"
+      :session-info-error="sessionInfoError"
       :brand="brand"
       :user-id="userId" />
     </b-modal>
@@ -260,7 +261,8 @@ export default {
       'isInstantDemo',
       'userId',
       'datacenter',
-      'sessionId'
+      'sessionId',
+      'sessionInfoError'
     ]),
     contactOptions () {
       const chat = {
@@ -645,6 +647,32 @@ export default {
       // process any templates into the final text value
       this.processTextTemplates()
       this.checkConfig(val)
+    },
+    sessionInfoError (val) {
+      // error getting session info. display message
+      if (val.status === 404) {
+        // session not found - probably user entered invalid data
+        // pop session modal again
+        this.showSessionInfoModal = true
+      } else {
+        // other error - display message
+        // display error message
+        this.$dialog.alert({
+          title: 'Error Retreiving dCloud Session Info',
+          message: `There was an error retreiving your dCloud
+          session information. Please refresh the page to try again, or
+          contact dCloud support if you continue to have this issue.
+          <br />
+          Status Code: <strong>${val.status}</strong>
+          <br />
+          Error Message: <strong>${val.data}</strong>`,
+          type: 'is-danger',
+          canCancel: false,
+          hasIcon: true,
+          icon: 'close-circle',
+          iconPack: 'mdi'
+        })
+      }
     },
     brandConfig (val) {
       // brand config loaded
