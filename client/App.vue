@@ -450,7 +450,7 @@ export default {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
         // set chat bot iframe to the chat bot URL
-        this.chatIframe = `https://mm-chat.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
+        this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
       } else {
         if (this.isUccx) {
           // UCCX demo
@@ -458,7 +458,7 @@ export default {
           // hide contact panel menu and show chat bot
           this.showChatBot = true
           // set chat bot iframe to the chat bot URL
-          this.chatIframe = `https://mm-chat.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
+          this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
         } else {
           // not UCCX demo - default to PCCE demo
           // check if upstream or ECE
