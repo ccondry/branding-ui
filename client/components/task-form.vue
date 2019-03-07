@@ -35,11 +35,12 @@
 
         <b-field label="Request Type">
           <b-select
+          required
           placeholder="Select a Request Type"
           v-model="formData.task">
           <option
-          v-for="option in requestTypes"
-          :value="option">
+          v-for="option in options"
+          :value="option.text">
           {{ option.text }}</option>
           </b-select>
         </b-field>
@@ -55,7 +56,7 @@
 
 <script>
 export default {
-  props: ['requestTypes', 'phone', 'email', 'name'],
+  props: ['options', 'phone', 'email', 'name'],
 
   mounted () {
     // copy props to data

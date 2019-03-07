@@ -25,7 +25,7 @@
 
     <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
       <task-form @submit="clickSubmitTask"
-      :request-types="requestTypes"
+      :options="model.taskOptions || [{text: 'Report a Problem'}]"
       :name="name"
       :phone="phone"
       :email="email" />
@@ -149,13 +149,6 @@ export default {
       email: '',
       loaded: false,
       qs: {},
-      requestTypes: [{
-        value: 'bill',
-        text: 'Report Bill Issue'
-      }, {
-        value: 'test',
-        text: 'Report test Issue'
-      }],
       production: process.env.NODE_ENV === 'production',
       showSessionInfoModal: false,
       showContactPanel: false,
@@ -218,6 +211,9 @@ export default {
         taskHeading: 'Request',
         taskText: 'An expert will handle your task',
         taskWaitTime: '',
+        taskOptions: [{
+          text: 'Report a Problem'
+        }],
         // cobrowse
         cobrowseEnabled: true,
         cobrowseIcon: 'lan-connect',
