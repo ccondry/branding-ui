@@ -150,7 +150,7 @@ export default {
         color1: '#2357af',
         color2: '#4881e2',
         advisorEnabled: true,
-        advisorImage: 'https://static.cxdemo.net/images/ming_advisor.png',
+        advisorImage: 'https://mm.cxdemo.net/static/images/cumulus/common/author1.png',
         advisorHeading: 'Expert Advisor',
         advisorText: `We're here to help`,
         // chat
