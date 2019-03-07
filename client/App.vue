@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <b-loading :is-full-page="true" :active="!loaded" :can-cancel="false"></b-loading>
+    <b-loading :is-full-page="true" :active="!loaded && !showSessionInfoModal" :can-cancel="false"></b-loading>
+
+    <b-modal :active.sync="showSessionInfoModal" :can-cancel="true" has-modal-card width="960">
+      <session-form @submit="clickSubmitSessionInfo" :datacenter="datacenter" :session-id="sessionId" :user-id="userId" />
+    </b-modal>
 
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
       <email-form @submit="clickSubmitEmail" :name="name" :email="email" />
@@ -95,12 +99,19 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import SessionForm from './components/session-form.vue'
 import EmailForm from './components/email-form.vue'
 import SmsForm from './components/sms-form.vue'
 import TaskForm from './components/task-form.vue'
 import CallbackForm from './components/callback-form.vue'
 import CallForm from './components/call-form.vue'
 import {formatUnicorn} from './utils'
+
+function setQueryStringParameter (name, value) {
+  const params = new window.URLSearchParams(window.location.search)
+  params.set(name, value)
+  window.history.replaceState({}, '', decodeURIComponent(`${window.location.pathname}?${params}`))
+}
 
 export default {
   created () {
@@ -110,6 +121,7 @@ export default {
   },
 
   components: {
+    SessionForm,
     EmailForm,
     SmsForm,
     TaskForm,
@@ -132,6 +144,7 @@ export default {
         text: 'Report test Issue'
       }],
       production: process.env.NODE_ENV === 'production',
+      showSessionInfoModal: false,
       showContactPanel: false,
       showEmailModal: false,
       showSmsModal: false,
@@ -208,78 +221,16 @@ export default {
     // set dCloud session ID and datacenter from query parameters
     if (this.qs.get('session')) {
       this.setSessionId(this.qs.get('session'))
-    } else {
-      // session ID not set - show error and stop loading
-      this.$toast.open({
-        duration: 5 * 60 * 1000,
-        message: `Please specify a session ID in the URL query parameters as "session".`,
-        type: 'is-danger'
-      })
-      return
     }
     if (this.qs.get('datacenter')) {
       this.setDatacenter(this.qs.get('datacenter'))
-    } else {
-      // datacenter not set - show error and stop loading
-      this.$toast.open({
-        duration: 5 * 60 * 1000,
-        message: `Please specify a datacenter in the URL query parameters as "datacenter".`,
-        type: 'is-danger'
-      })
-      return
     }
     if (this.qs.get('userId')) {
       this.setUserId(this.qs.get('userId'))
     }
     // load URL endpoints list from the API server
     console.log('getting endpoints...')
-    await this.getEndpoints(false)
-    // load dcloud session info
-    console.log('getting session info...')
-    await this.getSessionInfo(false)
-    if (!this.brand) {
-      // no brand set. show relevant error message to user.
-      if (this.isInstantDemo) {
-        // instant demo
-        if (this.userId) {
-          // userId is set
-          this.$toast.open({
-            duration: 5 * 60 * 1000,
-            message: `Your instant demo configuration does not have a brand
-            selected. Please select one on the Brand page of the dCloud Instant
-            Demo Toolbox, and then refresh this page.`,
-            type: 'is-danger'
-          })
-        } else {
-          // userId is not set
-          this.$toast.open({
-            duration: 5 * 60 * 1000,
-            message: `Your dCloud session is an instant demo session, but your
-            user ID was not specified in the URL query parameters. Please use
-            the link on the Brand Demo page of the dCloud Instant Demo Toolbox,
-            and then refresh this page.`,
-            type: 'is-danger'
-          })
-          return
-        }
-      } else {
-        // scheduled demo
-        this.$toast.open({
-          duration: 5 * 60 * 1000,
-          message: `Your dCloud session doesn't have a brand configured. Please
-          choose one from the Session Configuration Toolbox in your dCloud demo,
-          and then refresh this page.`,
-          type: 'is-danger'
-        })
-        return
-      }
-    }
-    if (this.brand) {
-      // brand ID has a value assigned - continue
-      // load brand configuration
-      console.log('getting brand configuration info...')
-      await this.getBrand(false)
-    }
+    this.getEndpoints(false)
   },
 
   computed: {
@@ -389,6 +340,17 @@ export default {
       'sendCallback',
       'sendTask'
     ]),
+    clickSubmitSessionInfo (data) {
+      // user submitted modal form with dCloud session information
+      // hide the modal
+      this.showSessionInfoModal = false
+      // set data in state from the modal data
+      this.setSessionId(data.sessionId)
+      this.setDatacenter(data.datacenter)
+      this.setUserId(data.userId)
+      // get session info now
+      this.getSessionInfo(false)
+    },
     updateView (model) {
       // set color 1
       window.document.documentElement.style.setProperty('--color-1', model.color1)
@@ -614,6 +576,43 @@ export default {
       // template
       this.$set(this.model, 'smsText', formatUnicorn(this.model.smsText, this.sessionInfo.sms.international))
       this.$set(this.model, 'callText', formatUnicorn(this.model.callText, this.sessionInfo.phone.international))
+    },
+    checkConfig () {
+      if (!this.brand) {
+        // no brand set. show relevant error message to user.
+        if (this.isInstantDemo) {
+          // instant demo
+          if (this.userId) {
+            // userId is set
+            this.$toast.open({
+              duration: 5 * 60 * 1000,
+              message: `Your instant demo configuration does not have a brand
+                selected. Please select one on the Brand page of the dCloud Instant
+                Demo Toolbox, and then refresh this page.`,
+              type: 'is-danger'
+            })
+          } else {
+            // userId is not set
+            this.$toast.open({
+              duration: 5 * 60 * 1000,
+              message: `Your dCloud session is an instant demo session, but your
+                user ID was not specified in the URL query parameters. Please use
+                the link on the Brand Demo page of the dCloud Instant Demo
+                Toolbox.`,
+              type: 'is-danger'
+            })
+          }
+        } else {
+          // scheduled demo
+          this.$toast.open({
+            duration: 5 * 60 * 1000,
+            message: `Your dCloud session doesn't have a brand configured. Please
+              choose one from the Session Configuration Toolbox in your dCloud demo,
+              and then refresh this page.`,
+            type: 'is-danger'
+          })
+        }
+      }
     }
   },
 
@@ -626,9 +625,15 @@ export default {
       console.log('sessionInfo changed')
       // process any templates into the final text value
       this.processTextTemplates()
+      this.checkConfig(val)
     },
     brandConfig (val) {
+      // brand config loaded
       console.log('brandConfig changed - copying changes to local model')
+      // update query string with the valid data we have now
+      setQueryStringParameter('session', this.sessionId)
+      setQueryStringParameter('datacenter', this.datacenter)
+      setQueryStringParameter('userId', this.userId)
       // configuration info loaded - merge into model
       for (const key of Object.keys(val)) {
         // ignore id and owner keys
@@ -643,6 +648,21 @@ export default {
       this.processTextTemplates()
       // brand has now loaded
       this.loaded = true
+    },
+    endpoints (val) {
+      // endpoints loaded - check if session and datacenter are set
+      if (this.datacenter && this.sessionId) {
+        // load dcloud session info
+        console.log('getting session info...')
+        this.getSessionInfo(false)
+      } else {
+        // pop modal to ask for datacenter and session ID
+        this.showSessionInfoModal = true
+      }
+    },
+    brand (val) {
+      // brand ID has been set - load this brand now
+      this.getBrand(false)
     }
   }
 }
