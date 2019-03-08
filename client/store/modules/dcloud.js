@@ -1,6 +1,7 @@
 import * as types from '../mutation-types'
 import {load} from '../../utils'
 import { Toast } from 'buefy/dist/components/toast'
+import Vue from 'vue'
 
 const getters = {
   // dCloud session ID
@@ -26,8 +27,12 @@ const getters = {
   // is the configured multichannel type ECE?
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // brand
-  brand: (state, getters) => getters.sessionConfig.brand,
-  brandConfig: state => state.brandConfig,
+  brand: (state, getters) => getters.sessionConfig.vertical,
+  // full demo config
+  demoConfig: state => state.brandConfig,
+  // just the branding-specific config
+  brandConfig: state => state.brandConfig.brand,
+  // null if no errors, object if errors getting dCloud session info
   sessionInfoError: state => state.sessionInfoError
 }
 
@@ -55,6 +60,10 @@ const mutations = {
   },
   [types.SET_BRAND_CONFIG] (state, data) {
     state.brandConfig = data
+    // if brand not set, set to empty object
+    if (!state.brandConfig.brand) {
+      Vue.set(state.brandConfig, 'brand', {})
+    }
   },
   [types.SET_SESSION_INFO_ERROR] (state, data) {
     state.sessionInfoError = data

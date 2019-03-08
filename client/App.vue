@@ -47,7 +47,7 @@
       :cancel-button="model.cancelButton"
       :heading="model.taskText"
       :modal-text="model.taskModalText"
-      :options="model.taskOptions || [{text: 'Report a Problem'}]"
+      :options="demoConfig.taskOptions || [{text: 'Report a Problem'}]"
       :email-label="model.emailLabel"
       :phone-label="model.phoneLabel"
       :name-label="model.nameLabel"
@@ -318,7 +318,8 @@ export default {
       'userId',
       'datacenter',
       'sessionId',
-      'sessionInfoError'
+      'sessionInfoError',
+      'demoConfig'
     ]),
     contactOptions () {
       const chat = {
@@ -657,9 +658,9 @@ export default {
             // display error message
             this.$dialog.alert({
               title: 'No Brand Configured',
-              message: `Your instant demo configuration does not have a brand
+              message: `Your instant demo configuration does not have a vertical
                 selected. Please select one on the
-                <a target="instant-toolbox" href="https://dcloud-collab-toolbox-${this.datacenter}.cisco.com/pcce/demos/brand">
+                <a target="instant-toolbox" href="https://dcloud-collab-toolbox-${this.datacenter}.cisco.com/pcce/demos/cumulus">
                 <strong>PCCE Instant Demo Toolbox</strong></a>,
                 and then try again.`,
               type: 'is-danger',
@@ -676,7 +677,7 @@ export default {
           // scheduled demo, but brand not configured - show error message
           this.$dialog.alert({
             title: 'dCloud Session Not Configured',
-            message: `Your dCloud session doesn't have a brand configured. Please
+            message: `Your dCloud session doesn't have a vertical configured. Please
               choose one from the
               <a target="session-toolbox" href="https://branding.dcloud.cisco.com/configure">
               <strong>Session Configuration Toolbox</strong>
