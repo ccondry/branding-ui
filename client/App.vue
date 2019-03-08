@@ -424,8 +424,10 @@ export default {
     },
     updateView (model) {
       // set color 1
+      console.log('setting color1 to', model.color1)
       window.document.documentElement.style.setProperty('--color-1', model.color1)
       // set color 2
+      console.log('setting color2 to', model.color2)
       window.document.documentElement.style.setProperty('--color-2', model.color2)
       // set the number of active options, to change the top property of the contact panel
       window.document.documentElement.style.setProperty('--active-options', this.contactOptions.length)
@@ -754,6 +756,8 @@ export default {
       this.loaded = true
       // hide session modal
       this.showSessionInfoModal = false
+      // update colors, favicon, html title
+      this.updateView(val)
     },
     endpoints (val) {
       // endpoints loaded - check if session and datacenter are set
