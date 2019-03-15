@@ -19,14 +19,14 @@ const actions = {
     // construct the task request object
     data.task = {
       cv1: data.name,
-      cv2: data.task.text,
+      cv2: data.task,
       cv3: data.phone,
       cv4: data.email,
-      description: data.task.text,
+      description: data.task,
       email: data.email,
       name: data.name,
       phone: data.phone,
-      title: data.task.text
+      title: data.task
     }
 
     // set working state
