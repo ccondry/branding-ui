@@ -173,6 +173,19 @@ export default {
     // get query string and put the object into this component's data
     let uri = window.location.search.substring(1)
     this.qs = new window.URLSearchParams(uri)
+    // add chat iframe event listener for postMessage
+    window.addEventListener('message', function (message) {
+      console.log('iframe message:', message)
+      try {
+        if (message.data.type === 'sparky.command') {
+          if (console.log('setting iframe to', message.data.data)
+          this.model.iframe = message.data.data
+        }
+      } catch (e) {
+        // failed to process postMessage from iframe
+        console.error('failed to process postMessage from iframe. message:', message)
+      }
+    })
   },
 
   components: {
