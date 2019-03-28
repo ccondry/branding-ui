@@ -178,7 +178,7 @@ export default {
       console.log('iframe message:', message)
       try {
         if (message.data.type === 'sparky.command') {
-          if (console.log('setting iframe to', message.data.data)
+          console.log('setting iframe to', message.data.data)
           this.model.iframe = message.data.data
         }
       } catch (e) {
