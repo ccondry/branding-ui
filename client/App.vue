@@ -183,7 +183,7 @@ export default {
         }
       } catch (e) {
         // failed to process postMessage from iframe
-        console.error('failed to process postMessage from iframe. message:', message)
+        console.error('failed to process postMessage from iframe. message:', e)
       }
     })
   },
