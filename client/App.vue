@@ -174,7 +174,7 @@ export default {
     let uri = window.location.search.substring(1)
     this.qs = new window.URLSearchParams(uri)
     // add chat iframe event listener for postMessage
-    window.addEventListener('message', function (message) {
+    window.addEventListener('message', (message) => {
       console.log('iframe message:', message)
       try {
         if (message.data.type === 'sparky.command') {
