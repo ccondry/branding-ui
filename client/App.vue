@@ -322,6 +322,7 @@ export default {
       'endpointsLoaded',
       'chatBotEnabled',
       'isUccx',
+      'isPcce',
       'isUpstream',
       'sessionInfo',
       'sessionConfig',
