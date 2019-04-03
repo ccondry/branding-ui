@@ -390,7 +390,7 @@ export default {
       if (this.model.chatEnabled) {
         ret.push(chat)
       }
-      if (this.model.smsEnabled) {
+      if (!this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
       }
       if (this.model.callEnabled) {
@@ -402,10 +402,10 @@ export default {
       if (this.model.emailEnabled) {
         ret.push(email)
       }
-      if (this.model.taskEnabled) {
+      if (!this.isUpstream && this.isPcce && this.model.taskEnabled) {
         ret.push(task)
       }
-      if (this.model.cobrowseEnabled) {
+      if (!this.isUpstream && this.isPcce && this.model.cobrowseEnabled) {
         ret.push(cobrowse)
       }
       return ret
