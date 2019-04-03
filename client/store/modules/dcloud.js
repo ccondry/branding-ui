@@ -26,7 +26,7 @@ const getters = {
   isUpstream: (state, getters) => getters.sessionConfig.multichannel === 'upstream',
   // is the configured multichannel type ECE?
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
-  // brand
+  // brand ID (actually its the vertical ID)
   brand: (state, getters) => getters.sessionConfig.vertical,
   // full demo config
   demoConfig: state => state.brandConfig,
