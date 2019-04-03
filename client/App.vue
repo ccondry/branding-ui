@@ -449,6 +449,10 @@ export default {
       this.changeFavicon(model.favicon)
       // change the title
       document.title = model.title
+      // set default iframe if there was no iframe set
+      if (!this.model.iframe) {
+        this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
+      }
     },
     clickSubmitEmail (data) {
       // update customer data cache
