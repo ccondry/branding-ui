@@ -74,11 +74,11 @@
 
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
       <call-form v-if="sessionInfo.phone"
-      :ok-button="model.okButton"
-      :cancel-button="model.cancelButton"
-      :dnis="sessionInfo.phone.international"
-      :heading="model.callText"
-      :modal-text="model.callModalText" />
+      :model="model"
+      :session-info="sessionInfo"
+      :is-pcce="isPcce"
+      :is-uccx="isUccx"
+      :is-instant-demo="isInstantDemo" />
     </b-modal>
 
     <span id="main-content" v-if="endpointsLoaded">
@@ -259,7 +259,11 @@ export default {
         callHeading: 'Call Us',
         callText: '{0}',
         callWaitTime: '8 min wait time',
-        callModalText: 'You can reach one of our experts by phone at <strong>{0}</strong>',
+        callModalText: 'You can reach one of our experts by phone:',
+        callModalMainLabel: 'Main',
+        callModalGoldLabel: 'Gold',
+        callModalVivrLabel: 'VIVR',
+        callModalAiLabel: 'AI',
         // callback
         callbackEnabled: true,
         callbackIcon: 'phone-forward',

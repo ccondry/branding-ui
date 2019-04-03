@@ -6,6 +6,28 @@
       </header>
       <section class="modal-card-body">
         <p class="content" v-html="text" />
+        <table class="phone-list">
+          <tr>
+            <td>{{ mainLabel }}</td>
+            <td>&gt;</td>
+            <td><strong>{{ main }}</strong></td>
+          </tr>
+          <tr v-if="isPcce">
+            <td>{{ goldLabel }}</td>
+            <td>&gt;</td>
+            <td><strong>{{ gold }}</strong></td>
+          </tr>
+          <tr v-if="isPcce">
+            <td>{{ vivrLabel }}</td>
+            <td>&gt;</td>
+            <td><strong>{{ vivr }}</strong></td>
+          </tr>
+          <tr v-if="isInstantDemo">
+            <td>{{ aiLabel }}</td>
+            <td>&gt;</td>
+            <td><strong>{{ ai }}</strong></td>
+          </tr>
+        </table>
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
@@ -20,17 +42,53 @@ import {formatUnicorn} from '../utils'
 
 export default {
   props: [
-    'dnis',
-    'modalText',
-    'heading',
-    'cancelButton',
-    'okButton'
+    'sessionInfo',
+    'isPcce',
+    'isUccx',
+    'isInstantDemo',
+    'model'
   ],
   methods: {
   },
   computed: {
+    okButton () {
+      return this.model.okButton
+    },
+    cancelButton () {
+      return this.model.cancelButton
+    },
+    modalText () {
+      return this.model.callModalText
+    },
+    heading () {
+      return this.model.callText
+    },
+    mainLabel () {
+      return this.model.callModalMainLabel
+    },
+    goldLabel () {
+      return this.model.callModalGoldLabel
+    },
+    vivrLabel () {
+      return this.model.callModalVivrLabel
+    },
+    aiLabel () {
+      return this.model.callModalAiLabel
+    },
     text () {
-      return formatUnicorn(this.modalText, this.dnis)
+      return formatUnicorn(this.modalText, this.main)
+    },
+    main () {
+      return this.sessionInfo.phone.international
+    },
+    gold () {
+      return this.sessionInfo.pq.international
+    },
+    vivr () {
+      return this.sessionInfo.jacada.international
+    },
+    ai () {
+      return this.sessionInfo.ai.international
     }
   }
 }
@@ -43,5 +101,11 @@ export default {
 .modal-card-foot {
   // pull the footer buttons to the right
   justify-content: flex-end !important;
+}
+.phone-list {
+  td {
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+  }
 }
 </style>
