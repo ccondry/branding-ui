@@ -801,7 +801,12 @@ html {
 
 body {
   height: 100%;
-  overflow-y: scroll;
+  // overflow-y: scroll;
+  overflow-y: hidden;
+}
+
+body:hover {
+  overflow-y: hidden;
 }
 
 #app {
