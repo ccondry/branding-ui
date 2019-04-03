@@ -253,6 +253,7 @@ export default {
         smsWaitTime: '1 min wait time',
         smsModalText: `Enter your mobile phone number and we will text you.
           Reply to begin texting with one of our experts.`,
+        smsMessage: encodeURIComponent('Hello! Please reply to this text message to begin chatting with us.'),
         // call
         callEnabled: true,
         callIcon: 'phone',
@@ -472,6 +473,8 @@ export default {
       console.log('clickSubmitSms', data)
       // close the modal
       this.showSmsModal = false
+      // attach the SMS messgae message
+      data.message = this.model.smsMessage
       // send the SMS
       this.sendSms(data)
     },
