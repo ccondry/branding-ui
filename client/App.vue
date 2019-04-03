@@ -552,13 +552,8 @@ export default {
     clickCallback (event) {
       // clicked callback option from contact panel
       console.log('clickCallback', event)
-      if (this.isUpstream || this.isUccx) {
-        // open the callback modal
-        this.showCallbackModal = true
-      } else {
-        // PCCE without Upstream - pop ECE callback window
-        this.popEceCallbackWindow()
-      }
+      // open the callback modal
+      this.showCallbackModal = true
     },
     clickEmail (event) {
       // clicked email option from contact panel
