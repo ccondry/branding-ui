@@ -501,31 +501,31 @@ export default {
     clickChat (event) {
       // clicked chat option from contact panel
       console.log('clickChat', event)
+      if (this.isUpstream) {
+        // pop Upstream chat window
+        this.popUpstreamChatWindow()
+        return
+      }
       if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
         // set chat bot iframe to the chat bot URL
         this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
-      } else {
-        if (this.isUccx) {
-          // UCCX demo
-          // run chat bot with bot turned off for CCX
-          // hide contact panel menu and show chat bot
-          this.showChatBot = true
-          // set chat bot iframe to the chat bot URL
-          this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
-        } else {
-          // not UCCX demo - default to PCCE demo
-          // check if upstream or ECE
-          if (this.isUpstream) {
-            // pop Upstream chat window
-            this.popUpstreamChatWindow()
-          } else {
-            // default to ECE chat, if not Upstream
-            // pop ECE chat window
-            this.popEceChatWindow()
-          }
-        }
+        return
+      }
+      if (this.isUccx) {
+        // UCCX demo and chat bot not enabled
+        // run chat bot with bot turned off for CCX
+        // hide contact panel menu and show chat bot
+        this.showChatBot = true
+        // set chat bot iframe to the chat bot URL
+        this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
+        return
+      }
+      if (this.isPcce) {
+        // PCCE demo and chat bot not enabled
+        // pop ECE chat window
+        this.popEceChatWindow()
       }
     },
     clickSms (event) {
