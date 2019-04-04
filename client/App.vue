@@ -549,6 +549,8 @@ export default {
         const widgetId = this.sessionConfig.widgetId || '3'
         const ciscoBubbleChat = window.initBubbleChat(smHost, widgetId)
         ciscoBubbleChat.showChatWindow()
+        // close the contact menu
+        this.showContactPanel = false
         return
       }
       if (this.chatBotEnabled) {
