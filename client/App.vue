@@ -446,7 +446,10 @@ export default {
       'sendEmail',
       'sendSms',
       'sendCallback',
-      'sendTask'
+      'sendTask',
+      'popEceCallbackWindow',
+      'popEceChatWindow',
+      'popUpstreamChatWindow'
     ]),
     clickSubmitSessionInfo (data) {
       // user submitted modal form with dCloud session information
@@ -520,23 +523,32 @@ export default {
       this.sendCallback(data)
     },
     clickSubmitChat (data) {
-      // clicked submit on the task request modal form
+      // clicked submit on the chat modal form
+      // log input data
+      console.log('clickSubmitChat', data)
       // update customer data cache
       this.name = data.name
       this.phone = data.phone
       this.email = data.email
-      // log input data
-      console.log('clickSubmitChat', data)
       // close the modal
       this.showChatModal = false
       // pop Upstream chat window
-      this.popUpstreamChatWindow()
+      this.popUpstreamChatWindow(data)
     },
     clickChat (event) {
       // clicked chat option from contact panel
       console.log('clickChat', event)
       if (this.isUpstream) {
         this.showChatModal = true
+        return
+      }
+      if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
+        // UCCX and bubble chat is enabled
+        // use bubble chat!
+        const smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
+        const widgetId = this.sessionConfig.widgetId || '3'
+        const ciscoBubbleChat = window.initBubbleChat(smHost, widgetId)
+        ciscoBubbleChat.showChatWindow()
         return
       }
       if (this.chatBotEnabled) {
@@ -623,54 +635,6 @@ export default {
           type: 'is-danger'
         })
       }
-    },
-    popEceChatWindow () {
-      console.log('popEceChatWindow')
-      // create url
-      // let url = `${this.endpoints.eceProxy.path}/${this.datacenter}-${this.sessionId}`
-      // url += `/system/templates/chat/kiwi/chat.html?subActivity=Chat&entryPointId=1001&templateName=kiwi&languageCode=en&countryCode=US&ver=v11`
-      // aqua template does not work through the reverse proxy
-      // https://${this.datacenter}-${this.session}.tunnel.cc-dcloud.com/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US
-      // url += `/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US`
-      // http://cceece.dcloud.cisco.com/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US
-      let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US`
-      console.log('ECE chat URL:', url)
-      let w = 400
-      let h = 600
-      let top = (window.screen.height / 2) - (h / 2)
-      let left = (window.screen.width / 2) - (w / 2)
-      // open popup
-      window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
-      // window.resize('400', '600')
-    },
-    popEceCallbackWindow () {
-      console.log('popEceCallbackWindow')
-      // create url
-      // rainbow template
-      let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/callback/rainbow/call.html?subActivity=Callback&entryPointId=1002&templateName=rainbow&languageCode=en&countryCode=US&ver=v11`
-      // cumulus template
-      // let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/callback/cumulus/call.html?subActivity=Callback&entryPointId=1002&templateName=cumulus&languageCode=en&countryCode=US&ver=v11`
-      console.log('ECE callback URL:', url)
-      let w = 400
-      let h = 600
-      let top = (window.screen.height / 2) - (h / 2)
-      let left = (window.screen.width / 2) - (w / 2)
-      // open popup
-      window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
-      // window.resize('400', '600')
-    },
-    popUpstreamChatWindow () {
-      console.log('popUpstreamChatWindow')
-      let url = `https://mm-static.cxdemo.net/upstream.html?name=${this.name}&phone=${this.phone}&email=${this.email}&session=${this.sessionId}&datacenter=${this.datacenter}`
-      // let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/Home`
-      console.log('Upstream URL:', url)
-      let w = 400
-      let h = 600
-      let top = (window.screen.height / 2) - (h / 2)
-      let left = (window.screen.width / 2) - (w / 2)
-      // open popup
-      window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
-      // window.resize('400', '600')
     },
     changeFavicon (src) {
       // change the favorite icon

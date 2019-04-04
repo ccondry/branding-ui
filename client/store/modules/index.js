@@ -5,6 +5,7 @@ import email from './email'
 import sms from './sms'
 import callback from './callback'
 import task from './task'
+import chat from './chat'
 
 export default {
   app,
@@ -13,5 +14,6 @@ export default {
   email,
   sms,
   callback,
-  task
+  task,
+  chat
 }
