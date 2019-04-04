@@ -7,17 +7,22 @@
       <section class="modal-card-body">
         <p class="content" v-html="text" />
         <table class="phone-list">
-          <tr>
+          <tr v-if="isUpstream">
             <td>{{ mainLabel }}</td>
             <td>&gt;</td>
             <td><strong>{{ main }}</strong></td>
           </tr>
-          <tr v-if="isPcce">
+          <tr v-if="!isUpstream">
+            <td>{{ mainLabel }}</td>
+            <td>&gt;</td>
+            <td><strong>{{ main }}</strong></td>
+          </tr>
+          <tr v-if="isPcce && !isUpstream">
             <td>{{ goldLabel }}</td>
             <td>&gt;</td>
             <td><strong>{{ gold }}</strong></td>
           </tr>
-          <tr v-if="isPcce">
+          <tr v-if="isPcce && !isUpstream">
             <td>{{ vivrLabel }}</td>
             <td>&gt;</td>
             <td><strong>{{ vivr }}</strong></td>
@@ -46,6 +51,7 @@ export default {
     'isPcce',
     'isUccx',
     'isInstantDemo',
+    'isUpstream',
     'model'
   ],
   methods: {

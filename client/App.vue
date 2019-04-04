@@ -73,9 +73,10 @@
     </b-modal>
 
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
-      <call-form v-if="sessionInfo.phone"
+      <call-form v-if="Object.keys(sessionInfo)"
       :model="model"
       :session-info="sessionInfo"
+      :is-upstream="isUpstream"
       :is-pcce="isPcce"
       :is-uccx="isUccx"
       :is-instant-demo="isInstantDemo" />
@@ -661,10 +662,19 @@ export default {
       document.head.appendChild(link)
     },
     processTextTemplates () {
-      // session config loaded - process phone number and SMS number using
-      // template
-      this.$set(this.model, 'smsText', formatUnicorn(this.model.smsText, this.sessionInfo.sms.international))
-      this.$set(this.model, 'callText', formatUnicorn(this.model.callText, this.sessionInfo.phone.international))
+      // session config loaded
+      if (this.isUpstream) {
+        // upstream demo - set phone number to the upstream number
+        const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.uwf.international)
+        this.$set(this.model, 'callText', formattedCallNumber)
+      } else {
+        // not upstream demo
+        // process phone number and SMS number using template, if this is not upstream demo
+        const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
+        this.$set(this.model, 'smsText', formattedSmsNumber)
+        const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)
+        this.$set(this.model, 'callText', formattedCallNumber)
+      }
     },
     checkConfig () {
       if (!this.brand) {
