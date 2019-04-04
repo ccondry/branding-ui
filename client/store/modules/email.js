@@ -16,6 +16,7 @@ const actions = {
     data.datacenter = getters.datacenter
     data.userId = getters.userId
     data.isUpstream = getters.isUpstream
+    data.isInstantDemo = getters.isInstantDemo
     // set working state
     dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
     console.debug('starting send email:', data)
