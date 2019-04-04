@@ -10,7 +10,7 @@
           <tr v-if="isUpstream">
             <td>{{ mainLabel }}</td>
             <td>&gt;</td>
-            <td><strong>{{ main }}</strong></td>
+            <td><strong>{{ uwf }}</strong></td>
           </tr>
           <tr v-if="!isUpstream">
             <td>{{ mainLabel }}</td>
@@ -86,6 +86,9 @@ export default {
     },
     main () {
       return this.sessionInfo.phone.international
+    },
+    uwf () {
+      return this.sessionInfo.uwf.international
     },
     gold () {
       return this.sessionInfo.pq.international
