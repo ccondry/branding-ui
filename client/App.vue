@@ -82,6 +82,20 @@
       :is-instant-demo="isInstantDemo" />
     </b-modal>
 
+    <b-modal :active.sync="showChatModal" :can-cancel="true" has-modal-card width="960">
+      <chat-form @submit="clickSubmitChat"
+      :send-button="model.sendButton"
+      :cancel-button="model.cancelButton"
+      :heading="model.chatHeading"
+      :email-label="model.emailLabel"
+      :phone-label="model.phoneLabel"
+      :name-label="model.nameLabel"
+      :message-label="model.messageLabel"
+      :name="name"
+      :email="email"
+      :phone="phone" />
+    </b-modal>
+
     <span id="main-content" v-if="endpointsLoaded">
       <!-- background iframe -->
       <iframe :src="model.iframe" class="demo-iframe"></iframe>
@@ -161,6 +175,7 @@ import SmsForm from './components/sms-form.vue'
 import TaskForm from './components/task-form.vue'
 import CallbackForm from './components/callback-form.vue'
 import CallForm from './components/call-form.vue'
+import ChatForm from './components/chat-form.vue'
 import {formatUnicorn} from './utils'
 
 function setQueryStringParameter (name, value) {
@@ -195,7 +210,8 @@ export default {
     SmsForm,
     TaskForm,
     CallbackForm,
-    CallForm
+    CallForm,
+    ChatForm
   },
 
   data () {
@@ -502,12 +518,24 @@ export default {
       // send callback request to server
       this.sendCallback(data)
     },
+    clickSubmitChat (data) {
+      // clicked submit on the task request modal form
+      // update customer data cache
+      this.name = data.name
+      this.phone = data.phone
+      this.email = data.email
+      // log input data
+      console.log('clickSubmitChat', data)
+      // close the modal
+      this.showChatModal = false
+      // pop Upstream chat window
+      this.popUpstreamChatWindow()
+    },
     clickChat (event) {
       // clicked chat option from contact panel
       console.log('clickChat', event)
       if (this.isUpstream) {
-        // pop Upstream chat window
-        this.popUpstreamChatWindow()
+        this.showChatModal = true
         return
       }
       if (this.chatBotEnabled) {
@@ -630,10 +658,11 @@ export default {
       window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
       // window.resize('400', '600')
     },
-    popUpstreamChatWindow (data) {
-      console.log('popUpstreamChatWindow', data)
-      let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/Home`
-      console.log('ECE URL:', url)
+    popUpstreamChatWindow () {
+      console.log('popUpstreamChatWindow')
+      let url = `https://mm-static.cxdemo.net/upstream.html?name=${this.name}&phone=${this.phone}&email=${this.email}&session=${this.sessionId}&datacenter=${this.datacenter}`
+      // let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/Home`
+      console.log('Upstream URL:', url)
       let w = 400
       let h = 600
       let top = (window.screen.height / 2) - (h / 2)
