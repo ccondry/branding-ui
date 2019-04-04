@@ -229,6 +229,7 @@ export default {
       showTaskModal: false,
       showCallbackModal: false,
       showCallModal: false,
+      showChatModal: false,
       showChatBot: false,
       chatIframe: '',
       model: {
