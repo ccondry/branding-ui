@@ -813,17 +813,21 @@ export default {
 html {
   background-color: darkgrey;
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
+  overflow-x: hidden;
 }
-
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
 body {
   height: 100%;
   // overflow-y: scroll;
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
 
 body:hover {
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
 
 #app {
