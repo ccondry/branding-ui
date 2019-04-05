@@ -26,10 +26,10 @@ const state = {
       region: 'US',
       multichannel: 'ece',
       vertical: 'finance',
-      smsDeflectionMessage: 'Hello%2C%20this%20is%20Cumulus.%20Please%20reply%20to%20this%20message%20to%20begin%20chatting%20with%20one%20of%20our%20agents.',
+      smsDeflectionMessage: 'Hello, this is Cumulus. Please reply to this message to begin chatting with one of our agents.',
       duoFraudSmsNumber: '',
       duoWelcomeMessage: 'Hello, and thanks for calling Cumulus internal service center.',
-      duoFraudSmsMessage: 'Mr%20Littlefoot%2C%0A%0ADue%20to%20a%20recorded%20fraudulent%20login%20attempt%2C%20we%20recommend%20changing%20your%20account%20information%20as%20it%20may%20be%20compromised.%20You%20can%20do%20that%20here%3A%0A%0Awww.cumulus.com%2Fmemberportal%0A%0AYou%20can%20also%20call%20us%20at%201-555-942-9464%20if%20you%20would%20rather%20speak%20to%20a%20fraud%20specialist.',
+      duoFraudSmsMessage: 'Mr Littlefoot,\n\nDue to a recorded fraudulent login attempt, we recommend changing your account information as it may be compromised. You can do that here:\n\nwww.cumulus.com/memberportal\n\nYou can also call us at 1-555-942-9464 if you would rather speak to a fraud specialist.',
       ttsEngine: 'nuance'
     }
   }
