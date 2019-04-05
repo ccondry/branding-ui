@@ -494,8 +494,8 @@ export default {
       console.log('clickSubmitSms', data)
       // close the modal
       this.showSmsModal = false
-      // attach the SMS messgae message
-      data.message = this.model.smsMessage
+      // attach the SMS message
+      data.message = this.model.smsDeflectionMessage
       // send the SMS
       this.sendSms(data)
     },
