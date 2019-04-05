@@ -15,7 +15,8 @@ const actions = {
     data.session = getters.sessionId
     data.datacenter = getters.datacenter
     data.userId = getters.userId
-    data.demo = getters.demo
+    // uccx or pcce demo?
+    data.demo = getters.sessionInfo.demo
     data.isUpstream = getters.isUpstream
     data.isInstantDemo = getters.isInstantDemo
     // set working state
