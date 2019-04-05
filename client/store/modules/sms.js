@@ -15,8 +15,6 @@ const actions = {
     data.session = getters.sessionId
     data.datacenter = getters.datacenter
     data.userId = getters.userId
-    // decode the URI-encoded SMS message because our API expects clear text
-    data.message = decodeURIComponent(data.message)
     // set working state
     dispatch('setWorking', {group: 'dcloud', type: 'sms', value: true})
     console.debug('starting send SMS:', data)
