@@ -26,7 +26,7 @@ const actions = {
     dataArr.push({ key: 'custname', value: data.name })
     dataArr.push({ key: 'mobilenum', value: data.phone })
     dataArr.push({ key: 'emailid', value: data.email })
-    dataArr.push({ key: 'question', value: 'Can I get a sales rep to help me with a finance quote?' })
+    dataArr.push({ key: 'question', value: data.message })
     dataArr.push({ key: 'reason', value: '546' })
     dataArr.push({ key: 'sendtranscript', value: 'false' })
     dataArr.push({ key: 'CUSTOM_MESSAGE', value: 'Unable to process your request.' })
