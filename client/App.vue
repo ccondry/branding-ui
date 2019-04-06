@@ -420,7 +420,7 @@ export default {
       if (!this.isCjp && this.model.callEnabled) {
         ret.push(call)
       }
-      if (this.model.callbackEnabled) {
+      if (!this.isCjp && this.model.callbackEnabled) {
         ret.push(callback)
       }
       if (this.model.emailEnabled) {
