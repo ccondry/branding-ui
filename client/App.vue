@@ -346,6 +346,7 @@ export default {
       'chatBotEnabled',
       'isUccx',
       'isPcce',
+      'isCjp',
       'isUpstream',
       'sessionInfo',
       'sessionConfig',
@@ -413,10 +414,10 @@ export default {
       if (this.model.chatEnabled) {
         ret.push(chat)
       }
-      if (!this.isUpstream && this.model.smsEnabled) {
+      if (!this.isCjp && !this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
       }
-      if (this.model.callEnabled) {
+      if (!this.isCjp && this.model.callEnabled) {
         ret.push(call)
       }
       if (this.model.callbackEnabled) {
@@ -425,10 +426,10 @@ export default {
       if (this.model.emailEnabled) {
         ret.push(email)
       }
-      if (!this.isUpstream && this.isPcce && this.model.taskEnabled) {
+      if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
         ret.push(task)
       }
-      if (!this.isUpstream && this.isPcce && this.model.cobrowseEnabled) {
+      if (this.isPcce && !this.isUpstream && this.model.cobrowseEnabled) {
         ret.push(cobrowse)
       }
       return ret
