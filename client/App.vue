@@ -450,7 +450,8 @@ export default {
       'sendTask',
       'popEceCallbackWindow',
       'popEceChatWindow',
-      'popUpstreamChatWindow'
+      'popUpstreamChatWindow',
+      'popCconeChatWindow'
     ]),
     clickSubmitSessionInfo (data) {
       // user submitted modal form with dCloud session information
@@ -533,8 +534,13 @@ export default {
       this.email = data.email
       // close the modal
       this.showChatModal = false
-      // pop Upstream chat window
-      this.popUpstreamChatWindow(data)
+      if (this.isCjp) {
+        // pop CJP CCone chat window
+        this.popCconeChatWindow(data)
+      } else {
+        // pop Upstream chat window
+        this.popUpstreamChatWindow(data)
+      }
     },
     clickChat (event) {
       // clicked chat option from contact panel

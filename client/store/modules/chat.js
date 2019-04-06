@@ -10,6 +10,19 @@ const mutations = {
 }
 
 const actions = {
+  popCconeChatWindow ({getters}, data) {
+    console.log('popCconeChatWindow', data)
+    let url = `https://mm-static.cxdemo.net/ccone.html?name=${data.name}&phone=${data.phone}&email=${data.email}&session=${getters.sessionId}&datacenter=${getters.datacenter}`
+    // let url = `https://${this.datacenter}-${this.sessionId}.tunnel.cc-dcloud.com/Home`
+    console.log('CCOne chat URL:', url)
+    let w = 400
+    let h = 600
+    let top = (window.screen.height / 2) - (h / 2)
+    let left = (window.screen.width / 2) - (w / 2)
+    // open popup
+    window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
+    // window.resize('400', '600')
+  },
   popUpstreamChatWindow ({getters}, data) {
     console.log('popUpstreamChatWindow', data)
     let url = `https://mm-static.cxdemo.net/upstream.html?name=${data.name}&phone=${data.phone}&email=${data.email}&session=${getters.sessionId}&datacenter=${getters.datacenter}`
