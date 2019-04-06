@@ -659,18 +659,22 @@ export default {
       document.head.appendChild(link)
     },
     processTextTemplates () {
-      // session config loaded
-      if (this.isUpstream) {
-        // upstream demo - set phone number to the upstream number
-        const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.uwf.international)
-        this.$set(this.model, 'callText', formattedCallNumber)
-      } else {
-        // not upstream demo
-        // process phone number and SMS number using template, if this is not upstream demo
-        const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
-        this.$set(this.model, 'smsText', formattedSmsNumber)
-        const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)
-        this.$set(this.model, 'callText', formattedCallNumber)
+      try {
+        // session config loaded
+        if (this.isUpstream) {
+          // upstream demo - set phone number to the upstream number
+          const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.uwf.international)
+          this.$set(this.model, 'callText', formattedCallNumber)
+        } else if (!this.isCjp) {
+          // not upstream demo
+          // process phone number and SMS number using template, if this is not upstream demo
+          const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
+          this.$set(this.model, 'smsText', formattedSmsNumber)
+          const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)
+          this.$set(this.model, 'callText', formattedCallNumber)
+        }
+      } catch (e) {
+        console.log('failed to format call number and sms number:', e)
       }
     },
     checkConfig () {
