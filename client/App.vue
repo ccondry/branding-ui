@@ -549,6 +549,11 @@ export default {
         this.showChatModal = true
         return
       }
+      if (this.isCjp) {
+        // show chat modal for cjp
+        this.showChatModal = true
+        return
+      }
       if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
         // UCCX and bubble chat is enabled
         // use bubble chat!
