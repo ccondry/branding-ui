@@ -796,8 +796,8 @@ export default {
       this.showSessionInfoModal = false
       // update colors, favicon, html title
       this.updateView(val)
-      // set default iframe if there was no iframe set
-      if (!this.model.iframe) {
+      // set default iframe to cumulus website if there was no iframe configured
+      if (!( this.model.iframe && this.model.iframe.trim().length() )) {
         this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
       }
     },
