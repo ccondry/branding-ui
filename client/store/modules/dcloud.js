@@ -21,7 +21,9 @@ const getters = {
   // is this a PCCE demo?
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
   // is this a CJP demo?
-  isCjp: (state, getters) => getters.sessionInfo.demo === 'cjp',
+  isCjp: (state, getters) => state.datacenter.toLowerCase() === 'cjp',
+  // is this the CJP CCOne demo?
+  isCcone: (state, getters) => state.datacenter.toLowerCase() === 'ccone',
   // is this a an instant demo?
   isInstantDemo: (state, getters) => getters.sessionInfo.instant === true,
   // is the configured multichannel type Upstream Works?
