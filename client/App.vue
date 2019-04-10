@@ -417,7 +417,7 @@ export default {
       if (!this.isCjp && !this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
       }
-      if (!this.isCjp && this.model.callEnabled) {
+      if (this.model.callEnabled) {
         ret.push(call)
       }
       if (!this.isCjp && this.model.callbackEnabled) {
