@@ -692,13 +692,17 @@ export default {
           // upstream demo - set phone number to the upstream number
           const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.uwf.international)
           this.$set(this.model, 'callText', formattedCallNumber)
-        } else if (!this.isCjp) {
+        } else {
           // not upstream demo
-          // process phone number and SMS number using template, if this is not upstream demo
-          const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
-          this.$set(this.model, 'smsText', formattedSmsNumber)
+          // set main call number using template
           const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)
           this.$set(this.model, 'callText', formattedCallNumber)
+
+          // set SMS number using template, if this is not CJP demo
+          if (!this.isCjp) {
+            const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
+            this.$set(this.model, 'smsText', formattedSmsNumber)
+          }
         }
       } catch (e) {
         console.log('failed to format call number and sms number:', e)
