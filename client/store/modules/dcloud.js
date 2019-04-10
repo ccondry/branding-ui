@@ -15,7 +15,7 @@ const getters = {
   // dCloud session configuration
   sessionConfig: (state, getters) => getters.sessionInfo.configuration || {},
   // is chat bot enabled?
-  chatBotEnabled: (state, getters) => getters.sessionConfig.chatBotEnabled,
+  chatBotEnabled: (state, getters) => getters.demoConfig.chatBotEnabled,
   // is this a UCCX demo?
   isUccx: (state, getters) => getters.sessionInfo.demo === 'uccx',
   // is this a PCCE demo?
