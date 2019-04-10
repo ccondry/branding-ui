@@ -30,9 +30,9 @@ const getters = {
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // brand ID (actually its the vertical ID)
   brand: (state, getters) => getters.sessionConfig.vertical,
-  // full demo config
+  // full vertical config
   demoConfig: state => state.brandConfig,
-  // just the branding-specific config
+  // just the branding-specific config in the vertical
   brandConfig: state => state.brandConfig.brand,
   // null if no errors, object if errors getting dCloud session info
   sessionInfoError: state => state.sessionInfoError
