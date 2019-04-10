@@ -217,6 +217,8 @@ export default {
   data () {
     return {
       name: '',
+      firstName: '',
+      lastName: '',
       phone: '',
       email: '',
       loaded: false,
@@ -332,6 +334,20 @@ export default {
     }
     if (this.qs.get('userId')) {
       this.setUserId(this.qs.get('userId'))
+    }
+    if (this.qs.get('firstName')) {
+      this.firstName = this.qs.get('firstName')
+      this.name = this.firstName + ' ' + this.lastName
+    }
+    if (this.qs.get('lastName')) {
+      this.lastName = this.qs.get('lastName')
+      this.name = this.firstName + ' ' + this.lastName
+    }
+    if (this.qs.get('phone')) {
+      this.phone = this.qs.get('phone')
+    }
+    if (this.qs.get('email')) {
+      this.email = this.qs.get('email')
     }
     // load URL endpoints list from the API server
     console.log('getting endpoints...')
