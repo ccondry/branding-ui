@@ -17,6 +17,7 @@
             <option value="LON">EMEAR</option>
             <option value="SNG">APJ</option>
             <option value="CJP">CJP</option>
+            <option value="RCDN">RCDN</option>
           </b-select>
         </b-field>
 
