@@ -575,6 +575,8 @@ export default {
         // use bubble chat!
         const smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
         const widgetId = this.sessionConfig.widgetId || '3'
+        console.log('opening bubble chat with smHost =', smHost)
+        console.log('opening bubble chat with widget ID =', widgetId)
         const ciscoBubbleChat = window.initBubbleChat(smHost, widgetId)
         ciscoBubbleChat.showChatWindow()
         // close the contact menu
