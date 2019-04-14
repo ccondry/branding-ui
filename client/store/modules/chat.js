@@ -27,7 +27,7 @@ const actions = {
     dataArr.push({ key: 'mobilenum', value: data.phone })
     dataArr.push({ key: 'emailid', value: data.email })
     dataArr.push({ key: 'question', value: data.message })
-    dataArr.push({ key: 'reason', value: getters.sessionConfig.reasonId})
+    dataArr.push({ key: 'reason', value: getters.sessionConfig.reasonId })
     dataArr.push({ key: 'sendtranscript', value: 'false' })
     dataArr.push({ key: 'CUSTOM_MESSAGE', value: 'Unable to process your request.' })
     dataArr.push({ key: 'SHOW_EXCEPTION_DETAILS', value: false })

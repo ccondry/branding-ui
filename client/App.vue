@@ -825,7 +825,7 @@ export default {
       // update colors, favicon, html title
       this.updateView(val)
       // set default iframe to cumulus website if there was no iframe configured
-      if (!( this.model.iframe && this.model.iframe.trim().length )) {
+      if (!(this.model.iframe && this.model.iframe.trim().length)) {
         this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
       }
     },
