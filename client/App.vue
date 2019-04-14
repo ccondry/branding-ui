@@ -694,27 +694,35 @@ export default {
       document.head.appendChild(link)
     },
     processTextTemplates () {
-      try {
         // session config loaded
         if (this.isUpstream) {
-          // upstream demo - set phone number to the upstream number
-          const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.uwf.international)
-          this.$set(this.model, 'callText', formattedCallNumber)
+          try {
+            // upstream demo - set phone number to the upstream number
+            const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.uwf.international)
+            this.$set(this.model, 'callText', formattedCallNumber)
+          } catch (e) {
+            console.log('failed to format call number:', e)
+          }
         } else {
           // not upstream demo
           // set main call number using template
-          const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)
-          this.$set(this.model, 'callText', formattedCallNumber)
+          try {
+            const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)
+            this.$set(this.model, 'callText', formattedCallNumber)
+          } catch (e) {
+            console.log('failed to format call number:', e)
+          }
 
           // set SMS number using template, if this is not CJP demo
           if (!this.isCjp) {
-            const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
-            this.$set(this.model, 'smsText', formattedSmsNumber)
+            try {
+              const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
+              this.$set(this.model, 'smsText', formattedSmsNumber)
+            } catch (e) {
+              console.log('failed to format call number and sms number:', e)
+            }
           }
         }
-      } catch (e) {
-        console.log('failed to format call number and sms number:', e)
-      }
     },
     checkConfig () {
       if (!this.brand) {
