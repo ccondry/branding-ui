@@ -363,6 +363,7 @@ export default {
       'isUccx',
       'isPcce',
       'isCjp',
+      'isRcdn',
       'isUpstream',
       'sessionInfo',
       'sessionConfig',
@@ -573,7 +574,12 @@ export default {
       if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
         // UCCX and bubble chat is enabled
         // use bubble chat!
-        const smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
+        let smHost
+        if (this.isRcdn) {
+          smHost = 'chat.cdxdemo.net'
+        } else {
+          smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
+        }
         const widgetId = this.sessionConfig.widgetId || '3'
         console.log('opening bubble chat with smHost =', smHost)
         console.log('opening bubble chat with widget ID =', widgetId)
