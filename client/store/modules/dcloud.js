@@ -22,8 +22,6 @@ const getters = {
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
   // is this a CJP demo?
   isCjp: (state, getters) => state.datacenter.toLowerCase() === 'cjp',
-  // is this the CJP CCOne demo?
-  isCcone: (state, getters) => state.datacenter.toLowerCase() === 'ccone',
   // is this an RCDN (Compete Lab) demo?
   isRcdn: (state, getters) => state.datacenter.toLowerCase() === 'rcdn',
   // is this a an instant demo?
