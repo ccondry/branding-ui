@@ -21,7 +21,7 @@
           required />
         </b-field>
 
-        <b-field :label="messageLabel">
+        <b-field :label="messageLabel" v-if="!isUccx">
           <b-input
           type="textarea"
           v-model="formData.message"
@@ -49,7 +49,8 @@ export default {
     'phoneLabel',
     'messageLabel',
     'cancelButton',
-    'sendButton'
+    'sendButton',
+    'isUccx'
   ],
 
   mounted () {

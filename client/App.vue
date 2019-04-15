@@ -68,6 +68,7 @@
       :phone-label="model.phoneLabel"
       :name-label="model.nameLabel"
       :message-label="model.messageLabel"
+      :is-uccx="isUccx"
       :name="name"
       :phone="phone" />
     </b-modal>
