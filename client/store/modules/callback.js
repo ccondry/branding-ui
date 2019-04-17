@@ -47,16 +47,15 @@ const actions = {
     // let minutes = Math.floor(response.data.ewt / 60)
     // if (minutes === 0) minutes = 1
 
-    dispatch('postData', {
+    await dispatch('postData', {
       endpoint: getters.endpoints.callback.path,
       data,
       success: `An expert will be calling you shortly. Your estimated wait
       time is 2 minutes.`,
       fail: 'Failed to complete your callback request'
-    }).finally(() => {
-      // reset working state
-      dispatch('setWorking', {group: 'dcloud', type: 'callback', value: false})
     })
+    // reset working state
+    dispatch('setWorking', {group: 'dcloud', type: 'callback', value: false})
   }
 }
 

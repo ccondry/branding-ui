@@ -23,16 +23,15 @@ const actions = {
     dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
     console.debug('starting send email:', data)
     // send email request to REST API
-    dispatch('postData', {
+    await dispatch('postData', {
       endpoint: getters.endpoints.email.path,
       data,
       success: `We have received your email and the next available expert will
       reply to your message.`,
       fail: 'Failed to send your email message'
-    }).finally(() => {
-      // reset working state
-      dispatch('setWorking', {group: 'dcloud', type: 'email', value: false})
     })
+    // reset working state
+    dispatch('setWorking', {group: 'dcloud', type: 'email', value: false})
   }
 }
 

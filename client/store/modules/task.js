@@ -33,16 +33,15 @@ const actions = {
     dispatch('setWorking', {group: 'dcloud', type: 'task', value: true})
     console.debug('starting send task request:', data)
     // send email request to REST API
-    dispatch('postData', {
+    await dispatch('postData', {
       endpoint: getters.endpoints.task.path,
       data,
       success: `We have received your task request and the next available expert
       will begin working on it.`,
       fail: 'Failed to send your task request'
-    }).finally(() => {
-      // reset working state
-      dispatch('setWorking', {group: 'dcloud', type: 'task', value: false})
     })
+    // reset working state
+    dispatch('setWorking', {group: 'dcloud', type: 'task', value: false})
   }
 }
 

@@ -10,7 +10,7 @@ const mutations = {
 }
 
 const actions = {
-  sendSms ({getters, commit, dispatch}, data) {
+  async sendSms ({getters, commit, dispatch}, data) {
     // attach dCloud session information
     data.session = getters.sessionId
     data.datacenter = getters.datacenter
@@ -19,16 +19,15 @@ const actions = {
     dispatch('setWorking', {group: 'dcloud', type: 'sms', value: true})
     console.debug('starting send SMS:', data)
     // send email request to REST API
-    dispatch('postData', {
+    await dispatch('postData', {
       endpoint: getters.endpoints.sms.path,
       data,
       success: `We have sent you a text message. Reply to this message to
       beging chatting with one of our experts.`,
       fail: 'Failed to send you a text message'
-    }).finally(() => {
-      // reset working state
-      dispatch('setWorking', {group: 'dcloud', type: 'sms', value: false})
     })
+    // reset working state
+    dispatch('setWorking', {group: 'dcloud', type: 'sms', value: false})
   }
 }
 
