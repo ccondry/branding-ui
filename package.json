@@ -45,6 +45,7 @@
     "he": "^1.1.1",
     "mdi": "^1.8.36",
     "moment": "^2.20.1",
+    "query-string": "^6.4.2",
     "transform-runtime": "0.0.0",
     "vue": "^2.6.8",
     "vue-cleave": "1.1.1",
