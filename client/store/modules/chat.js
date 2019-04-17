@@ -36,7 +36,7 @@ const actions = {
     // make a URL-friendly query string from JSON data
     const qs = queryString.stringify(query)
     // build the URL
-    const url = `https://mm-static.cxdemo.net/ccone-chat?${qs}`
+    const url = `https://mm-static.cxdemo.net/ccone-chat.html?${qs}`
     console.log('popCconeChatWindow - starting chat with full url =', url)
     // pop the chat window
     let w = 400
