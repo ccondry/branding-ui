@@ -38,12 +38,14 @@ const actions = {
     // build the URL
     const url = `https://mm-static.cxdemo.net/ccone-chat.html?${qs}`
     console.log('popCconeChatWindow - starting chat with full url =', url)
+
     // pop the chat window
-    let w = 400
-    let h = 600
+    let w = window.screen.width * 0.6
+    let h = 115
     let top = (window.screen.height / 2) - (h / 2)
     let left = (window.screen.width / 2) - (w / 2)
-    window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
+    const settings = `width=${w}, height=${h}, top=${top}, left=${left}, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no`
+    window.open(url, '_blank', settings)
     console.log('popCconeChatWindow - chat window opened.')
   },
   popUpstreamChatWindow ({getters}, data) {
