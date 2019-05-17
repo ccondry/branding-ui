@@ -40,8 +40,9 @@ const actions = {
     console.log('popCconeChatWindow - starting chat with full url =', url)
 
     // pop the chat window
-    let w = window.screen.width * 0.6
-    let h = 115
+    // let w = window.screen.width * 0.6
+    let w = 500
+    let h = window.screen.height * 0.9
     let top = (window.screen.height / 2) - (h / 2)
     let left = (window.screen.width / 2) - (w / 2)
     const settings = `width=${w}, height=${h}, top=${top}, left=${left}, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no`
