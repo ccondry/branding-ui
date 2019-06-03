@@ -574,7 +574,6 @@ export default {
         return
       } else if (this.isCjpWebex) {
         // CJP chat from Webex Sandbox (old spark care chat)
-        // meady's org info:
         window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
       } else if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
         // UCCX and bubble chat is enabled
