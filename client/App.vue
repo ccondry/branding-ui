@@ -364,6 +364,8 @@ export default {
       'isUccx',
       'isPcce',
       'isCjp',
+      'isCjpCcone',
+      'isCjpWebex',
       'isRcdn',
       'isUpstream',
       'sessionInfo',
@@ -441,7 +443,7 @@ export default {
       if (!this.isCjp && this.model.callbackEnabled) {
         ret.push(callback)
       }
-      if (this.model.emailEnabled) {
+      if (!this.isCjpWebex && this.model.emailEnabled) {
         ret.push(email)
       }
       if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
@@ -552,10 +554,10 @@ export default {
       this.email = data.email
       // close the modal
       this.showChatModal = false
-      if (this.isCjp) {
+      if (this.isCjpCcone) {
         // pop CJP CCone chat window
         this.popCconeChatWindow(data)
-      } else {
+      } else if (this.isUpstream) {
         // pop Upstream chat window
         this.popUpstreamChatWindow(data)
       }
@@ -566,13 +568,16 @@ export default {
       if (this.isUpstream) {
         this.showChatModal = true
         return
-      }
-      if (this.isCjp) {
+      } else if (this.isCjpCcone) {
         // show chat modal for cjp
         this.showChatModal = true
         return
-      }
-      if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
+      } else if (this.isCjpWebex) {
+        // CJP chat from Webex Sandbox (old spark care chat)
+        // meady's org info:
+        // window.initSparkCareChat('a17aa3cd-b877-4013-81a0-605ff17cd5b7', '4cf33780-7d59-11e9-a00f-d3da35871de9')
+        window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+      } else if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
         // UCCX and bubble chat is enabled
         // use bubble chat!
         let smHost
@@ -589,15 +594,13 @@ export default {
         // close the contact menu
         this.showContactPanel = false
         return
-      }
-      if (this.chatBotEnabled) {
+      } else if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
         // set chat bot iframe to the chat bot URL
         this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
         return
-      }
-      if (this.isUccx) {
+      } else if (this.isUccx) {
         // UCCX demo and chat bot not enabled
         // run chat bot with bot turned off for CCX
         // hide contact panel menu and show chat bot
@@ -605,8 +608,7 @@ export default {
         // set chat bot iframe to the chat bot URL
         this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
         return
-      }
-      if (this.isPcce) {
+      } else if (this.isPcce) {
         // PCCE demo and chat bot not enabled
         // pop ECE chat window
         this.popEceChatWindow()
