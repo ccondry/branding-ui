@@ -22,6 +22,10 @@ const getters = {
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
   // is this a CJP demo?
   isCjp: (state, getters) => state.datacenter.toLowerCase() === 'cjp',
+  // is this a CJP CCOne demo?
+  isCjpCcone: (state, getters) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'ccone',
+  // is this a CJP Webex Sandbox Spark Chat demo?
+  isCjpWebex: (state, getters) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'webex',
   // is this an RCDN (Compete Lab) demo?
   isRcdn: (state, getters) => state.datacenter.toLowerCase() === 'rcdn',
   // is this a an instant demo?
