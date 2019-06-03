@@ -431,7 +431,7 @@ export default {
       }
 
       const ret = []
-      if (this.model.chatEnabled) {
+      if (!this.isCjpWebex && this.model.chatEnabled) {
         ret.push(chat)
       }
       if (!this.isCjp && !this.isUpstream && this.model.smsEnabled) {
@@ -573,8 +573,7 @@ export default {
         this.showChatModal = true
         return
       } else if (this.isCjpWebex) {
-        // CJP chat from Webex Sandbox (old spark care chat)
-        window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+        // do nothing - should not be here
       } else if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
         // UCCX and bubble chat is enabled
         // use bubble chat!
@@ -766,6 +765,12 @@ export default {
             icon: 'close-circle',
             iconPack: 'mdi'
           })
+        }
+      } else {
+        // brand is set
+        if (this.isCjpWebex) {
+          // init CJP chat from Webex Sandbox (old spark care chat)
+          window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
         }
       }
     }
