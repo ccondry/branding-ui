@@ -567,11 +567,9 @@ export default {
       console.log('clickChat', event)
       if (this.isUpstream) {
         this.showChatModal = true
-        return
       } else if (this.isCjpCcone) {
         // show chat modal for cjp
         this.showChatModal = true
-        return
       } else if (this.isCjpWebex) {
         // do nothing - should not be here
       } else if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
@@ -590,13 +588,11 @@ export default {
         ciscoBubbleChat.showChatWindow()
         // close the contact menu
         this.showContactPanel = false
-        return
       } else if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
         // set chat bot iframe to the chat bot URL
         this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
-        return
       } else if (this.isUccx) {
         // UCCX demo and chat bot not enabled
         // run chat bot with bot turned off for CCX
@@ -604,7 +600,6 @@ export default {
         this.showChatBot = true
         // set chat bot iframe to the chat bot URL
         this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
-        return
       } else if (this.isPcce) {
         // PCCE demo and chat bot not enabled
         // pop ECE chat window
