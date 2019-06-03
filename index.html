@@ -21,6 +21,27 @@ var EG_ACT_ID="EG16529739"; (function(e,f){var d,c,b,a=e.createElement("iframe")
 <!-- CCOne chat js -->
 <!-- <script type="text/javascript"  src="https://mm.ccone.net/chat-adapter/html/js/ThinConnectChatAPI4.js?1"></script> -->
 
+<!-- CJP Sandbox chat js -->
+<script>
+//Name of the Customer Support Template: CJP_Chat_meady
+//Name of the Organization: meady.webexsandbox.co
+  function initSparkCareChat (orgId, templateId) {
+    var bubbleScript = document.createElement('script')
+    e = document.getElementsByTagName('script')[0]
+    bubbleScript.async = true
+    bubbleScript.CiscoAppId =  'cisco-chat-bubble-app'
+    bubbleScript.appPrefix = ''
+    bubbleScript.DC = 'produs1.ciscoccservice.com'
+    bubbleScript.orgId = orgId
+    bubbleScript.templateId = templateId
+    bubbleScript.src = 'https://bubble.produs1.ciscoccservice.com/bubble.js'
+    bubbleScript.type = 'text/javascript'
+    bubbleScript.setAttribute('charset', 'utf-8')
+    e.parentNode.insertBefore(bubbleScript, e)
+  }
+</script>
+<!-- <script type="text/javascript"  src="https://mm.ccone.net/chat-adapter/html/js/ThinConnectChatAPI4.js?1"></script> -->
+
 <!-- UCCX bubble chat -->
 <script type="application/javascript">
 function initBubbleChat (smHost, widgetId) {
