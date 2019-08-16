@@ -27,7 +27,7 @@
             <td>&gt;</td>
             <td><strong>{{ vivr }}</strong></td>
           </tr>
-          <tr v-if="isInstantDemo">
+          <tr v-if="isInstantDemo && (isPcce || isUccx)">
             <td>{{ aiLabel }}</td>
             <td>&gt;</td>
             <td><strong>{{ ai }}</strong></td>
@@ -48,11 +48,15 @@ import {formatUnicorn} from '../utils'
 export default {
   props: [
     'sessionInfo',
+    'sessionConfig',
     'isPcce',
     'isUccx',
     'isInstantDemo',
     'isUpstream',
-    'model'
+    'model',
+    'isCwccV1',
+    'dids',
+    'cwccDid'
   ],
   methods: {
   },
@@ -85,7 +89,12 @@ export default {
       return formatUnicorn(this.modalText, this.main)
     },
     main () {
-      return this.sessionInfo.phone.international
+      if (this.isCwccV1) {
+        return this.cwccDid
+      } else {
+        // all others use the main 'phone' sent by the API
+        return this.sessionInfo.phone.international
+      }
     },
     uwf () {
       return this.sessionInfo.uwf.international

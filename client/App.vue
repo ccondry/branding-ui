@@ -77,9 +77,13 @@
       <call-form v-if="Object.keys(sessionInfo)"
       :model="model"
       :session-info="sessionInfo"
+      :session-config="sessionConfig"
+      :dids="dids"
       :is-upstream="isUpstream"
       :is-pcce="isPcce"
       :is-uccx="isUccx"
+      :is-cwcc-v1="isCwccV1"
+      :cwcc-did="cwccDid"
       :is-instant-demo="isInstantDemo" />
     </b-modal>
 
@@ -379,7 +383,9 @@ export default {
       'sessionInfoError',
       'demoConfig',
       'isCwcc',
-      'isCwccV1'
+      'isCwccV1',
+      'dids',
+      'cwccDid'
     ]),
     contactOptions () {
       const chat = {
@@ -700,6 +706,10 @@ export default {
         } catch (e) {
           console.log('failed to format call number:', e)
         }
+      } else if (this.isCwccV1) {
+        // CWCC v1 demo
+        const formattedCallNumber = formatUnicorn(this.model.callText, this.cwccDid)
+        this.$set(this.model, 'callText', formattedCallNumber)
       } else {
         // not upstream demo
         // set main call number using template
