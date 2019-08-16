@@ -41,7 +41,11 @@ const getters = {
   // just the branding-specific config in the vertical
   brandConfig: state => state.brandConfig.brand,
   // null if no errors, object if errors getting dCloud session info
-  sessionInfoError: state => state.sessionInfoError
+  sessionInfoError: state => state.sessionInfoError,
+  // is this a Cisco Webex Contact Center demo?
+  isCwcc: (state, getters) => getters.sessionConfig.toLowerCase() === 'cwcc',
+  // is this a Cisco Webex Contact Center v1 demo?
+  isCwccV1: (state, getters) => getters.sessionConfig.toLowerCase() === 'cwcc' && state.sessionConfig.version.toLowerCase() === 'v1'
 }
 
 const state = {
