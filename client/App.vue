@@ -377,7 +377,9 @@ export default {
       'datacenter',
       'sessionId',
       'sessionInfoError',
-      'demoConfig'
+      'demoConfig',
+      'isCwcc',
+      'isCwccV1'
     ]),
     contactOptions () {
       const chat = {
@@ -431,19 +433,19 @@ export default {
       }
 
       const ret = []
-      if (!this.isCjpWebex && this.model.chatEnabled) {
+      if (!this.isCwccV1 && !this.isCjpWebex && this.model.chatEnabled) {
         ret.push(chat)
       }
-      if (!this.isCjp && !this.isUpstream && this.model.smsEnabled) {
+      if (!this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
       }
       if (this.model.callEnabled) {
         ret.push(call)
       }
-      if (!this.isCjp && this.model.callbackEnabled) {
+      if (!this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
         ret.push(callback)
       }
-      if (!this.isCjpWebex && this.model.emailEnabled) {
+      if (!this.isCwccV1 && !this.isCjpWebex && this.model.emailEnabled) {
         ret.push(email)
       }
       if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
