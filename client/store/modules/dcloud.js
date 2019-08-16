@@ -43,9 +43,21 @@ const getters = {
   // null if no errors, object if errors getting dCloud session info
   sessionInfoError: state => state.sessionInfoError,
   // is this a Cisco Webex Contact Center demo?
-  isCwcc: (state, getters) => getters.sessionConfig.toLowerCase() === 'cwcc',
+  isCwcc: (state, getters) => {
+    try {
+      return getters.sessionInfo.demo.toLowerCase() === 'cwcc'
+    } catch (e) {
+      return false
+    }
+  },
   // is this a Cisco Webex Contact Center v1 demo?
-  isCwccV1: (state, getters) => getters.sessionConfig.toLowerCase() === 'cwcc' && state.sessionConfig.version.toLowerCase() === 'v1'
+  isCwccV1: (state, getters) => {
+    try {
+      return getters.sessionInfo.demo.toLowerCase() === 'cwcc' && state.sessionInfo.version.toLowerCase() === 'v1'
+    } catch (e) {
+      return false
+    }
+  }
 }
 
 const state = {
