@@ -27,7 +27,7 @@
             <td>&gt;</td>
             <td><strong>{{ vivr }}</strong></td>
           </tr>
-          <tr v-if="isInstantDemo && (isPcce || isUccx)">
+          <tr v-if="(isPcce || isUccx) && (isInstantDemo || sessionInfo.version === '12.0v1')">
             <td>{{ aiLabel }}</td>
             <td>&gt;</td>
             <td><strong>{{ ai }}</strong></td>
