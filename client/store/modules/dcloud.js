@@ -66,14 +66,19 @@ const getters = {
     }
   },
   cwccDid: (state, getters) => {
-    // for CWCC demo, determine main phone number based on vertical selected
-    switch (getters.sessionConfig.vertical) {
-      case 'finance': return getters.dids.DID7
-      case 'travel': return getters.dids.DID8
-      case 'healthcare': return getters.dids.DID9
-      case 'city': return getters.dids.DID5
-      case 'utility': return getters.dids.DID10
-      default: return getters.dids.DID7
+    try {
+      // for CWCC demo, determine main phone number based on vertical selected
+      switch (getters.sessionConfig.vertical) {
+        case 'finance': return getters.dids.DID7
+        case 'travel': return getters.dids.DID8
+        case 'healthcare': return getters.dids.DID9
+        case 'city': return getters.dids.DID5
+        case 'utility': return getters.dids.DID10
+        default: return getters.dids.DID7
+      }
+    } catch (e) {
+      // maybe getters.dids is not defined
+      return ''
     }
   }
 }
