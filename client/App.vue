@@ -562,7 +562,8 @@ export default {
       this.email = data.email
       // close the modal
       this.showChatModal = false
-      if (this.isCjpCcone) {
+      if (this.isCjpCcone || this.isCwccV1) {
+        // CJP CCOne and CWCC v1 (R10)
         // pop CJP CCone chat window
         this.popCconeChatWindow(data)
       } else if (this.isUpstream) {
