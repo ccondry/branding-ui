@@ -18,6 +18,7 @@
             <option value="SNG">APJ</option>
             <option value="CJP">CJP</option>
             <option value="RCDN">RCDN</option>
+            <option value="CWCC">CWCC</option>
           </b-select>
         </b-field>
 
