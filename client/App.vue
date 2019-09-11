@@ -439,7 +439,7 @@ export default {
       }
 
       const ret = []
-      if (!this.isCwccV1 && !this.isCjpWebex && this.model.chatEnabled) {
+      if (!this.isCjpWebex && this.model.chatEnabled) {
         ret.push(chat)
       }
       if (!this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
