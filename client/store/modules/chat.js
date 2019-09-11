@@ -1,4 +1,4 @@
-// import { Toast } from 'buefy/dist/components/toast'
+import { Toast } from 'buefy/dist/components/toast'
 import queryString from 'query-string'
 
 const getters = {
@@ -13,21 +13,44 @@ const mutations = {
 const actions = {
   popCconeChatWindow ({getters}, data) {
     console.log('popCconeChatWindow', data)
+    // for CCOne / CWCC R10
+    // use tenant and reason IDs from session config
+    const tenantId = getters.sessionConfig.tenantId
+    const reasonId = getters.sessionConfig.reasonId
     // validate
-    if (isNaN(getters.sessionConfig.reasonId) || isNaN(getters.sessionConfig.tenantId)) {
-      // reasonId or tenantId are not set - pop error message
-      console.log('popCconeChatWindow - reasonId or tenantId are not set. Not starting chat.')
+    if (isNaN(tenantId)) {
+      // tenantId is not set - pop error message
+      console.log('popCconeChatWindow - tenantId is not set. Not starting chat.')
+      // notify user that chat is not configured properly
+      Toast.open({
+        // duration: 5000,
+        message: 'Chat tenant ID is not set - please configure this in the Brand Toolbox.',
+        type: 'is-danger'
+      })
       // stop here - don't pop chat window without all the params
       return
     }
+    if (isNaN(reasonId)) {
+      // reasonId is not set - pop error message
+      console.log('popCconeChatWindow - reasonId is not set. Not starting chat.')
+      // notify user that chat is not configured properly
+      Toast.open({
+        // duration: 5000,
+        message: 'Chat tenant ID is not set - please configure this in the Brand Toolbox.',
+        type: 'is-danger'
+      })
+      // stop here - don't pop chat window without all the params
+      return
+    }
+    // tenant ID and reason ID are configured - continue
     // build URL query parameter options
     const query = {
       name: data.name,
       phone: data.phone,
       email: data.email,
       question: data.message,
-      reasonId: getters.sessionConfig.reasonId,
-      tenantId: getters.sessionConfig.tenantId,
+      reasonId,
+      tenantId,
       data0: 'Cumulus Homepage',
       data1: 'Model_X Diamond Customer',
       data2: 'Finance Quote'
