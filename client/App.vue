@@ -370,6 +370,7 @@ export default {
       'isCjp',
       'isCjpCcone',
       'isCjpWebex',
+      'isTsaCwcc',
       'isRcdn',
       'isUpstream',
       'sessionInfo',
@@ -779,6 +780,11 @@ export default {
         if (this.isCjpWebex) {
           // init CJP chat from Webex Sandbox (old spark care chat)
           window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+        }
+        if (this.isTsaCwcc) {
+          // this is the new CWCC Abilene tenant for Cisco TSAs
+          // init Abilene CWCC chat
+          window.initTsaCwccChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
         }
       }
     }
