@@ -784,7 +784,7 @@ export default {
         if (this.isTsaCwcc) {
           // this is the new CWCC Abilene tenant for Cisco TSAs
           // init Abilene CWCC chat
-          window.initTsaCwccChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+          window.initCwccTsaChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
         }
       }
     }
