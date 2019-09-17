@@ -580,6 +580,8 @@ export default {
       } else if (this.isCjpCcone) {
         // show chat modal for cjp
         this.showChatModal = true
+      } else if (this.isCwccV1) {
+        this.showChatModal = true
       } else if (this.isCjpWebex) {
         // do nothing - should not be here
       } else if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
