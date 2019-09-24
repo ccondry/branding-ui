@@ -17,14 +17,16 @@ const actions = {
     // use tenant and reason IDs from session config
     const tenantId = getters.sessionConfig.tenantId
     const reasonId = getters.sessionConfig.reasonId
+    const message = 'Chat tenant ID is not set - please contact support team to provision your chat features.'
+    const conosleMessage = 'popCconeChatWindow - chat reasonId is not set. Not starting chat.'
     // validate
     if (isNaN(tenantId)) {
       // tenantId is not set - pop error message
-      console.log('popCconeChatWindow - tenantId is not set. Not starting chat.')
+      console.log(consoleMessage)
       // notify user that chat is not configured properly
       Toast.open({
-        // duration: 5000,
-        message: 'Chat tenant ID is not set - please configure this in the Brand Toolbox.',
+        duration: 5000,
+        message,
         type: 'is-danger'
       })
       // stop here - don't pop chat window without all the params
@@ -32,11 +34,11 @@ const actions = {
     }
     if (isNaN(reasonId)) {
       // reasonId is not set - pop error message
-      console.log('popCconeChatWindow - reasonId is not set. Not starting chat.')
+      console.log(consoleMessage)
       // notify user that chat is not configured properly
       Toast.open({
-        // duration: 5000,
-        message: 'Chat tenant ID is not set - please configure this in the Brand Toolbox.',
+        duration: 5000,
+        message,
         type: 'is-danger'
       })
       // stop here - don't pop chat window without all the params
