@@ -18,7 +18,7 @@ const actions = {
     const tenantId = getters.sessionConfig.tenantId
     const reasonId = getters.sessionConfig.reasonId
     const message = 'Chat tenant ID is not set - please contact support team to provision your chat features.'
-    const conosleMessage = 'popCconeChatWindow - chat reasonId is not set. Not starting chat.'
+    const consoleMessage = 'popCconeChatWindow - chat reasonId is not set. Not starting chat.'
     // validate
     if (isNaN(tenantId)) {
       // tenantId is not set - pop error message
