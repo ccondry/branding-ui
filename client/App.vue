@@ -443,13 +443,13 @@ export default {
       if (!this.isCjpWebex && this.model.chatEnabled) {
         ret.push(chat)
       }
-      if (!this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
+      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
       }
       if (this.model.callEnabled) {
         ret.push(call)
       }
-      if (!this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
+      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
         ret.push(callback)
       }
       if (!this.isCwccV1 && !this.isCjpWebex && this.model.emailEnabled) {
