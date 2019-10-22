@@ -274,7 +274,8 @@ export default {
         smsEnabled: true,
         smsIcon: 'message-processing',
         smsHeading: 'Text Us',
-        smsText: '{0}',
+        // smsText: '{0}',
+        smsText: 'An expert will text with you live',
         smsWaitTime: '1 min wait time',
         smsModalText: `Enter your mobile phone number and we will text you.
           Reply to begin texting with one of our experts.`,
@@ -283,7 +284,7 @@ export default {
         callEnabled: true,
         callIcon: 'phone',
         callHeading: 'Call Us',
-        callText: '{0}',
+        callText: 'Call an expert now',
         callWaitTime: '8 min wait time',
         callModalText: 'You can reach one of our experts by phone:',
         callModalMainLabel: 'Main',
