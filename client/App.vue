@@ -267,7 +267,7 @@ export default {
         // chat
         chatEnabled: true,
         chatIcon: 'message-processing',
-        chatHeading: 'Chat Now',
+        chatHeading: 'Chat Live',
         chatText: 'An expert will chat with you live',
         chatWaitTime: '1 min wait time',
         // sms
