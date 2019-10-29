@@ -473,19 +473,19 @@ export default {
       // determine which options are enabled for this demo type and vertical
       const ret = []
       // chat
-      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.model.chatBotEnabled) {
+      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
         ret.push(chat)
       }
       // chat bot
-      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled) {
+      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
         ret.push(chatBot)
       }
       // SMS
-      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled && !this.model.smsBotEnabled) {
+      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
         ret.push(sms)
       }
       // SMS bot
-      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsBotEnabled) {
+      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
         ret.push(smsBot)
       }
       // voice call
