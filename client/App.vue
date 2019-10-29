@@ -275,7 +275,7 @@ export default {
         chatBotIcon: 'message-processing',
         chatBotHeading: 'Chat with Bot',
         chatBotText: 'An AI-driven chat bot will assist you',
-        chatBotWaitTime: 'no wait time',
+        chatBotWaitTime: 'No wait time',
         // sms
         smsEnabled: true,
         smsIcon: 'message-processing',
