@@ -463,24 +463,31 @@ export default {
       if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled) {
         ret.push(chatBot)
       }
+      // SMS
       if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
       }
+      // voice call
       if (this.model.callEnabled) {
         ret.push(call)
       }
+      // voice callback
       if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
         ret.push(callback)
       }
+      // email
       if (!this.isCwccV1 && !this.isCjpWebex && this.model.emailEnabled) {
         ret.push(email)
       }
+      // task routing
       if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
         ret.push(task)
       }
+      // cobrowse
       if (this.isPcce && !this.isUpstream && this.model.cobrowseEnabled) {
         ret.push(cobrowse)
       }
+      // return the array of options
       return ret
     }
   },
