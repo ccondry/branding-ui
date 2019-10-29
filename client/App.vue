@@ -270,6 +270,12 @@ export default {
         chatHeading: 'Chat Live',
         chatText: 'An expert will chat with you live',
         chatWaitTime: '1 min wait time',
+        // chat bot
+        chatBotEnabled: true,
+        chatBotIcon: 'message-processing',
+        chatBotHeading: 'Chat with Bot',
+        chatBotText: 'An AI-driven chat bot will assist you',
+        chatBotWaitTime: 'no wait time',
         // sms
         smsEnabled: true,
         smsIcon: 'message-processing',
@@ -390,12 +396,20 @@ export default {
       'cwccDid'
     ]),
     contactOptions () {
+      // build all possible contact options
       const chat = {
         click: this.clickChat,
         icon: this.model.chatIcon,
         heading: this.model.chatHeading,
         subtext: this.model.chatText,
         waitTime: this.model.chatWaitTime
+      }
+      const chatBot = {
+        click: this.clickChat,
+        icon: this.model.chatBotIcon,
+        heading: this.model.chatBotHeading,
+        subtext: this.model.chatBotText,
+        waitTime: this.model.chatBotWaitTime
       }
       const sms = {
         click: this.clickSms,
@@ -439,10 +453,15 @@ export default {
         subtext: this.model.cobrowseText,
         waitTime: this.model.cobrowseWaitTime
       }
-
+      // determine which options are enabled for this demo type and vertical
       const ret = []
-      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled) {
+      // chat
+      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.model.chatBotEnabled) {
         ret.push(chat)
+      }
+      // chat bot
+      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled) {
+        ret.push(chatBot)
       }
       if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
         ret.push(sms)
