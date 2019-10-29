@@ -279,13 +279,23 @@ export default {
         // sms
         smsEnabled: true,
         smsIcon: 'message-processing',
-        smsHeading: 'Text Us',
+        smsHeading: 'Text Us Live',
         // smsText: '{0}',
         smsText: 'An expert will text with you live',
         smsWaitTime: '1 min wait time',
         smsModalText: `Enter your mobile phone number and we will text you.
           Reply to begin texting with one of our experts.`,
         smsMessage: encodeURIComponent('Hello! Please reply to this text message to begin chatting with us.'),
+        // sms bot
+        smsBotEnabled: true,
+        smsBotIcon: 'message-processing',
+        smsBotHeading: 'Text with Bot',
+        // smsBotText: '{0}',
+        smsBotText: 'Text with an AI-driven chat bot',
+        smsBotWaitTime: 'No wait time',
+        smsBotModalText: `Enter your mobile phone number and we will text you.
+          Reply to begin texting with an AI-driven chat bot.`,
+        smsBotMessage: encodeURIComponent('Hello! Please reply to this text message to begin chatting with us.'),
         // call
         callEnabled: true,
         callIcon: 'phone',
@@ -418,6 +428,13 @@ export default {
         subtext: this.model.smsText,
         waitTime: this.model.smsWaitTime
       }
+      const smsBot = {
+        click: this.clickSms,
+        icon: this.model.smsBotIcon,
+        heading: this.model.smsBotHeading,
+        subtext: this.model.smsBotText,
+        waitTime: this.model.smsBotWaitTime
+      }
       const call = {
         click: this.clickCall,
         icon: this.model.callIcon,
@@ -464,8 +481,12 @@ export default {
         ret.push(chatBot)
       }
       // SMS
-      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled) {
+      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled && !this.model.smsBotEnabled) {
         ret.push(sms)
+      }
+      // SMS bot
+      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsBotEnabled) {
+        ret.push(smsBot)
       }
       // voice call
       if (this.model.callEnabled) {
