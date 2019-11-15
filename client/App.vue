@@ -472,42 +472,173 @@ export default {
       }
       // determine which options are enabled for this demo type and vertical
       const ret = []
-      // chat
-      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
-        ret.push(chat)
+
+      if (this.isCjpCcone) {
+        // CXDemo TSA users R10 demo tenant ("Gold Tenant")
+        // chat
+        if (this.model.chatEnabled) {
+          ret.push(chat)
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
+      } else if (this.isTsaCwcc) {
+        // CXDemo TSA users CWCC abilene demo tenant
+        // chat
+        if (this.model.chatEnabled) {
+          ret.push(chat)
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
+      } else if (this.isCjpWebex) {
+        // CJP Webex Sandbox Spark Chat demo? meady's demo?
+        // chat
+        if (this.model.chatEnabled) {
+          ret.push(chat)
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
+      } else if (this.isPcce) {
+        // dCloud PCCE demo
+        // chat
+        if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
+          // direct chat to agent, no chat bot
+          ret.push(chat)
+        } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
+          // chat bot, with option to escalate to agent
+          ret.push(chatBot)
+        }
+        // SMS
+        if (!this.isUpstream) {
+          // disable any SMS option for upstream demos
+          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+            // direct SMS to agent, no chat bot
+            ret.push(sms)
+          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+            // SMS bot
+            ret.push(smsBot)
+          }
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // voice callback
+        if (this.model.callbackEnabled) {
+          ret.push(callback)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
+        // task routing
+        if (!this.isUpstream && this.model.taskEnabled) {
+          ret.push(task)
+        }
+        // cobrowse
+        if (!this.isUpstream && this.model.cobrowseEnabled) {
+          ret.push(cobrowse)
+        }
+      } else if (this.isUccx) {
+        // dCloud UCCX demo
+        // chat
+        if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
+          // direct chat to agent, no chat bot
+          ret.push(chat)
+        } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
+          // chat bot, with option to escalate to agent
+          ret.push(chatBot)
+        }
+        // SMS
+        if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+          // direct SMS to agent, no chat bot
+          ret.push(sms)
+        } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+          // SMS bot
+          ret.push(smsBot)
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // voice callback
+        if (this.model.callbackEnabled) {
+          ret.push(callback)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
+      } else if (this.isCwccV1) {
+        // dCloud CWCC v1 instant demo
+        // chat
+        if (this.model.chatEnabled) {
+          ret.push(chat)
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
       }
-      // chat bot
-      if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
-        ret.push(chatBot)
-      }
-      // SMS
-      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-        ret.push(sms)
-      }
-      // SMS bot
-      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-        ret.push(smsBot)
-      }
-      // voice call
-      if (this.model.callEnabled) {
-        ret.push(call)
-      }
-      // voice callback
-      if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
-        ret.push(callback)
-      }
-      // email
-      if (!this.isCwccV1 && !this.isCjpWebex && this.model.emailEnabled) {
-        ret.push(email)
-      }
-      // task routing
-      if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
-        ret.push(task)
-      }
-      // cobrowse
-      if (this.isPcce && !this.isUpstream && this.model.cobrowseEnabled) {
-        ret.push(cobrowse)
-      }
+
+      //
+      // // chat
+      // if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
+      //   ret.push(chat)
+      // }
+      // // chat bot
+      // if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
+      //   ret.push(chatBot)
+      // }
+      // // SMS
+      // if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+      //   ret.push(sms)
+      // }
+      // // SMS bot
+      // if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+      //   ret.push(smsBot)
+      // }
+      // // voice call
+      // if (this.model.callEnabled) {
+      //   ret.push(call)
+      // }
+      // // voice callback
+      // if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
+      //   ret.push(callback)
+      // }
+      // // email
+      // if (!this.isCwccV1 && !this.isCjpWebex && this.model.emailEnabled) {
+      //   ret.push(email)
+      // }
+      // // task routing
+      // if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
+      //   ret.push(task)
+      // }
+      // // cobrowse
+      // if (this.isPcce && !this.isUpstream && this.model.cobrowseEnabled) {
+      //   ret.push(cobrowse)
+      // }
       // return the array of options
       return ret
     }
