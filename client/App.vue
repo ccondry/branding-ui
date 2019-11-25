@@ -756,6 +756,7 @@ export default {
         // show chat modal for cjp
         this.showChatModal = true
       } else if (this.isCwccV1) {
+        // show chat modal for CWCC v1 demo (R10)
         this.showChatModal = true
       } else if (this.isCjpWebex) {
         // do nothing - should not be here
