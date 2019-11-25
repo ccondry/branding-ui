@@ -489,10 +489,6 @@ export default {
         }
       } else if (this.isTsaCwcc) {
         // CXDemo TSA users CWCC abilene demo tenant
-        // chat
-        if (this.model.chatEnabled) {
-          ret.push(chat)
-        }
         // voice call
         if (this.model.callEnabled) {
           ret.push(call)
