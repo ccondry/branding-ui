@@ -792,6 +792,9 @@ export default {
         // PCCE demo and chat bot not enabled
         // pop ECE chat window
         this.popEceChatWindow()
+      } else if (this.isTsaCwcc) {
+        // we should not be here. Abilene chats should be started by clicking
+        // the bubble chat icon, which is not in the contact panel
       }
     },
     clickSms (event) {
