@@ -10,7 +10,7 @@ const getters = {
   datacenter: state => state.datacenter,
   // dCloud instant demo user ID
   userId: state => state.userId,
-  // dCloud session information, including configuraiton
+  // dCloud session information, including configuration
   sessionInfo: state => state.sessionInfo,
   // dCloud session configuration
   sessionConfig: (state, getters) => getters.sessionInfo.configuration || {},
