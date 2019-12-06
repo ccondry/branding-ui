@@ -20,7 +20,7 @@ function sleep (ms) {
 const actions = {
   async loadSurfly ({getters, commit, state}) {
     // try to find widget key in local storage
-    const localKey = localStorage.getItem('surflyWidgetKey')
+    const localKey = window.localStorage.getItem('surflyWidgetKey')
     if (!getters.sessionConfig.surflyWidgetKey && !localKey) {
       console.log('No surflyWidgetKey was found in the user/session config or in localStorage. Surfly not started.')
     }
