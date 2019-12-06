@@ -14,7 +14,7 @@ const mutations = {
 }
 
 const actions = {
-  loadSurfly ({commit, state}) {
+  loadSurfly ({getters, commit, state}) {
     if (!getters.sessionConfig.surflyWidgetKey) {
       console.log('No Surfly widget key was found in the user/session config. Surfly not started.')
     }
