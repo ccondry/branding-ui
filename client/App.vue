@@ -598,14 +598,6 @@ export default {
         }
       }
 
-      // check if surfly cobrowse is enabled
-      if (this.model.surflyEnabled) {
-        // add cobrowse option if it is not already added
-        if (!ret.includes(cobrowse)) {
-          ret.push(cobrowse)
-        }
-      }
-
       //
       // // chat
       // if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
@@ -853,27 +845,22 @@ export default {
     },
     clickCobrowse (event) {
       console.log('click cobrowse button', event)
-      if (this.model.surflyEnabled) {
-        // do surfly cobrowse
-        this.initSurfly()
+      // do egain cobrowse?
+      if (document.eGain) {
+        console.log('running document.eGain.cobrowse.startCobrowse()')
+        document.eGain.cobrowse.startCobrowse()
+      } else if (window.eGain) {
+        console.log('running window.eGain.cobrowse.startCobrowse()')
+        window.eGain.cobrowse.startCobrowse()
       } else {
-        // do egain cobrowse?
-        if (document.eGain) {
-          console.log('running document.eGain.cobrowse.startCobrowse()')
-          document.eGain.cobrowse.startCobrowse()
-        } else if (window.eGain) {
-          console.log('running window.eGain.cobrowse.startCobrowse()')
-          window.eGain.cobrowse.startCobrowse()
-        } else {
-          console.log('failed to start cobrowse - window.eGain and document.eGain are undefined.')
-          this.$toast.open({
-            duration: 15000,
-            message: `eGain Cobrowse library failed to load. If you are using a
-            browser outside of the demo workstation, please make sure you are
-            connected to your demo VPN.`,
-            type: 'is-danger'
-          })
-        }
+        console.log('failed to start cobrowse - window.eGain and document.eGain are undefined.')
+        this.$toast.open({
+          duration: 15000,
+          message: `eGain Cobrowse library failed to load. If you are using a
+          browser outside of the demo workstation, please make sure you are
+          connected to your demo VPN.`,
+          type: 'is-danger'
+        })
       }
     },
     changeFavicon (src) {
@@ -1053,7 +1040,7 @@ export default {
       if (!(this.model.iframe && this.model.iframe.trim().length)) {
         this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
       }
-      // load Surfly, if enabled
+      // load and start Surfly, if enabled
       if (this.model.surflyEnabled) {
         this.loadSurfly()
       }

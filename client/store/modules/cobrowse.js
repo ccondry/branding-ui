@@ -14,25 +14,25 @@ const mutations = {
 }
 
 const actions = {
-  initSurfly ({getters}) {
-    console.log('startSurflyCobrowse')
-
+  loadSurfly ({commit, state}) {
+    if (!getters.sessionConfig.surflyWidgetKey) {
+      console.log('No Surfly widget key was found in the user/session config. Surfly not started.')
+    }
+    // only load once
+    if (state.surflyLoaded) {
+      console.log('Surfly is already loaded.')
+      return
+    }
+    // load surfly into DOM
+    window.loadSurfly(window, document, 'script', 'Surfly')
+    // set loaded flag in state
+    commit(types.SET_SURFLY_LOADED, true)
     // surfly settings
     const settings = {
       widget_key: getters.sessionConfig.surflyWidgetKey
     }
-
-    // do init surfly
+    // do init surfly. this will add the surfly cobrowse button to the DOM
     window.initSurfly(settings)
-  },
-  loadSurfly ({commit, state}) {
-    // only load once
-    if (!state.surflyLoaded) {
-      // do load surfly
-      window.loadSurfly(window, document, 'script', 'Surfly')
-      // set loaded in state
-      commit(types.SET_SURFLY_LOADED, true)
-    }
   }
 }
 
