@@ -24,3 +24,6 @@ export const SET_USER_ID = 'SET_USER_ID'
 export const SET_SESSION_INFO = 'SET_SESSION_INFO'
 export const SET_BRAND_CONFIG = 'SET_BRAND_CONFIG'
 export const SET_SESSION_INFO_ERROR = 'SET_SESSION_INFO_ERROR'
+
+// surfly cobrowse library loaded yet
+export const SET_SURFLY_LOADED = 'SET_SURFLY_LOADED'
