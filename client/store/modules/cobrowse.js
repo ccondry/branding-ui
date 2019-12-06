@@ -19,12 +19,22 @@ function sleep (ms) {
 
 const actions = {
   async loadSurfly ({getters, commit, state}) {
-    if (!getters.sessionConfig.surflyWidgetKey) {
-      console.log('No Surfly widget key was found in the user/session config. Surfly not started.')
+    // try to find widget key in local storage
+    const localKey = localStorage.getItem('surflyWidgetKey')
+    if (!getters.sessionConfig.surflyWidgetKey && !localKey) {
+      console.log('No surflyWidgetKey was found in the user/session config or in localStorage. Surfly not started.')
     }
+
+    // try to use user/session config key
+    let widgetKey = getters.sessionConfig.surflyWidgetKey
+    // if no session config key found, use local key
+    if (!widgetKey) {
+      widgetKey = localKey
+    }
+
     // surfly settings
     const settings = {
-      widget_key: getters.sessionConfig.surflyWidgetKey
+      widget_key: widgetKey
     }
     // only load once
     if (state.surflyLoaded) {
