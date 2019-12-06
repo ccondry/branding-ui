@@ -23,6 +23,7 @@ const actions = {
     const localKey = window.localStorage.getItem('surflyWidgetKey')
     if (!getters.sessionConfig.surflyWidgetKey && !localKey) {
       console.log('No surflyWidgetKey was found in the user/session config or in localStorage. Surfly not started.')
+      return
     }
 
     // try to use user/session config key
