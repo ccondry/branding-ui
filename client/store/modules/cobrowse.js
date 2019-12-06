@@ -13,10 +13,18 @@ const mutations = {
   }
 }
 
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 const actions = {
-  loadSurfly ({getters, commit, state}) {
+  async loadSurfly ({getters, commit, state}) {
     if (!getters.sessionConfig.surflyWidgetKey) {
       console.log('No Surfly widget key was found in the user/session config. Surfly not started.')
+    }
+    // surfly settings
+    const settings = {
+      widget_key: getters.sessionConfig.surflyWidgetKey
     }
     // only load once
     if (state.surflyLoaded) {
@@ -27,9 +35,10 @@ const actions = {
     window.loadSurfly(window, document, 'script', 'Surfly')
     // set loaded flag in state
     commit(types.SET_SURFLY_LOADED, true)
-    // surfly settings
-    const settings = {
-      widget_key: getters.sessionConfig.surflyWidgetKey
+    // wait for it to be loaded
+    while (!window.Surfly) {
+      // wait 300ms
+      await sleep(300)
     }
     // do init surfly. this will add the surfly cobrowse button to the DOM
     window.initSurfly(settings)
