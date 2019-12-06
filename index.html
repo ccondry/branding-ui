@@ -255,5 +255,26 @@ function initSurfly (settings) {
   })
 }
 
+// try to find widget key in local storage
+const surflyKey = window.localStorage.getItem('surflyKey')
+if (surflyKey) {
+  console.log('surflyKey is set to', surflyKey, '. Loading Surfly...')
+  // load surfly into DOM
+  window.loadSurfly(window, document, 'script', 'Surfly')
+  // now wait another bit to make sure it's done
+  setTimeout(function () {
+    // surfly settings
+    const settings = {
+      widget_key: surflyKey
+    }
+    // do init surfly. this will add the surfly cobrowse button to the DOM
+    window.initSurfly(settings)
+    // only load once
+    if (state.surflyLoaded) {
+      console.log('Surfly is already loaded.')
+      return
+    }
+  }, 1200)
+}
 </script>
 </html>

@@ -655,9 +655,7 @@ export default {
       'popEceCallbackWindow',
       'popEceChatWindow',
       'popUpstreamChatWindow',
-      'popCconeChatWindow',
-      'loadSurfly',
-      'initSurfly'
+      'popCconeChatWindow'
     ]),
     clickSubmitSessionInfo (data) {
       // user submitted modal form with dCloud session information
@@ -1039,10 +1037,6 @@ export default {
       // set default iframe to cumulus website if there was no iframe configured
       if (!(this.model.iframe && this.model.iframe.trim().length)) {
         this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
-      }
-      // load and start Surfly, if enabled
-      if (this.model.surflyEnabled) {
-        this.loadSurfly()
       }
     },
     endpoints (val) {

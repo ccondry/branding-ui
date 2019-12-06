@@ -6,7 +6,6 @@ import sms from './sms'
 import callback from './callback'
 import task from './task'
 import chat from './chat'
-import cobrowse from './cobrowse'
 
 export default {
   app,
@@ -16,6 +15,5 @@ export default {
   sms,
   callback,
   task,
-  chat,
-  cobrowse
+  chat
 }
