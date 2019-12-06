@@ -40,6 +40,8 @@ const actions = {
       // wait 300ms
       await sleep(300)
     }
+    // now wait another bit to make sure it's done
+    await sleep(800)
     // do init surfly. this will add the surfly cobrowse button to the DOM
     window.initSurfly(settings)
   }
