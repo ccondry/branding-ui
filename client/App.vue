@@ -204,6 +204,18 @@ export default {
         if (message.data.type === 'sparky.command') {
           console.log('setting iframe to', message.data.data)
           this.model.iframe = message.data.data
+        } else if (message.data.type === 'sparky.submit') {
+          const d = message.data.data
+          // save submitted data as cached user info
+          this.firstName = d.firstName
+          this.lastName = d.lastName
+          this.phone = d.phone
+          this.email = d.email
+          // update URL query parameters to match cached data
+          setQueryStringParameter('firstName', this.firstName)
+          setQueryStringParameter('lastName', this.lastName)
+          setQueryStringParameter('phone', this.phone)
+          setQueryStringParameter('email', this.email)
         }
       } catch (e) {
         // failed to process postMessage from iframe
@@ -362,6 +374,7 @@ export default {
     if (this.qs.get('userId')) {
       this.setUserId(this.qs.get('userId'))
     }
+    // set user/contact info from query parameters
     if (this.qs.get('firstName')) {
       this.firstName = this.qs.get('firstName')
       this.name = this.firstName + ' ' + this.lastName
@@ -376,9 +389,36 @@ export default {
     if (this.qs.get('email')) {
       this.email = this.qs.get('email')
     }
+    // set cached email parameters from query parameters
+    if (this.qs.get('body')) {
+      this.body = this.qs.get('body')
+    }
+    if (this.qs.get('subject')) {
+      this.subject = this.qs.get('subject')
+    }
     // load URL endpoints list from the API server
     console.log('getting endpoints...')
     this.getEndpoints(false)
+    // set up event listener for submitter user info, to cache it here
+
+    // make a cross-browser compatible event listener
+    const eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
+    const eventer = window[eventMethod]
+    const messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
+
+    // attach event listener for message from iframe
+    eventer(messageEvent, e => {
+      console.log('parent received message!:', e.data)
+      if (e.data.event === 'submit-chat') {
+        const d = e.data.data
+        // save submitted data as cached user info
+        this.firstName = d.firstName
+        this.lastName = d.lastName
+        this.phone = d.phone
+        this.email = d.email
+        this.updateUrlParameters()
+      }
+    }, false)
   },
 
   computed: {
@@ -698,13 +738,27 @@ export default {
       document.title = model.title
     },
     clickSubmitEmail (data) {
+      // clicked submit on the email modal form
+      console.log('clickSubmitEmail', data)
       // update customer data cache
       this.name = data.name
+      // try to set first/last name
+      try {
+        const nameParts = this.name.split(' ')
+        this.firstName = nameParts.shift()
+        this.lastName = nameParts.join(' ')
+      } catch (e) {
+        console.log('clickSubmitEmail - failed to parse firstName and lastName from', this.name)
+      }
       this.email = data.email
       this.subject = data.subject
       this.body = data.body
-      // clicked submit on the email modal form
-      console.log('clickSubmitEmail', data)
+      // update URL query parameters to match cached data
+      setQueryStringParameter('firstName', this.firstName)
+      setQueryStringParameter('lastName', this.lastName)
+      setQueryStringParameter('subject', this.subject)
+      setQueryStringParameter('body', this.body)
+      setQueryStringParameter('email', this.email)
       // close the modal
       this.showEmailModal = false
       // send the email
@@ -796,15 +850,59 @@ export default {
       } else if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
-        // set chat bot iframe to the chat bot URL
-        this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
+        // build chat bot iframe URL
+        let chatUrl = `https://mm-chat.cxdemo.net/?`
+        const options = {
+          expand: true,
+          session: this.sessionId,
+          datacenter: this.datacenter,
+          userId: this.userId,
+          firstName: this.firstName,
+          lastName: this.firstName,
+          phone: this.phone,
+          email: this.email
+        }
+        // append URL options
+        let count = 0
+        for (const key of Object.keys(options)) {
+          if (count !== 0) {
+            chatUrl += '&'
+          }
+          chatUrl += `${key}=${options[key]}`
+          count++
+        }
+        console.log('chatbot URL =', chatUrl)
+        // set chat iframe URL
+        this.chatIframe = chatUrl
       } else if (this.isUccx) {
         // UCCX demo and chat bot not enabled
         // run chat bot with bot turned off for CCX
         // hide contact panel menu and show chat bot
         this.showChatBot = true
-        // set chat bot iframe to the chat bot URL
-        this.chatIframe = `https://mm-chat.cxdemo.net/?expand=true&session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}&botDisabled=true`
+        // build chat bot iframe URL
+        let chatUrl = `https://mm-chat.cxdemo.net/?`
+        const options = {
+          expand: true,
+          session: this.sessionId,
+          datacenter: this.datacenter,
+          userId: this.userId,
+          firstName: this.firstName,
+          lastName: this.firstName,
+          phone: this.phone,
+          email: this.email,
+          botDisabled: true
+        }
+        // append URL options
+        let count = 0
+        for (const key of Object.keys(options)) {
+          if (count !== 0) {
+            chatUrl += '&'
+          }
+          chatUrl += `${key}=${options[key]}`
+          count++
+        }
+        // set chat iframe URL
+        this.chatIframe = chatUrl
       } else if (this.isPcce) {
         // PCCE demo and chat bot not enabled
         // pop ECE chat window
