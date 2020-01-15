@@ -514,7 +514,11 @@ export default {
       } else if (this.isPcce) {
         // dCloud PCCE demo
         // chat
-        if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
+        // Upstream chat? don't have bot option for upstream, so always show "chat live"
+        if (this.isUpstream) {
+          // direct chat to agent, no chat bot
+          ret.push(chat)
+        } else if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
           // direct chat to agent, no chat bot
           ret.push(chat)
         } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
