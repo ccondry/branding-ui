@@ -154,7 +154,7 @@
             </div>
 
             <!-- render each contact option -->
-            <footer v-for="item of contactOptions" class="card-footer contact-item">
+            <footer v-for="(item, key) of contactOptions" class="card-footer contact-item" :key="key">
               <a @click="item.click" class="card-footer-item">
                 <b-icon class="contact-icon" :icon="item.icon" />
                 <div class="content">
