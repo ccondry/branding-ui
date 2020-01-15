@@ -1086,9 +1086,9 @@ body {
   // overflow-y: hidden;
 }
 
-body:hover {
+// body:hover {
   // overflow-y: hidden;
-}
+// }
 
 #app {
   height: 100%;
