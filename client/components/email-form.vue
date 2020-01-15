@@ -51,6 +51,8 @@ export default {
   props: [
     'name',
     'email',
+    'subject',
+    'body',
     'heading',
     'modalText',
     'nameLabel',
@@ -65,6 +67,8 @@ export default {
     // copy props to data
     this.formData.name = this.name
     this.formData.email = this.email
+    this.formData.subject = this.subject
+    this.formData.body = this.body
   },
 
   data () {

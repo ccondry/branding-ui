@@ -26,7 +26,10 @@
       :message-label="model.messageLabel"
       :subject-label="model.subjectLabel"
       :name="name"
-      :email="email" />
+      :email="email"
+      :subject="subject"
+      :body="body"
+      />
     </b-modal>
 
     <b-modal :active.sync="showSmsModal" :can-cancel="true" has-modal-card width="960">
@@ -226,6 +229,8 @@ export default {
       lastName: '',
       phone: '',
       email: '',
+      subject: '',
+      body: '',
       loaded: false,
       qs: {},
       production: process.env.NODE_ENV === 'production',
@@ -696,6 +701,8 @@ export default {
       // update customer data cache
       this.name = data.name
       this.email = data.email
+      this.subject = data.subject
+      this.body = data.body
       // clicked submit on the email modal form
       console.log('clickSubmitEmail', data)
       // close the modal
