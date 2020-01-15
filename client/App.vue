@@ -118,7 +118,7 @@
         <div id="contact-panel" v-show="showContactPanel">
           <!-- Chat Bot -->
           <b-collapse class="card" v-show="showChatBot">
-            <div class="card-header" role="button" @click="showChatBot = false">
+            <div class="card-header" role="button" @click="hideChatBot">
               <p class="card-header-title contact-title">
                 {{ model.chatMenuTitle }}
               </p>
@@ -661,6 +661,12 @@ export default {
       'popUpstreamChatWindow',
       'popCconeChatWindow'
     ]),
+    hideChatBot () {
+      // change the chat bot iframe URL to kill the session
+      this.chatIframe = ''
+      // and stop showing the chat bot iframe. reveals the main menu again.
+      showChatBot = false
+    },
     clickSubmitSessionInfo (data) {
       // user submitted modal form with dCloud session information
       // hide the modal
