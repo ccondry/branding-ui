@@ -665,7 +665,7 @@ export default {
       // change the chat bot iframe URL to kill the session
       this.chatIframe = ''
       // and stop showing the chat bot iframe. reveals the main menu again.
-      showChatBot = false
+      this.showChatBot = false
     },
     clickSubmitSessionInfo (data) {
       // user submitted modal form with dCloud session information
