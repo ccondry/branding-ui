@@ -73,7 +73,9 @@
       :message-label="model.messageLabel"
       :is-uccx="isUccx"
       :name="name"
-      :phone="phone" />
+      :phone="phone"
+      :message="message"
+      />
     </b-modal>
 
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
@@ -87,7 +89,8 @@
       :is-uccx="isUccx"
       :is-cwcc-v1="isCwccV1"
       :cwcc-did="cwccDid"
-      :is-instant-demo="isInstantDemo" />
+      :is-instant-demo="isInstantDemo"
+      />
     </b-modal>
 
     <b-modal :active.sync="showChatModal" :can-cancel="true" has-modal-card width="960">
@@ -792,6 +795,7 @@ export default {
       // update customer data cache
       this.name = data.name
       this.phone = data.phone
+      // this.message = data.message
       // clicked submit on the callback modal form
       console.log('clickSubmitCallback', data)
       // close the modal

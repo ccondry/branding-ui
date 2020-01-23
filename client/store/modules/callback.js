@@ -37,7 +37,7 @@ const actions = {
       mediaAddress: data.phone,
       name: data.name,
       tags: '',
-      title: data.message,
+      title: data.message || 'Hi',
       variables: []
     }
 

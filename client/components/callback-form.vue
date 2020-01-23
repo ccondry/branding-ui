@@ -21,13 +21,13 @@
           required />
         </b-field>
 
-        <b-field :label="messageLabel" v-if="!isUccx">
+        <!-- <b-field :label="messageLabel" v-if="!isUccx">
           <b-input
           type="textarea"
           v-model="formData.message"
           placeholder="Message"
-          required />
-        </b-field>
+          />
+        </b-field> -->
 
       </section>
       <footer class="modal-card-foot">
@@ -43,11 +43,12 @@ export default {
   props: [
     'phone',
     'name',
+    'message',
     'heading',
     'modalText',
     'nameLabel',
     'phoneLabel',
-    'messageLabel',
+    // 'messageLabel',
     'cancelButton',
     'sendButton',
     'isUccx'
@@ -57,14 +58,15 @@ export default {
     // copy props to data
     this.formData.phone = this.phone
     this.formData.name = this.name
+    // this.formData.message = this.message
   },
 
   data () {
     return {
       formData: {
         name: '',
-        phone: '',
-        message: ''
+        phone: ''
+        // message: ''
       }
     }
   }
