@@ -53,6 +53,7 @@ const getters = {
     }
   },
   // is this a Cisco Webex Contact Center v1 demo?
+  // this actually includes the v2 demo as well - it's the same demo
   isCwccV1: (state, getters) => {
     try {
       return getters.sessionInfo.demo.toLowerCase() === 'cwcc' && state.sessionInfo.version.toLowerCase() === 'v1'
