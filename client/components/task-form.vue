@@ -35,10 +35,13 @@
           required
           placeholder=""
           v-model="formData.task">
-          <option
-          v-for="option in options"
-          :value="option.text">
-          {{ option.text }}</option>
+            <option
+            v-for="(option, index) in options"
+            :key="index"
+            :value="option.text"
+            >
+              {{ option.text }}
+            </option>
           </b-select>
         </b-field>
 
@@ -66,7 +69,8 @@ export default {
     'requestTypeLabel',
     'messageLabel',
     'cancelButton',
-    'sendButton'
+    'sendButton',
+    'task'
   ],
 
   mounted () {
@@ -74,6 +78,7 @@ export default {
     this.formData.phone = this.phone
     this.formData.email = this.email
     this.formData.name = this.name
+    this.formData.task = this.task
   },
 
   data () {

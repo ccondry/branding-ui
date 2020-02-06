@@ -58,7 +58,8 @@
       :request-type-label="model.requestTypeLabel"
       :name="name"
       :phone="phone"
-      :email="email" />
+      :email="email"
+      :task="task" />
     </b-modal>
 
     <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
@@ -246,6 +247,8 @@ export default {
       email: '',
       subject: '',
       body: '',
+      message: '',
+      task: null,
       loaded: false,
       qs: {},
       production: process.env.NODE_ENV === 'production',
@@ -784,6 +787,7 @@ export default {
       this.name = data.name
       this.phone = data.phone
       this.email = data.email
+      this.task = data.task
       // clicked submit on the task request modal form
       console.log('clickSubmitTask', data)
       // close the modal
