@@ -18,14 +18,23 @@ const actions = {
 
     // construct the task request object
     data.task = {
+      // customer name
       cv1: data.name,
+      // the task option, like 'Request a Parking'
       cv2: data.task,
+      // customer phone
       cv3: data.phone,
+      // customer email
       cv4: data.email,
+      // the task description, like 'Request a Parking'
       description: data.task,
+      // customer email
       email: data.email,
+      // customer name
       name: data.name,
+      // customer phone
       phone: data.phone,
+      // the task title, like 'Request a Parking'
       title: data.task
     }
 
