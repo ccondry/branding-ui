@@ -41,6 +41,12 @@ const actions = {
     // task PQ ID for routing
     if (getters.sessionConfig.taskPqId) {
       data.task.cv5 = getters.sessionConfig.taskPqId
+      req.body.task.pqId = getters.sessionConfig.taskPqId
+    }
+    // task call type ID, for reporting
+    if (getters.sessionConfig.taskCtId) {
+      data.task.cv6 = getters.sessionConfig.taskCtId
+      req.body.task.ctId = getters.sessionConfig.taskCtId
     }
 
     // set working state
