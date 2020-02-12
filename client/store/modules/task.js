@@ -29,6 +29,11 @@ const actions = {
       title: data.task
     }
 
+    // task PQ ID for routing
+    if (getters.sessionConfig.taskPqId) {
+      data.task.cv5 = getters.sessionConfig.taskPqId
+    }
+
     // set working state
     dispatch('setWorking', {group: 'dcloud', type: 'task', value: true})
     console.debug('starting send task request:', data)
