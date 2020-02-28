@@ -2,6 +2,8 @@ import { Toast } from 'buefy/dist/components/toast'
 import queryString from 'query-string'
 
 const getters = {
+  // ECE chat entry point ID
+  entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001'
 }
 
 const state = {
@@ -90,7 +92,7 @@ const actions = {
   popEceChatWindow ({getters}) {
     console.log('popEceChatWindow')
     // create url
-    let url = `https://${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=1001&templateName=aqua&ver=v11&locale=en-US`
+    let url = `https://${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/chat/aqua/index.html?subActivity=Chat&entryPointId=${getters.entryPointId}&templateName=aqua&ver=v11&locale=en-US`
     console.log('ECE chat URL:', url)
     let w = 400
     let h = 600
