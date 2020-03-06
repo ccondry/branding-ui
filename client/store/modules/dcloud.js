@@ -3,6 +3,38 @@ import {load} from '../../utils'
 import { Toast } from 'buefy/dist/components/toast'
 import Vue from 'vue'
 
+// const didMap = [{
+//   name: 'DID1',
+//   internal: '7800'
+// }, {
+//   name: 'DID2',
+//   internal: '6021'
+// }, {
+//   name: 'DID3',
+//   internal: '6022'
+// }, {
+//   name: 'DID4',
+//   internal: '6023'
+// }, {
+//   name: 'DID5',
+//   internal: '6020'
+// }, {
+//   name: 'DID6',
+//   internal: '7019'
+// }, {
+//   name: 'DID7',
+//   internal: '6016'
+// }, {
+//   name: 'DID8',
+//   internal: '6017'
+// }, {
+//   name: 'DID9',
+//   internal: '6018'
+// }, {
+//   name: 'DID10',
+//   internal: '6019'
+// }]
+
 const getters = {
   // dCloud session ID
   sessionId: state => state.sessionId,
