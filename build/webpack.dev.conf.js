@@ -35,7 +35,8 @@ module.exports = merge(baseWebpackConfig, {
       title: '',
       template: 'index.html',
       inject: true,
-      favicon: ''
+      favicon: '',
+      environment: 'development'
     })
   ]
 })
