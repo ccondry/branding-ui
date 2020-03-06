@@ -44,14 +44,36 @@ export default {
   computed: {
     numbers () {
       const ret = []
-      // the phone numbers to display
+      // returns the phone numbers to display
+      if (this.isPcce && this.demoVersion === '12.5CVA') {
+      // PCCE 12.5CVA lab
+        ret.push({
+          label: this.mainLabel,
+          number: this.dids.DID7
+        })
+        ret.push({
+          label: 'DFAudio',
+          number: this.dids.DID8
+        })
+        ret.push({
+          label: 'DFRemote',
+          number: this.dids.DID9
+        })
+        ret.push({
+          label: 'DFTranscribe',
+          number: this.dids.DID5
+        })
+        // return
+        return ret
+      }
+
       // main number for all demos
       ret.push({
         label: this.mainLabel,
         number: this.main
       })
       // normal PCCE, not with Upstream and not 12.5CVA lab, has gold and VIVR numbers
-      if (this.isPcce && !this.isUpstream && !this.demoVersion === '12.5CVA') {
+      if (this.isPcce && !this.isUpstream) {
         ret.push({
           label: this.goldLabel,
           number: this.gold
@@ -61,7 +83,7 @@ export default {
           number: this.vivr
         })
       }
-      // all PCCE and UCCX have AI number, but PCCE 12.5CVA uses DID2
+      // all PCCE and UCCX have AI number
       if (this.isPcce || this.isUccx) {
         ret.push({
           label: this.aiLabel,
