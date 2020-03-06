@@ -83,6 +83,9 @@ const getters = {
       // maybe getters.dids is not defined
       return ''
     }
+  },
+  demoVersion: state => {
+    return state.sessionInfo.version
   }
 }
 
