@@ -52,16 +52,16 @@ export default {
           number: this.dids.DID7
         })
         ret.push({
-          label: 'DFAudio',
+          label: 'DF',
           number: this.dids.DID8
         })
         ret.push({
-          label: 'DFRemote',
+          label: 'DF Param',
           number: this.dids.DID9
         })
         ret.push({
-          label: 'DFTranscribe',
-          number: this.dids.DID5
+          label: 'DF Transcribe',
+          number: this.dids.DID10
         })
         // return
         return ret
