@@ -7,30 +7,10 @@
       <section class="modal-card-body">
         <p class="content" v-html="text" />
         <table class="phone-list">
-          <tr v-if="isUpstream">
-            <td>{{ mainLabel }}</td>
+          <tr v-for="(number, index) of numbers" :key="index">
+            <td>{{ number.label }}</td>
             <td>&gt;</td>
-            <td><strong>{{ uwf }}</strong></td>
-          </tr>
-          <tr v-if="!isUpstream">
-            <td>{{ mainLabel }}</td>
-            <td>&gt;</td>
-            <td><strong>{{ main }}</strong></td>
-          </tr>
-          <tr v-if="isPcce && !isUpstream">
-            <td>{{ goldLabel }}</td>
-            <td>&gt;</td>
-            <td><strong>{{ gold }}</strong></td>
-          </tr>
-          <tr v-if="isPcce && !isUpstream">
-            <td>{{ vivrLabel }}</td>
-            <td>&gt;</td>
-            <td><strong>{{ vivr }}</strong></td>
-          </tr>
-          <tr v-if="isPcce || isUccx">
-            <td>{{ aiLabel }}</td>
-            <td>&gt;</td>
-            <td><strong>{{ ai }}</strong></td>
+            <td><strong>{{ number.number }}</strong></td>
           </tr>
         </table>
       </section>
@@ -56,11 +36,40 @@ export default {
     'model',
     'isCwccV1',
     'dids',
-    'cwccDid'
+    'cwccDid',
+    'demoVersion'
   ],
   methods: {
   },
   computed: {
+    numbers () {
+      const ret = []
+      // the phone numbers to display
+      // main number for all demos
+      ret.push({
+        label: this.mainLabel,
+        number: this.main
+      })
+      // normal PCCE, not with Upstream and not 12.5CVA lab, has gold and VIVR numbers
+      if (this.isPcce && !this.isUpstream && !this.demoVersion === '12.5CVA') {
+        ret.push({
+          label: this.goldLabel,
+          number: this.gold
+        })
+        ret.push({
+          label: this.vivrLabel,
+          number: this.vivr
+        })
+      }
+      // all PCCE and UCCX have AI number, but PCCE 12.5CVA uses DID2
+      if (this.isPcce || this.isUccx) {
+        ret.push({
+          label: this.aiLabel,
+          number: this.ai
+        })
+      }
+      return ret
+    },
     okButton () {
       return this.model.okButton
     },
@@ -91,13 +100,12 @@ export default {
     main () {
       if (this.isCwccV1) {
         return this.cwccDid
+      } else if (this.isUpstream) {
+        return this.sessionInfo.uwf.international
       } else {
         // all others use the main 'phone' sent by the API
         return this.sessionInfo.phone.international
       }
-    },
-    uwf () {
-      return this.sessionInfo.uwf.international
     },
     gold () {
       return this.sessionInfo.pq.international
@@ -106,7 +114,11 @@ export default {
       return this.sessionInfo.jacada.international
     },
     ai () {
-      return this.sessionInfo.ai.international
+      if (this.demoVersion === '12.5CVA') {
+        return this.dids.DID2
+      } else {
+        return this.sessionInfo.ai.international
+      }
     }
   }
 }
