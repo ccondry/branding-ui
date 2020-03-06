@@ -91,6 +91,7 @@
       :is-cwcc-v1="isCwccV1"
       :cwcc-did="cwccDid"
       :is-instant-demo="isInstantDemo"
+      :demo-version="demoVersion"
       />
     </b-modal>
 
@@ -454,7 +455,8 @@ export default {
       'isCwcc',
       'isCwccV1',
       'dids',
-      'cwccDid'
+      'cwccDid',
+      'demoVersion'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -564,48 +566,57 @@ export default {
         }
       } else if (this.isPcce) {
         // dCloud PCCE demo
-        // chat
-        // Upstream chat? don't have bot option for upstream, so always show "chat live"
-        if (this.isUpstream) {
-          // direct chat to agent, no chat bot
-          ret.push(chat)
-        } else if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
-          // direct chat to agent, no chat bot
-          ret.push(chat)
-        } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
-          // chat bot, with option to escalate to agent
-          ret.push(chatBot)
-        }
-        // SMS
-        if (!this.isUpstream) {
-          // disable any SMS option for upstream demos
-          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-            // direct SMS to agent, no chat bot
-            ret.push(sms)
-          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-            // SMS bot
-            ret.push(smsBot)
+        if (this.isPcce && this.demoVersion === '12.5CVA') {
+          // PCCE 12.5CVA lab
+          // voice call only
+          if (this.model.callEnabled) {
+            ret.push(call)
           }
-        }
-        // voice call
-        if (this.model.callEnabled) {
-          ret.push(call)
-        }
-        // voice callback
-        if (this.model.callbackEnabled) {
-          ret.push(callback)
-        }
-        // email
-        if (this.model.emailEnabled) {
-          ret.push(email)
-        }
-        // task routing
-        if (!this.isUpstream && this.model.taskEnabled) {
-          ret.push(task)
-        }
-        // cobrowse
-        if (!this.isUpstream && this.model.cobrowseEnabled) {
-          ret.push(cobrowse)
+        } else {
+          // all other PCCE demos not 12.5CVA
+          // chat
+          // Upstream chat? don't have bot option for upstream, so always show "chat live"
+          if (this.isUpstream) {
+            // direct chat to agent, no chat bot
+            ret.push(chat)
+          } else if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
+            // direct chat to agent, no chat bot
+            ret.push(chat)
+          } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
+            // chat bot, with option to escalate to agent
+            ret.push(chatBot)
+          }
+          // SMS
+          if (!this.isUpstream) {
+            // disable any SMS option for upstream demos
+            if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+              // direct SMS to agent, no chat bot
+              ret.push(sms)
+            } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+              // SMS bot
+              ret.push(smsBot)
+            }
+          }
+          // voice call
+          if (this.model.callEnabled) {
+            ret.push(call)
+          }
+          // voice callback
+          if (this.model.callbackEnabled) {
+            ret.push(callback)
+          }
+          // email
+          if (this.model.emailEnabled) {
+            ret.push(email)
+          }
+          // task routing
+          if (!this.isUpstream && this.model.taskEnabled) {
+            ret.push(task)
+          }
+          // cobrowse
+          if (!this.isUpstream && this.model.cobrowseEnabled) {
+            ret.push(cobrowse)
+          }
         }
       } else if (this.isUccx) {
         // dCloud UCCX demo
