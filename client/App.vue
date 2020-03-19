@@ -941,7 +941,7 @@ export default {
         // PCCE demo and chat bot not enabled
         // pop ECE chat window
         this.popEceChatWindow()
-      } else if (this.isTsaCwcc) {
+      } else if (this.isTsaCwcc || this.isWebexV3Prod) {
         // we should not be here. Abilene chats should be started by clicking
         // the bubble chat icon, which is not in the contact panel
       }
@@ -1116,6 +1116,10 @@ export default {
           // this is the new CWCC Abilene tenant for Cisco TSAs
           // init Abilene CWCC chat
           window.initCwccTsaChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+        }
+        if (this.isWebexV3Prod) {
+          // Webex v3 production Abilene tenant for dCloud
+          window.initWebexChat(this.sessionConfig)
         }
       }
     }

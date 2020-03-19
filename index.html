@@ -63,6 +63,24 @@ var EG_ACT_ID="EG16529739"; (function(e,f){var d,c,b,a=e.createElement("iframe")
   }
 </script>
 
+<!-- generic Webex Abilene chat js -->
+<script>
+  function initWebexChat (config) {
+    var bubbleScript = document.createElement('script')
+    e = document.getElementsByTagName('script')[0]
+    bubbleScript.async = config.async
+    bubbleScript.CiscoAppId =  config.CiscoAppId
+    bubbleScript.appPrefix = config.appPrefix
+    bubbleScript.DC = config.DC
+    bubbleScript.orgId = config.orgId
+    bubbleScript.templateId = config.templateId
+    bubbleScript.src = 'https://btsbubble.' + config.DC + '/bubble.js'
+    bubbleScript.type = 'text/javascript'
+    bubbleScript.setAttribute('charset', 'utf-8')
+    e.parentNode.insertBefore(bubbleScript, e)
+  }
+</script>
+
 <!-- UCCX bubble chat -->
 <script type="application/javascript">
 function initBubbleChat (smHost, widgetId) {
