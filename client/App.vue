@@ -456,7 +456,8 @@ export default {
       'isCwccV1',
       'dids',
       'cwccDid',
-      'demoVersion'
+      'demoVersion',
+      'isWebexV3Prod'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -650,6 +651,20 @@ export default {
         }
       } else if (this.isCwccV1) {
         // dCloud CWCC v1 instant demo
+        // chat
+        if (this.model.chatEnabled) {
+          ret.push(chat)
+        }
+        // voice call
+        if (this.model.callEnabled) {
+          ret.push(call)
+        }
+        // email
+        if (this.model.emailEnabled) {
+          ret.push(email)
+        }
+      } else if (this.isWebexV3Prod) {
+        // dCloud Webex v3 production (Abilene) instant demo
         // chat
         if (this.model.chatEnabled) {
           ret.push(chat)
@@ -1024,12 +1039,12 @@ export default {
         } catch (e) {
           console.log('failed to format call number:', e)
         }
-      } else if (this.isCwccV1) {
-        // CWCC v1 demo
+      } else if (this.isCwccV1 || this.isWebexV3Prod) {
+        // CWCC v1/v2 demo, or Webex CC v3 demo
         const formattedCallNumber = formatUnicorn(this.model.callText, this.cwccDid)
         this.$set(this.model, 'callText', formattedCallNumber)
       } else {
-        // not upstream demo
+        // not upstream demo or CWCC demo
         // set main call number using template
         try {
           const formattedCallNumber = formatUnicorn(this.model.callText, this.sessionInfo.phone.international)

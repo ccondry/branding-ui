@@ -93,6 +93,14 @@ const getters = {
       return false
     }
   },
+  // is this Webex CC v3 Production (Abilene) demo?
+  isWebexV3Prod: (state, getters) => {
+    try {
+      return getters.sessionInfo.demo.toLowerCase() === 'webex' && state.sessionInfo.version.toLowerCase() === 'v3prod'
+    } catch (e) {
+      return false
+    }
+  },
   dids: (state, getters) => {
     try {
       return getters.sessionInfo.dids
