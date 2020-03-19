@@ -17,7 +17,11 @@ const actions = {
     data.userId = getters.userId
     // uccx or pcce demo?
     data.demo = getters.sessionInfo.demo
+    // demo version
+    data.version = getters.sessionInfo.version
+    // true if using Upstream Works in PCCE
     data.isUpstream = getters.isUpstream
+    // true if this is an instant demo. false if scheduled demo.
     data.isInstantDemo = getters.isInstantDemo
     // set working state
     dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
