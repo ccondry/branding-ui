@@ -62,7 +62,6 @@ var EG_ACT_ID="EG16529739"; (function(e,f){var d,c,b,a=e.createElement("iframe")
     e.parentNode.insertBefore(bubbleScript, e)
   }
 </script>
-
 <!-- generic Webex Abilene chat js -->
 <script>
   function initWebexChat (config) {
@@ -75,7 +74,7 @@ var EG_ACT_ID="EG16529739"; (function(e,f){var d,c,b,a=e.createElement("iframe")
     bubbleScript.DC = config.DC
     bubbleScript.orgId = config.orgId
     bubbleScript.templateId = config.templateId
-    bubbleScript.src = 'https://btsbubble.' + config.DC + '/bubble.js'
+    bubbleScript.src = 'https://' + config.appPrefix + 'bubble.' + config.DC + '/bubble.js'
     bubbleScript.type = 'text/javascript'
     bubbleScript.setAttribute('charset', 'utf-8')
     e.parentNode.insertBefore(bubbleScript, e)
