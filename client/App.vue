@@ -665,10 +665,6 @@ export default {
         }
       } else if (this.isWebexV3Prod) {
         // dCloud Webex v3 production (Abilene) instant demo
-        // chat
-        if (this.model.chatEnabled) {
-          ret.push(chat)
-        }
         // voice call
         if (this.model.callEnabled) {
           ret.push(call)
