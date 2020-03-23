@@ -3,6 +3,7 @@
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
         <p class="modal-card-title">{{ heading }}</p>
+        isWebexV3Prod - {{ isWebexV3Prod }}
       </header>
       <section class="modal-card-body">
         <p class="content" v-html="text" />
@@ -37,7 +38,8 @@ export default {
     'isCwccV1',
     'dids',
     'cwccDid',
-    'demoVersion'
+    'demoVersion',
+    'isWebexV3Prod'
   ],
   methods: {
   },
@@ -72,6 +74,7 @@ export default {
         label: this.mainLabel,
         number: this.main
       })
+
       // normal PCCE, not with Upstream and not 12.5CVA lab, has gold and VIVR numbers
       if (this.isPcce && !this.isUpstream) {
         ret.push({
@@ -83,6 +86,7 @@ export default {
           number: this.vivr
         })
       }
+
       // all PCCE and UCCX have AI number
       if (this.isPcce || this.isUccx) {
         ret.push({
@@ -120,9 +124,12 @@ export default {
       return formatUnicorn(this.modalText, this.main)
     },
     main () {
-      if (this.isCwccV1) {
+      // main phone number
+      if (this.isCwccV1 || this.isWebexV3Prod) {
+        // webex CC v1/v2/v3
         return this.cwccDid
       } else if (this.isUpstream) {
+        // upstream PCCE demo
         return this.sessionInfo.uwf.international
       } else {
         // all others use the main 'phone' sent by the API

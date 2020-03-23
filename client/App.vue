@@ -98,6 +98,7 @@
       :cwcc-did="cwccDid"
       :is-instant-demo="isInstantDemo"
       :demo-version="demoVersion"
+      :is-webex-v3-prod="isWebexV3Prod"
       />
     </b-modal>
 
