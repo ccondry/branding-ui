@@ -2,6 +2,7 @@
   <div id="app">
     <b-loading :is-full-page="true" :active="loading.dcloud.sessionInfo || loading.dcloud.brand" :can-cancel="false"></b-loading>
 
+    <!-- Session info modal -->
     <b-modal :active.sync="showSessionInfoModal" :can-cancel="false" has-modal-card width="960">
       <session-form
       @submit="clickSubmitSessionInfo"
@@ -15,6 +16,7 @@
       :user-id="userId" />
     </b-modal>
 
+    <!-- Email modal -->
     <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
       <email-form @submit="clickSubmitEmail"
       :send-button="model.sendButton"
@@ -32,6 +34,7 @@
       />
     </b-modal>
 
+    <!-- SMS modal -->
     <b-modal :active.sync="showSmsModal" :can-cancel="true" has-modal-card width="960">
       <sms-form v-if="sessionInfo.sms"
       :send-button="model.sendButton"
@@ -44,6 +47,7 @@
       :phone="phone" />
     </b-modal>
 
+    <!-- Task Routing modal -->
     <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
       <task-form @submit="clickSubmitTask"
       :send-button="model.sendButton"
@@ -62,6 +66,7 @@
       :task="task" />
     </b-modal>
 
+    <!-- Voice Callback modal -->
     <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
       <callback-form @submit="clickSubmitCallback"
       :send-button="model.sendButton"
@@ -79,6 +84,7 @@
       />
     </b-modal>
 
+    <!-- Inbound Voice Call modal -->
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
       <call-form v-if="Object.keys(sessionInfo)"
       :model="model"
@@ -95,6 +101,7 @@
       />
     </b-modal>
 
+    <!-- Chat modal -->
     <b-modal :active.sync="showChatModal" :can-cancel="true" has-modal-card width="960">
       <chat-form @submit="clickSubmitChat"
       :send-button="model.sendButton"
@@ -109,7 +116,8 @@
       :phone="phone" />
     </b-modal>
 
-    <span id="main-content" v-if="endpointsLoaded">
+    <!-- Main page content -->
+    <span id="main-content">
       <!-- background iframe -->
       <iframe :src="model.iframe" class="demo-iframe"></iframe>
 
@@ -403,11 +411,16 @@ export default {
     if (this.qs.get('subject')) {
       this.subject = this.qs.get('subject')
     }
-    // load URL endpoints list from the API server
-    console.log('getting endpoints...')
-    this.getEndpoints(false)
+    // are datacenter and sessionID set?
+    if (this.datacenter && this.sessionId) {
+      // load dcloud session info
+      console.log('getting session info...')
+      this.getSessionInfo(false)
+    } else {
+      // pop modal to ask for datacenter and session ID
+      this.showSessionInfoModal = true
+    }
     // set up event listener for submitter user info, to cache it here
-
     // make a cross-browser compatible event listener
     const eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
     const eventer = window[eventMethod]
@@ -719,7 +732,6 @@ export default {
 
   methods: {
     ...mapActions([
-      'getEndpoints',
       'getSessionInfo',
       'setUserId',
       'setSessionId',
@@ -1186,17 +1198,6 @@ export default {
       // set default iframe to cumulus website if there was no iframe configured
       if (!(this.model.iframe && this.model.iframe.trim().length)) {
         this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
-      }
-    },
-    endpoints (val) {
-      // endpoints loaded - check if session and datacenter are set
-      if (this.datacenter && this.sessionId) {
-        // load dcloud session info
-        console.log('getting session info...')
-        this.getSessionInfo(false)
-      } else {
-        // pop modal to ask for datacenter and session ID
-        this.showSessionInfoModal = true
       }
     },
     brand (val) {

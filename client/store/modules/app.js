@@ -1,10 +1,4 @@
 import * as types from '../mutation-types'
-import { Toast } from 'buefy/dist/components/toast'
-import {load} from '../../utils'
-import config from '../../config'
-
-const getters = {
-}
 
 const state = {
   device: {
@@ -17,9 +11,7 @@ const state = {
   },
   effect: {
     translate3d: true
-  },
-  endpointsLoaded: false,
-  endpoints: config.app.endpoints
+  }
 }
 
 const mutations = {
@@ -44,49 +36,10 @@ const mutations = {
     for (let name in effectItem) {
       state.effect[name] = effectItem[name]
     }
-  },
-
-  [types.SET_ENDPOINTS] (state, data) {
-    state.endpoints = data
-  },
-
-  [types.SET_ENDPOINTS_LOADED] (state, data) {
-    console.log('state.endpointsLoaded =', data)
-    state.endpointsLoaded = data
-  }
-}
-
-const actions = {
-  async getEndpoints ({getters, commit, dispatch}, showNotification = true) {
-    // mark loading started
-    dispatch('setLoading', {group: 'app', type: 'endpoints', value: true})
-    try {
-      console.log('getting endpoints for branding-ui')
-      // get endpoints from API server
-      const response = await load(getters.endpoints.endpoints)
-      // set the endpoints data in state
-      commit(types.SET_ENDPOINTS, response.data)
-      // mark endpoints as loaded
-      commit(types.SET_ENDPOINTS_LOADED, true)
-    } catch (e) {
-      console.log(e)
-      // failed to get endpoints
-      console.error('load endpoints', 'failed:', e)
-      Toast.open({
-        // duration: 5000,
-        message: 'load endpoints' + ' failed: ' + e.message,
-        type: 'is-danger'
-      })
-    } finally {
-      // mark loading done
-      dispatch('setLoading', {group: 'app', type: 'endpoints', value: false})
-    }
   }
 }
 
 export default {
   state,
-  actions,
-  getters,
   mutations
 }

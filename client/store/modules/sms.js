@@ -20,7 +20,7 @@ const actions = {
     console.debug('starting send SMS:', data)
     // send email request to REST API
     await dispatch('postData', {
-      endpoint: getters.endpoints.sms.path,
+      endpoint: getters.endpoints.sms,
       data,
       success: `We have sent you a text message. Reply to this message to
       beging chatting with one of our experts.`,

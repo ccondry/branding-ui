@@ -7,7 +7,3 @@ export const effect = state => state.app.effect
 // loading and working status objects. used for tracking status of REST API operations
 export const loading = state => state.loading
 export const working = state => state.working
-// REST API endpoints
-export const endpoints = state => state.app.endpoints
-// are the REST API endpoints loaded yet?
-export const endpointsLoaded = state => state.app.endpointsLoaded

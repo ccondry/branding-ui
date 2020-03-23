@@ -54,7 +54,7 @@ const actions = {
     console.debug('starting send task request:', data)
     // send email request to REST API
     await dispatch('postData', {
-      endpoint: getters.endpoints.task.path,
+      endpoint: getters.endpoints.task,
       data,
       success: `We have received your task request and the next available expert
       will begin working on it.`,

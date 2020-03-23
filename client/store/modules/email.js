@@ -28,7 +28,7 @@ const actions = {
     console.debug('starting send email:', data)
     // send email request to REST API
     await dispatch('postData', {
-      endpoint: getters.endpoints.email.path,
+      endpoint: getters.endpoints.email,
       data,
       success: `We have received your email and the next available expert will
       reply to your message.`,

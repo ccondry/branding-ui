@@ -48,7 +48,7 @@ const actions = {
     // if (minutes === 0) minutes = 1
 
     await dispatch('postData', {
-      endpoint: getters.endpoints.callback.path,
+      endpoint: getters.endpoints.callback,
       data,
       success: `An expert will be calling you shortly. Your estimated wait
       time is 2 minutes.`,

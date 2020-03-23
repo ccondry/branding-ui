@@ -6,6 +6,7 @@ import sms from './sms'
 import callback from './callback'
 import task from './task'
 import chat from './chat'
+import endpoints from './endpoints'
 
 export default {
   app,
@@ -15,5 +16,6 @@ export default {
   sms,
   callback,
   task,
-  chat
+  chat,
+  endpoints
 }

@@ -110,13 +110,14 @@ const getters = {
   },
   cwccDid: (state, getters) => {
     try {
-      // for CWCC demo, determine main phone number based on vertical selected
+      // for Webex CC v1/v2/v3 demo, determine main phone number based on vertical selected
       switch (getters.sessionConfig.vertical) {
         case 'finance': return getters.dids.DID7
         case 'travel': return getters.dids.DID8
         case 'healthcare': return getters.dids.DID9
         case 'city': return getters.dids.DID5
         case 'utility': return getters.dids.DID10
+        // default to Finance demo DID
         default: return getters.dids.DID7
       }
     } catch (e) {
@@ -182,7 +183,7 @@ const actions = {
         datacenter: getters.datacenter,
         userId: getters.userId
       }
-      const response = await load(getters.endpoints.session.path, query)
+      const response = await load(getters.endpoints.session, query)
       console.log('load dcloud session info:', response)
       commit(types.SET_SESSION_INFO, response.data)
       // set error to null to remove UI error messages
@@ -212,7 +213,7 @@ const actions = {
       const query = {
         id: getters.brand
       }
-      const response = await load(getters.endpoints.brand.path, query)
+      const response = await load(getters.endpoints.brand, query)
       console.log('load dcloud brand configuration for', getters.brand, response)
       commit(types.SET_BRAND_CONFIG, response.data)
       if (showNotification) {
