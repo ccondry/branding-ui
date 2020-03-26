@@ -583,9 +583,21 @@ export default {
         // dCloud PCCE demo
         if (this.isPcce && this.demoVersion === '12.5CVA') {
           // PCCE 12.5CVA lab
-          // voice call only
+          // voice call
           if (this.model.callEnabled) {
             ret.push(call)
+          }
+          // show the right chat/chatbot option
+          if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
+            // direct chat to agent, no chat bot
+            ret.push(chat)
+          } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
+            // chat bot, with option to escalate to agent
+            ret.push(chatBot)
+          }
+          // email
+          if (this.model.emailEnabled) {
+            ret.push(email)
           }
         } else {
           // all other PCCE demos not 12.5CVA
