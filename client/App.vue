@@ -913,7 +913,7 @@ export default {
           datacenter: this.datacenter,
           userId: this.userId,
           firstName: this.firstName,
-          lastName: this.firstName,
+          lastName: this.lastName,
           phone: this.phone,
           email: this.email
         }
