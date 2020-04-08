@@ -44,10 +44,11 @@ export default {
   },
   computed: {
     numbers () {
-      const ret = []
       // returns the phone numbers to display
+      const ret = []
+
       if (this.isPcce && this.demoVersion === '12.5CVA') {
-      // PCCE 12.5CVA lab
+        // PCCE 12.5CVA lab
         ret.push({
           label: this.mainLabel,
           number: this.dids.DID7
@@ -66,33 +67,63 @@ export default {
         })
         // return
         return ret
-      }
-
-      // main number for all demos
-      ret.push({
-        label: this.mainLabel,
-        number: this.main
-      })
-
-      // normal PCCE, not with Upstream and not 12.5CVA lab, has gold and VIVR numbers
-      if (this.isPcce && !this.isUpstream) {
+      } else if (this.isPcce && this.demoVersion === 'wxccev1') {
+        // Webex CCE v1
+        // main
+        ret.push({
+          label: this.mainLabel,
+          number: this.dids.DID7
+        })
+        // gold
         ret.push({
           label: this.goldLabel,
           number: this.gold
         })
-        ret.push({
-          label: this.vivrLabel,
-          number: this.vivr
-        })
-      }
-
-      // all PCCE and UCCX have AI number
-      if (this.isPcce || this.isUccx) {
+        // AI
         ret.push({
           label: this.aiLabel,
           number: this.ai
         })
+        // Portal Demo
+        ret.push({
+          label: 'Portal Demo',
+          number: this.dids.DID2
+        })
+        // Portal Free
+        ret.push({
+          label: 'Portal Free',
+          number: this.dids.DID3
+        })
+
+        return ret
+      } else {
+        // main number for all demos
+        ret.push({
+          label: this.mainLabel,
+          number: this.main
+        })
+
+        // normal PCCE, not with Upstream and not 12.5CVA lab, has gold and VIVR numbers
+        if (this.isPcce && !this.isUpstream) {
+          ret.push({
+            label: this.goldLabel,
+            number: this.gold
+          })
+          ret.push({
+            label: this.vivrLabel,
+            number: this.vivr
+          })
+        }
+
+        // all PCCE and UCCX have AI number
+        if (this.isPcce || this.isUccx) {
+          ret.push({
+            label: this.aiLabel,
+            number: this.ai
+          })
+        }
       }
+
       return ret
     },
     okButton () {
