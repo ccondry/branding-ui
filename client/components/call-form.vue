@@ -3,7 +3,6 @@
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
         <p class="modal-card-title">{{ heading }}</p>
-        isWebexV3Prod - {{ isWebexV3Prod }}
       </header>
       <section class="modal-card-body">
         <p class="content" v-html="text" />
