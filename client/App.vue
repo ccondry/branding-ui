@@ -1134,9 +1134,15 @@ export default {
           window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
         }
         if (this.isTsaCwcc) {
-          // this is the new CWCC Abilene tenant for Cisco TSAs
-          // init Abilene CWCC chat
-          window.initCwccTsaChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+          // this is for the Cisco TSA tenants on Webex Contact Center Abilene
+          window.initWebexChat({
+            async: typeof this.sessionConfig.async === 'boolean' ? this.sessionConfig.async : true,
+            CiscoAppId: this.sessionConfig.CiscoAppId || 'cisco-chat-bubble-app',
+            appPrefix: this.sessionConfig.appPrefix || 'bts',
+            DC: this.sessionConfig.DC || 'appstaging.ciscoccservice.com',
+            orgId: this.sessionConfig.orgId || '83f66514-200c-47cd-8310-4a5711e7b356',
+            templateId: this.sessionConfig.templateId || 'ce28a900-a8bc-11e9-9dce-53872d5a6b64'
+          })
         }
         if (this.isWebexV3Prod) {
           // Webex v3 production Abilene tenant for dCloud
