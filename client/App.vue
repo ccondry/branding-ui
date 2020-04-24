@@ -1201,8 +1201,9 @@ export default {
         // ignore id and owner keys
         if (['_id', 'id', 'owner'].includes(key)) {
           continue
-        } else {
-          // set model value for each brand config value
+        } else if (typeof val[key] !== 'string' || val[key].length) {
+          // set model value for each brand config value, if the value is not
+          // an empty string
           this.$set(this.model, key, val[key])
         }
       }
