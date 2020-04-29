@@ -11,6 +11,7 @@
             <td>{{ number.label }}</td>
             <td>&gt;</td>
             <td><strong>{{ number.number }}</strong></td>
+            <td v-show="isWebexV3Prod">ext. <strong>{{ sessionConfig.queueId }}</strong></td>
           </tr>
         </table>
       </section>
