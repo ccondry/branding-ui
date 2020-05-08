@@ -10,8 +10,10 @@
           <tr v-for="(number, index) of numbers" :key="index">
             <td>{{ number.label }}</td>
             <td>&gt;</td>
-            <td><strong>{{ number.number }}</strong></td>
-            <td v-show="isWebexV3Prod">ext. <strong>{{ sessionConfig.queueId }}</strong></td>
+            <td>
+              <strong>{{ number.number }}</strong>
+              <span v-show="isWebexV3Prod">ext. <strong>{{ sessionConfig.queueId }}</strong></span>
+            </td>
           </tr>
         </table>
       </section>
