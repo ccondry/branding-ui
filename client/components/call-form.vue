@@ -120,7 +120,7 @@ export default {
         }
 
         // all PCCE and UCCX have AI number, though PCCE 12.5 has different AI
-        if (this.isUccx || (this.isPcce && this.demoVersion !== '12.5')) {
+        if (this.isUccx || (this.isPcce && this.demoVersion !== '12.5v1')) {
           ret.push({
             label: this.aiLabel,
             number: this.ai
@@ -128,7 +128,7 @@ export default {
         }
 
         // PCCE 12.5 demo AI numbers
-        if (this.isPcce && this.demoVersion === '12.5') {
+        if (this.isPcce && this.demoVersion === '12.5v1') {
           // AI label is for new CVP CVA feature
           ret.push({
             label: this.aiLabel,
