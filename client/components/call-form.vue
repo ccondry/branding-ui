@@ -120,7 +120,7 @@ export default {
         }
 
         // all PCCE and UCCX have AI number, though PCCE 12.5 has different AI
-        if (this.isUccx || (this.isPcce && !this.demoVersion === '12.5')) {
+        if (this.isUccx || (this.isPcce && this.demoVersion !== '12.5')) {
           ret.push({
             label: this.aiLabel,
             number: this.ai
