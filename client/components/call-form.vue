@@ -100,6 +100,7 @@ export default {
 
         return ret
       } else {
+        // else = all other demos, not webex CCE v1 or PCCE 12.5 CVA Lab
         // main number for all demos
         ret.push({
           label: this.mainLabel,
@@ -118,11 +119,25 @@ export default {
           })
         }
 
-        // all PCCE and UCCX have AI number
-        if (this.isPcce || this.isUccx) {
+        // all PCCE and UCCX have AI number, though PCCE 12.5 has different AI
+        if (this.isUccx || (this.isPcce && !this.demoVersion === '12.5')) {
           ret.push({
             label: this.aiLabel,
             number: this.ai
+          })
+        }
+
+        // PCCE 12.5 demo AI numbers
+        if (this.isPcce && this.demoVersion === '12.5') {
+          // AI label is for new CVP CVA feature
+          ret.push({
+            label: this.aiLabel,
+            number: this.dids.DID2
+          })
+          // new "Custom AI" label is for the old Conversational IVR demo
+          ret.push({
+            label: this.customAiLabel,
+            number: this.dids.DID6
           })
         }
       }
@@ -152,6 +167,9 @@ export default {
     },
     aiLabel () {
       return this.model.callModalAiLabel
+    },
+    customAiLabel () {
+      return this.model.callModalCustomAiLabel
     },
     text () {
       return formatUnicorn(this.modalText, this.main)

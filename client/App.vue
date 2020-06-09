@@ -340,6 +340,7 @@ export default {
         callModalGoldLabel: 'Gold',
         callModalVivrLabel: 'VIVR',
         callModalAiLabel: 'AI',
+        callModalCustomAiLabel: 'Custom AI',
         // callback
         callbackEnabled: true,
         callbackIcon: 'phone-forward',
