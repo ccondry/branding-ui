@@ -73,26 +73,21 @@ export default {
         }]
       }
       
+      // PCCE 12.5CVA lab
       if (this.isPcce && this.demoVersion === '12.5CVA') {
-        // PCCE 12.5CVA lab
-        ret.push({
+        return [{
           label: this.mainLabel,
           number: this.dids.DID7
-        })
-        ret.push({
+        }, {
           label: 'DF',
           number: this.dids.DID8
-        })
-        ret.push({
+        }, {
           label: 'DF Param',
           number: this.dids.DID9
-        })
-        ret.push({
+        }, {
           label: 'DF Transcribe',
           number: this.dids.DID10
-        })
-        // return
-        return ret
+        }]
       } else if (this.isPcce && this.demoVersion === 'wxccev1') {
         // Webex CCE v1
         // main
