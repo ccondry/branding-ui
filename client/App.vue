@@ -337,6 +337,7 @@ export default {
         callWaitTime: '8 min wait time',
         callModalText: 'You can reach one of our experts by phone:',
         callModalMainLabel: 'Main',
+        callModalWxmLabel: 'WXM',
         callModalGoldLabel: 'Gold',
         callModalVivrLabel: 'VIVR',
         callModalAiLabel: 'AI',

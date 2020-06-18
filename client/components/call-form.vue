@@ -50,6 +50,29 @@ export default {
       // returns the phone numbers to display
       const ret = []
 
+      // PCCE 12.5v1 demo 
+      if (this.isPcce && this.demoVersion === '12.5v1') {
+        return [{
+          label: this.mainLabel,
+          number: this.main
+        }, {
+          label: this.wxmLabel,
+          number: this.dids.DID1
+        }, {
+          label: this.goldLabel,
+            number: this.gold
+        }, {
+            label: this.vivrLabel,
+            number: this.vivr
+        }, {
+          label: this.aiLabel,
+          number: this.dids.DID2
+        }, {
+          label: this.customAiLabel,
+          number: this.dids.DID6
+        }]
+      }
+      
       if (this.isPcce && this.demoVersion === '12.5CVA') {
         // PCCE 12.5CVA lab
         ret.push({
@@ -126,20 +149,6 @@ export default {
             number: this.ai
           })
         }
-
-        // PCCE 12.5 demo AI numbers
-        if (this.isPcce && this.demoVersion === '12.5v1') {
-          // AI label is for new CVP CVA feature
-          ret.push({
-            label: this.aiLabel,
-            number: this.dids.DID2
-          })
-          // new "Custom AI" label is for the old Conversational IVR demo
-          ret.push({
-            label: this.customAiLabel,
-            number: this.dids.DID6
-          })
-        }
       }
 
       return ret
@@ -158,6 +167,9 @@ export default {
     },
     mainLabel () {
       return this.model.callModalMainLabel
+    },
+    wxmLabel () {
+      return this.model.callModalWxmLabel
     },
     goldLabel () {
       return this.model.callModalGoldLabel
