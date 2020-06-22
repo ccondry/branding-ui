@@ -340,7 +340,7 @@ export default {
         callModalWxmLabel: 'WXM',
         callModalGoldLabel: 'Gold',
         callModalVivrLabel: 'VIVR',
-        callModalAiLabel: 'AI',
+        callModalAiLabel: 'CVA AI',
         callModalCustomAiLabel: 'Custom AI',
         // callback
         callbackEnabled: true,
