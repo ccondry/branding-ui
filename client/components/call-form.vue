@@ -65,10 +65,10 @@ export default {
             label: this.vivrLabel,
             number: this.vivr
         }, {
-          label: this.aiLabel,
+          label: this.model.callModalCvaAiLabel,
           number: this.dids.DID2
         }, {
-          label: this.customAiLabel,
+          label: this.model.callModalCustomAiLabel,
           number: this.dids.DID6
         }]
       }
