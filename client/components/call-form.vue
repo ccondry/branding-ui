@@ -50,7 +50,7 @@ export default {
       // returns the phone numbers to display
       const ret = []
 
-      // PCCE 12.5v1 demo 
+      // PCCE 12.5v1 demo
       if (this.isPcce && this.demoVersion === '12.5v1') {
         return [{
           label: this.mainLabel,
@@ -60,10 +60,10 @@ export default {
           number: this.dids.DID1
         }, {
           label: this.goldLabel,
-            number: this.gold
+          number: this.gold
         }, {
-            label: this.vivrLabel,
-            number: this.vivr
+          label: this.vivrLabel,
+          number: this.vivr
         }, {
           label: this.model.callModalCvaAiLabel,
           number: this.dids.DID2
@@ -72,7 +72,7 @@ export default {
           number: this.dids.DID6
         }]
       }
-      
+
       // PCCE 12.5CVA lab
       if (this.isPcce && this.demoVersion === '12.5CVA') {
         return [{
