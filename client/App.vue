@@ -760,7 +760,8 @@ export default {
       'popEceCallbackWindow',
       'popEceChatWindow',
       'popUpstreamChatWindow',
-      'popCconeChatWindow'
+      'popCconeChatWindow',
+      'startEceDockedChat'
     ]),
     hideChatBot () {
       // change the chat bot iframe URL to kill the session
@@ -963,8 +964,14 @@ export default {
         this.chatIframe = chatUrl
       } else if (this.isPcce) {
         // PCCE demo and chat bot not enabled
-        // pop ECE chat window
-        this.popEceChatWindow()
+        // is docked chat enabled? variable name uccxBubbleChat now applies to
+        // UCCX and PCCE chat
+        if (this.demoConfig.uccxBubbleChat) {
+          this.startEceDockedChat()
+        } else {
+        // no docked chat - pop ECE chat window
+          this.popEceChatWindow()
+        }
       } else if (this.isTsaCwcc || this.isWebexV3Prod) {
         // we should not be here. Abilene chats should be started by clicking
         // the bubble chat icon, which is not in the contact panel
@@ -1150,6 +1157,10 @@ export default {
         if (this.isWebexV3Prod) {
           // Webex v3 production Abilene tenant for dCloud
           window.initWebexChat(this.sessionConfig)
+        }
+        // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
+        if (!this.demoConfig.uccxBubbleChat) {
+          window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
         }
       }
     }

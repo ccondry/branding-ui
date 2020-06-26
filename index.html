@@ -248,6 +248,19 @@ function initBubbleChat (smHost, widgetId) {
 }
 </script>
 
+<!-- ECE docked chat -->
+<script>
+function initEceDockedChat (host) {
+  console.log('window.initEceDockedChat', host)
+  const dockedScript = document.createElement('script')
+  const e = document.getElementsByTagName('script')[0]
+  dockedScript.src = 'https://' + host + '/system/templates/chat/egain-chat.js'
+  dockedScript.type = 'text/javascript'
+  dockedScript.setAttribute('charset', 'utf-8')
+  e.parentNode.insertBefore(dockedScript, e)
+}
+</script>
+
 <!-- Surfly cobrowse -->
 <script>
 // function to load surfly library

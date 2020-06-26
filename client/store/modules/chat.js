@@ -108,6 +108,64 @@ const actions = {
     let left = (window.screen.width / 2) - (w / 2)
     // open popup
     window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
+  },
+  startEceDockedChat ({getters}) {
+    console.log('startEceDockedChat')
+    // eGain Chat server
+    const egainDockChat = window.egainDockChat || {}
+    egainDockChat.serverURL = 'https://cceeceweb.dcloud.cisco.com/system'
+    // eGain Chat Entry Point
+    egainDockChat.EntryPointId = '1001'
+    // eGain Chat Locale
+    egainDockChat.Locale = 'en-US'
+    // eGain template name
+    egainDockChat.Template = getters.chatTemplate
+    // Set to true to enable posting attributes to templates
+    egainDockChat.PostChatAttributes = false
+    egainDockChat.IntegratedEntryPoint = 'true'
+    // eGain video chat parameters
+    egainDockChat.VChatParams = ''
+    // Set to true if custom button is used to launch docked chat
+    egainDockChat.UseCustomButton = true
+    // Method to set customer Parameters. To be called by client website. All the parameters specified in application-chat-defaults must be set here.
+    egainDockChat.SetCustomerParameters = function (egainAttributeName, attributeValue) {
+      if (!egainDockChat.SetParameter) {
+        egainDockChat.CallQueue = egainDockChat.CallQueue || []
+        egainDockChat.CallQueue.push({
+          name: 'SetParameter',
+          args: [
+            egainAttributeName,
+            attributeValue
+          ]
+        })
+      } else {
+        egainDockChat.SetParameter(egainAttributeName, attributeValue)
+      }
+    }
+
+    //  Method to be called on click of custom button to launch chat in docked mode
+    egainDockChat.openHelp = function () {
+      egainDockChat.IsChatLaunched = true
+      startChat()
+    }
+
+    if (!egainDockChat.UseCustomButton) {
+      startChat()
+    }
+
+    function startChat () {
+      if (!egainDockChat.launchChat) {
+        egainDockChat.CallQueue = egainDockChat.CallQueue || []
+        egainDockChat.CallQueue.push({
+          name: 'launchChat',
+          args: []
+        })
+      } else {
+        egainDockChat.launchChat()
+      }
+    }
+
+    egainDockChat.openHelp()
   }
 }
 
