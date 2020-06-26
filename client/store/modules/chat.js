@@ -3,7 +3,17 @@ import queryString from 'query-string'
 
 const getters = {
   // ECE chat entry point ID
-  entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001'
+  entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001',
+  tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
+  chatTemplate: (state, getters) => {
+    // determine chat template name
+    if (getters.demoVersion.startsWith('11.6') || getters.demoVersion.startsWith('12.0')) {
+      return 'aqua'
+    } else {
+      // 12.5 and newer demos use cumulus_aqua
+      return 'cumulus_aqua'
+    }
+  }
 }
 
 const state = {
@@ -91,16 +101,8 @@ const actions = {
   },
   popEceChatWindow ({getters}) {
     console.log('popEceChatWindow')
-    let chatTemplate
-    // determine chat template name
-    if (getters.demoVersion.startsWith('11.6') || getters.demoVersion.startsWith('12.0')) {
-      chatTemplate = 'aqua'
-    } else {
-      // 12.5 and newer demos use cumulus_aqua
-      chatTemplate = 'cumulus_aqua'
-    }
     // create ECE chat url
-    let url = `https://${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com/ece/system/templates/chat/${chatTemplate}/index.html?subActivity=Chat&entryPointId=${getters.entryPointId}&templateName=${chatTemplate}&ver=v11&locale=en-US`
+    let url = `https://${getters.tunnelAddress}/ece/system/templates/chat/${getters.chatTemplate}/index.html?subActivity=Chat&entryPointId=${getters.entryPointId}&templateName=${getters.chatTemplate}&ver=v11&locale=en-US`
     console.log('ECE chat URL:', url)
     let w = 400
     let h = 600
