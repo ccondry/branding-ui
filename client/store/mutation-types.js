@@ -10,10 +10,6 @@ export const SET_SESSION = 'SET_SESSION'
 export const SET_WORKING = 'SET_WORKING'
 export const SET_LOADING = 'SET_LOADING'
 
-// app REST API endpoints
-export const SET_ENDPOINTS = 'SET_ENDPOINTS'
-export const SET_ENDPOINTS_LOADED = 'SET_ENDPOINTS_LOADED'
-
 // defaults
 export const SET_DEFAULTS = 'SET_DEFAULTS'
 
