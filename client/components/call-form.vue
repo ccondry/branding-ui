@@ -48,10 +48,18 @@ export default {
   computed: {
     numbers () {
       // returns the phone numbers to display
-      const ret = []
+
+      // return only main number for upstream
+      if (this.isUpstream) {
+        return [{
+          label: this.mainLabel,
+          number: this.main
+        }]
+      }
 
       // PCCE 12.5v1 demo
       if (this.isPcce && this.demoVersion === '12.5v1') {
+        // 12.5v1 no upstream
         return [{
           label: this.mainLabel,
           number: this.main
@@ -72,6 +80,8 @@ export default {
           number: this.dids.DID6
         }]
       }
+
+      const ret = []
 
       // PCCE 12.5CVA lab
       if (this.isPcce && this.demoVersion === '12.5CVA') {
