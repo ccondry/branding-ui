@@ -66,8 +66,8 @@ export default {
           label: this.wxmLabel,
           number: this.dids.DID1
         }, {
-          label: this.model.aiLabel,
           number: this.dids.DID6
+          label: this.aiLabel,
         }]
       }
 
