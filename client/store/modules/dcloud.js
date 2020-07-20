@@ -59,7 +59,10 @@ const getters = {
   // is this a CJP Webex Sandbox Spark Chat demo?
   isCjpWebex: (state, getters) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'webex',
   // is this a CWCC Abilene demo on the Cisco TSA tenant?
-  isTsaCwcc: (state, getters) => state.datacenter.toLowerCase() === 'cwcc' && state.sessionId.toLowerCase() === 'tsa',
+  isTsaCwcc: (state, getters) => {
+    return state.datacenter.toLowerCase() === 'cwcc'
+    && state.sessionId.toLowerCase().startsWith('tsa')
+  },
   // is this an RCDN (Compete Lab) demo?
   isRcdn: (state, getters) => state.datacenter.toLowerCase() === 'rcdn',
   // is this a an instant demo?
