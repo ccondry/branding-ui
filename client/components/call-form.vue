@@ -57,9 +57,23 @@ export default {
         }]
       }
 
-      // PCCE 12.5v1 demo
-      if (this.isPcce && this.demoVersion === '12.5v1') {
-        // 12.5v1 no upstream
+      // UCCX 12.5 demo (any revision)
+      if (this.isUccx && this.demoVersion.startsWith('12.5')) {
+        return [{
+          label: this.mainLabel,
+          number: this.main
+        }, {
+          label: this.wxmLabel,
+          number: this.dids.DID1
+        }, {
+          label: this.model.callModalCustomAiLabel,
+          number: this.dids.DID6
+        }]
+      }
+
+      // PCCE 12.5 demo (any revision)
+      if (this.isPcce && this.demoVersion.startsWith('12.5')) {
+        // 12.5 no upstream
         return [{
           label: this.mainLabel,
           number: this.main
@@ -128,7 +142,7 @@ export default {
 
         return ret
       } else {
-        // else = all other demos, not webex CCE v1 or PCCE 12.5 CVA Lab
+        // else = all other demos
         // main number for all demos
         ret.push({
           label: this.mainLabel,
@@ -147,7 +161,7 @@ export default {
           })
         }
 
-        // all PCCE and UCCX have AI number, though PCCE 12.5 has different AI
+        // all 11.x and 12.0 PCCE and UCCX have AI number, though PCCE 12.5 has different AI
         if (this.isUccx || (this.isPcce && this.demoVersion !== '12.5v1')) {
           ret.push({
             label: this.aiLabel,
