@@ -64,10 +64,10 @@ export default {
           number: this.main
         }, {
           label: this.wxmLabel,
-          number: this.dids.DID1
+          number: this.dids.DID9
         }, {
           label: this.aiLabel,
-          number: this.dids.DID9
+          number: this.dids.DID6
         }]
       }
 
