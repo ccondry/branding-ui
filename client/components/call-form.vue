@@ -12,7 +12,7 @@
             <td>&gt;</td>
             <td>
               <strong>{{ number.number }}</strong>
-              <span v-show="isWebexV3Prod">ext. <strong>{{ sessionConfig.queueId }}</strong></span>
+              <span v-show="showExtension">ext. <strong>{{ sessionConfig.queueId }}</strong></span>
             </td>
           </tr>
         </table>
@@ -27,6 +27,7 @@
 
 <script>
 import {formatUnicorn} from '../utils'
+import {mapGetters} from 'vuex'
 
 export default {
   props: [
@@ -43,9 +44,13 @@ export default {
     'demoVersion',
     'isWebexV3Prod'
   ],
-  methods: {
-  },
   computed: {
+    ...mapGetters([
+      'isWebexV4Prod'
+    ]),
+    showExtension () {
+      return this.isWebexV3Prod || this.isWebexV4Prod
+    },
     numbers () {
       // returns the phone numbers to display
 
@@ -207,8 +212,8 @@ export default {
     },
     main () {
       // main phone number
-      if (this.isCwccV1 || this.isWebexV3Prod) {
-        // webex CC v1/v2/v3
+      if (this.isCwccV1 || this.isWebexV3Prod || this.isWebexV4Prod) {
+        // webex CC v1/v2/v3/4
         return this.cwccDid
       } else if (this.isUpstream) {
         // upstream PCCE demo

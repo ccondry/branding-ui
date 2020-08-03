@@ -474,7 +474,8 @@ export default {
       'dids',
       'cwccDid',
       'demoVersion',
-      'isWebexV3Prod'
+      'isWebexV3Prod',
+      'isWebexV4Prod'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -692,8 +693,8 @@ export default {
         if (this.model.emailEnabled) {
           ret.push(email)
         }
-      } else if (this.isWebexV3Prod) {
-        // dCloud Webex v3 production (Abilene) instant demo
+      } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
+        // dCloud Webex v3/v4 production (Abilene) instant demo
         // voice call
         if (this.model.callEnabled) {
           ret.push(call)
@@ -972,7 +973,7 @@ export default {
         // no docked chat - pop ECE chat window
           this.popEceChatWindow()
         }
-      } else if (this.isTsaCwcc || this.isWebexV3Prod) {
+      } else if (this.isTsaCwcc || this.isWebexV3Prod || this.isWebexV4Prod) {
         // we should not be here. Abilene chats should be started by clicking
         // the bubble chat icon, which is not in the contact panel
       }
@@ -1070,7 +1071,7 @@ export default {
         } catch (e) {
           console.log('failed to format call number:', e)
         }
-      } else if (this.isCwccV1 || this.isWebexV3Prod) {
+      } else if (this.isCwccV1 || this.isWebexV3Prod || this.isWebexV4Prod) {
         // CWCC v1/v2 demo, or Webex CC v3 demo
         const formattedCallNumber = formatUnicorn(this.model.callText, this.cwccDid)
         this.$set(this.model, 'callText', formattedCallNumber)
@@ -1154,7 +1155,7 @@ export default {
             templateId: this.sessionConfig.templateId || 'ce28a900-a8bc-11e9-9dce-53872d5a6b64'
           })
         }
-        if (this.isWebexV3Prod) {
+        if (this.isWebexV3Prod || this.isWebexV4Prod) {
           // Webex v3 production Abilene tenant for dCloud
           window.initWebexChat(this.sessionConfig)
         }

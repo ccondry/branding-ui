@@ -101,6 +101,14 @@ const getters = {
       return false
     }
   },
+  // is this Webex CC v4 Production (Abilene) demo?
+  isWebexV4Prod: (state, getters) => {
+    try {
+      return getters.sessionInfo.demo.toLowerCase() === 'webex' && state.sessionInfo.version.toLowerCase() === 'v4prod'
+    } catch (e) {
+      return false
+    }
+  },
   dids: (state, getters) => {
     try {
       return getters.sessionInfo.dids
@@ -110,7 +118,7 @@ const getters = {
   },
   cwccDid: (state, getters) => {
     try {
-      // for Webex CC v1/v2/v3 demo, determine main phone number based on vertical selected
+      // for Webex CC v1/v2/v3/v4 demo, determine main phone number based on vertical selected
       switch (getters.sessionConfig.vertical) {
         case 'finance': return getters.dids.DID7
         case 'travel': return getters.dids.DID8
