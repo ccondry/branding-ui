@@ -76,6 +76,34 @@ export default {
         }]
       }
 
+      // PCCE 12.5v2 demo or higher
+      // TODO or higher
+      if (this.isPcce && this.demoVersion === '12.5v2') {
+        return [{
+          label: this.mainLabel,
+          number: this.main
+        }, {
+          label: this.wxmLabel,
+          number: this.dids.DID1
+        }, {
+          // CRM phone number
+          label: this.crmLabel,
+          number: this.dids.DID3
+        }, {
+          label: this.goldLabel,
+          number: this.gold
+        }, {
+          label: this.vivrLabel,
+          number: this.vivr
+        }, {
+          label: this.model.callModalCvaAiLabel,
+          number: this.dids.DID2
+        }, {
+          label: this.model.callModalCustomAiLabel,
+          number: this.dids.DID6
+        }]
+      }
+
       // PCCE 12.5 demo (any revision)
       if (this.isPcce && this.demoVersion.startsWith('12.5')) {
         // 12.5 no upstream
@@ -194,6 +222,9 @@ export default {
     },
     wxmLabel () {
       return this.model.callModalWxmLabel
+    },
+    crmLabel () {
+      return this.model.callModalCrmLabel
     },
     goldLabel () {
       return this.model.callModalGoldLabel
