@@ -49,10 +49,18 @@ export default {
       'isWebexV4Prod'
     ]),
     showExtension () {
-      return this.isWebexV3Prod || this.isWebexV4Prod
+      return this.isWebexV3Prod
     },
     numbers () {
       // returns the phone numbers to display
+
+      // return only main number for webex CC v4
+      if (this.isWebexV4Prod) {
+        return [{
+          label: this.mainLabel,
+          number: '+1 469-270-6769'
+        }]
+      }
 
       // return only main number for upstream
       if (this.isUpstream) {
