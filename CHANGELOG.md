@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.14.0 (2020-09-17)
+
+### Features
+
+* **PCCE 12.5v2:** add support for SalesForce.com chat
+
+
 # 1.13.0 (2020-09-03)
 
 ### Features
