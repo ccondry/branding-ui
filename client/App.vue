@@ -476,7 +476,8 @@ export default {
       'cwccDid',
       'demoVersion',
       'isWebexV3Prod',
-      'isWebexV4Prod'
+      'isWebexV4Prod',
+      'isSfdc'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -1163,6 +1164,9 @@ export default {
         // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
         if (!this.demoConfig.uccxBubbleChat) {
           window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
+        }
+        if (this.isSfdc) {
+          window.initSfdcChat(this.datacenter, this.sessionId)
         }
       }
     }
