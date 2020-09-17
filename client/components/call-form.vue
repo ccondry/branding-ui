@@ -70,6 +70,22 @@ export default {
         }]
       }
 
+      // UCCX 12.5 enablement lab
+      if (this.isUccx && this.demoVersion === '12.5el') {
+        return [{
+          label: this.mainLabel,
+          number: this.main
+        }, {
+          label: 'Customer Service',
+          // 6021
+          number: this.dids.DID2
+        }, {
+          label: 'Language',
+          // 6022
+          number: this.dids.DID3
+        }]
+      }
+
       // UCCX 12.5 demo (any revision)
       if (this.isUccx && this.demoVersion.startsWith('12.5')) {
         return [{
