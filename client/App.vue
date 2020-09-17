@@ -1142,11 +1142,11 @@ export default {
         }
       } else {
         // brand is set
+        // determine if we need to load another chat library
         if (this.isCjpWebex) {
           // init CJP chat from Webex Sandbox (old spark care chat)
           window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
-        }
-        if (this.isTsaCwcc) {
+        } else if (this.isTsaCwcc) {
           // this is for the Cisco TSA tenants on Webex Contact Center Abilene
           window.initWebexChat({
             async: typeof this.sessionConfig.async === 'boolean' ? this.sessionConfig.async : true,
@@ -1156,16 +1156,14 @@ export default {
             orgId: this.sessionConfig.orgId || '83f66514-200c-47cd-8310-4a5711e7b356',
             templateId: this.sessionConfig.templateId || 'ce28a900-a8bc-11e9-9dce-53872d5a6b64'
           })
-        }
-        if (this.isWebexV3Prod || this.isWebexV4Prod) {
+        } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
           // Webex v3 production Abilene tenant for dCloud
           window.initWebexChat(this.sessionConfig)
-        }
-        // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
-        if (!this.demoConfig.uccxBubbleChat) {
+        } else if (!this.demoConfig.uccxBubbleChat) {
+          // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
           window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
-        }
-        if (this.isSfdc) {
+        } else if (this.isSfdc) {
+          // SalesForce.com chat for PCCE 12.5+
           window.initSfdcChat(this.datacenter, this.sessionId)
         }
       }
