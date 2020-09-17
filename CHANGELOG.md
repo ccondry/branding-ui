@@ -8,6 +8,7 @@ Dates are in YYYY-MM-DD format
 ### Features
 
 * **PCCE 12.5v2:** add support for SalesForce.com chat
+* **UCCX 12.0 Enablement Lab:** set phone numbers
 
 
 # 1.13.0 (2020-09-03)
