@@ -19,10 +19,12 @@ const actions = {
     data.demo = getters.sessionInfo.demo
     // demo version
     data.version = getters.sessionInfo.version
-    // true if using Upstream Works in PCCE
+    // true if using Upstream Works in PCCE as the multichannel option
     data.isUpstream = getters.isUpstream
     // true if this is an instant demo. false if scheduled demo.
     data.isInstantDemo = getters.isInstantDemo
+    // true if using SalesForce in PCCE as the multichannel option
+    data.isSfdc = getters.isSfdc
     // set working state
     dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
     console.debug('starting send email:', data)
