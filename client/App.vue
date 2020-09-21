@@ -1159,12 +1159,12 @@ export default {
         } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
           // Webex v3 production Abilene tenant for dCloud
           window.initWebexChat(this.sessionConfig)
-        } else if (!this.demoConfig.uccxBubbleChat) {
-          // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
-          window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
         } else if (this.isSfdc) {
           // SalesForce.com chat for PCCE 12.5+
           window.initSfdcChat(this.datacenter, this.sessionId)
+        } else if (!this.demoConfig.uccxBubbleChat) {
+          // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
+          window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
         }
       }
     }
