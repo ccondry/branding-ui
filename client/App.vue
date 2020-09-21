@@ -213,7 +213,7 @@ export default {
     this.qs = new window.URLSearchParams(uri)
     // add chat iframe event listener for postMessage
     window.addEventListener('message', (message) => {
-      console.log('iframe message:', message)
+      // console.log('iframe message:', message)
       try {
         if (message.data.type === 'sparky.command') {
           console.log('setting iframe to', message.data.data)
@@ -433,7 +433,7 @@ export default {
 
     // attach event listener for message from iframe
     eventer(messageEvent, e => {
-      console.log('parent received message!:', e.data)
+      // console.log('parent received message!:', e.data)
       if (e.data.event === 'submit-chat') {
         const d = e.data.data
         // save submitted data as cached user info
