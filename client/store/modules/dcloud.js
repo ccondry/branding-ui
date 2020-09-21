@@ -69,7 +69,7 @@ const getters = {
   // is the configured multichannel type ECE?
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // is the configured multichannel type SalesForce?
-  isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'sfdc',
+  isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
   // brand ID (also known as vertical ID)
   brand: (state, getters) => getters.sessionConfig.vertical,
   // full vertical config
