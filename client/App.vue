@@ -477,7 +477,8 @@ export default {
       'demoVersion',
       'isWebexV3Prod',
       'isWebexV4Prod',
-      'isSfdc'
+      'isSfdc',
+      'isServiceNow'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -622,6 +623,15 @@ export default {
               ret.push(callback)
             }
             return ret
+          } else if (this.isServiceNow) {
+            // ServiceNow has only voice
+            if (this.model.callEnabled) {
+              ret.push(call)
+            }
+            // socialminer callback
+            if (this.model.callbackEnabled) {
+              ret.push(callback)
+            }
           }
 
           // chat
