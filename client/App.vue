@@ -617,6 +617,10 @@ export default {
             if (this.model.emailEnabled) {
               ret.push(email)
             }
+            // socialminer callback
+            if (this.model.callbackEnabled) {
+              ret.push(callback)
+            }
             return ret
           }
 
