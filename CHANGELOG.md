@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.15.2 (2020-09-22)
+
+### Bug Fixes
+
+* **Salesforce:** remove contact panel options except inbound voice and email
+
+
 # 1.15.1 (2020-09-21)
 
 ### Bug Fixes
