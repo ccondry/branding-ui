@@ -3,6 +3,14 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.16.0 (2020-09-22)
+
+### Features
+
+* **ServiceNow:** only show inbound voice and callback options for ServiceNow multichannel
+* **Salesforce:** add callback option for Salesforce multichannel
+
+
 # 1.15.2 (2020-09-22)
 
 ### Bug Fixes
