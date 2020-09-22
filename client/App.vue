@@ -607,6 +607,19 @@ export default {
           }
         } else {
           // all other PCCE demos not 12.5CVA
+
+          if (this.isSfdc) {
+            // salesforce multichannel - offer only voice and email (chat is separate)
+            if (this.model.callEnabled) {
+              ret.push(call)
+            }
+            // email
+            if (this.model.emailEnabled) {
+              ret.push(email)
+            }
+            return ret
+          }
+
           // chat
           // Upstream chat? don't have bot option for upstream, so always show "chat live"
           if (this.isUpstream) {
