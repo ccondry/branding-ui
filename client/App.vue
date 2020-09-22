@@ -587,7 +587,7 @@ export default {
         }
       } else if (this.isPcce) {
         // dCloud PCCE demo
-        if (this.isPcce && this.demoVersion === '12.5CVA') {
+        if (this.demoVersion === '12.5CVA') {
           // PCCE 12.5CVA lab
           // voice call
           if (this.model.callEnabled) {
