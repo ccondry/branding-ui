@@ -1434,8 +1434,4 @@ body {
   color: black;
 }
 
-// make the Salesforce chat "agent offline" message visible
-.message {
-  background-color: revert !important;
-}
 </style>
