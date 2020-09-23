@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.16.2 (2020-09-23)
+
+### Bug Fixes
+
+* **Salesforce:** add/update Salesforce chat button style
+
+
 # 1.16.1 (2020-09-22)
 
 ### Bug Fixes
