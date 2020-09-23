@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.16.1 (2020-09-22)
+
+### Bug Fixes
+
+* **ServiceNow:** remove extra channel options from the panel
+
+
 # 1.16.0 (2020-09-22)
 
 ### Features
