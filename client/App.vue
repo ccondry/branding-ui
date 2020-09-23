@@ -622,6 +622,7 @@ export default {
             if (this.model.callbackEnabled) {
               ret.push(callback)
             }
+            // no more channels
             return ret
           } else if (this.isServiceNow) {
             // ServiceNow has only voice
@@ -632,6 +633,8 @@ export default {
             if (this.model.callbackEnabled) {
               ret.push(callback)
             }
+            // no more channels
+            return ret
           }
 
           // chat
