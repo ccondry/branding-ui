@@ -86,7 +86,24 @@ export default {
         }]
       }
 
-      // UCCX 12.5 demo (any revision)
+      // UCCX 12.5v2 demo
+      if (this.isUccx && this.demoVersion === '12.5v2') {
+        return [{
+          label: this.mainLabel,
+          number: this.main
+        }, {
+          label: this.wxmLabel,
+          number: this.dids.DID9
+        }, {
+          label: this._2RingLabel,
+          number: this.dids.DID10
+        }, {
+          label: this.aiLabel,
+          number: this.dids.DID6
+        }]
+      }
+
+      // UCCX 12.5 demo (any other revision)
       if (this.isUccx && this.demoVersion.startsWith('12.5')) {
         return [{
           label: this.mainLabel,
@@ -261,6 +278,9 @@ export default {
     },
     customAiLabel () {
       return this.model.callModalCustomAiLabel
+    },
+    _2RingLabel () {
+      return this.model.callModal2RingLabel
     },
     text () {
       return formatUnicorn(this.modalText, this.main)
