@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.17.0 (2020-09-24)
+
+### Features
+
+* **2Ring:** add 2Ring phone number for UCCX 12.5v2 demos
+
+
 # 1.16.2 (2020-09-23)
 
 ### Bug Fixes
