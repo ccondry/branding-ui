@@ -479,7 +479,8 @@ export default {
       'isWebexV3Prod',
       'isWebexV4Prod',
       'isSfdc',
-      'isServiceNow'
+      'isServiceNow',
+      'isMsDynamics'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -625,7 +626,7 @@ export default {
             }
             // no more channels
             return ret
-          } else if (this.isServiceNow) {
+          } else if (this.isServiceNow || this.isMsDynamics) {
             // ServiceNow has only voice
             if (this.model.callEnabled) {
               ret.push(call)
