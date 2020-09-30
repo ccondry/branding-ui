@@ -3,6 +3,18 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.18.0 (2020-09-30)
+
+### Features
+
+* **Webex CCE v2:** add support for Webex CCE v2 demo
+* **Microsoft Dynamics:** add support for Microsoft Dynamics multichannel
+
+### Bug Fixes
+
+* **Salesforce:** fix chat style conflict (white text with white background)
+
+
 # 1.17.0 (2020-09-24)
 
 ### Features
