@@ -374,13 +374,16 @@ function initSfdcChat (datacenter, sessionId) {
 
 <!-- SFDC chat style -->
 <style type='text/css'>
-    .embeddedServiceHelpButton .helpButton .uiButton {
-        background-color: #005DA9;
-        font-family: "Arial", sans-serif;
-    }
-    .embeddedServiceHelpButton .helpButton .uiButton:focus {
-        outline: 1px solid #005DA9;
-    }
+  .embeddedServiceHelpButton .helpButton .uiButton {
+    background-color: #005DA9;
+    font-family: "Arial", sans-serif;
+  }
+  .embeddedServiceHelpButton .helpButton .uiButton:focus {
+    outline: 1px solid #005DA9;
+  }
+  /* fix SFDC chat style CSS conflict with buefy */
+  .embeddedServiceHelpButton .message {
+    background-color: initial;
+  }
 </style>
-
 </html>
