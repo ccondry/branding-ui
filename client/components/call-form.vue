@@ -186,8 +186,8 @@ export default {
           label: 'DF Transcribe',
           number: this.dids.DID10
         }]
-      } else if (this.isPcce && this.demoVersion === 'wxccev1') {
-        // Webex CCE v1
+      } else if (this.isPcce && (this.demoVersion === 'wxccev1' || this.demoVersion === 'wxccev2')) {
+        // Webex CCE v1/v2
         // main
         ret.push({
           label: this.mainLabel,
