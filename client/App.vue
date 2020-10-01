@@ -119,6 +119,23 @@
 
     <!-- Main page content -->
     <span id="main-content">
+
+      <!-- draggable Webex Teams Space Widget -->
+      <div id="webex-teams-widget-container"
+      ref="teams"
+      @mousedown="mouseDown"
+      @mousemove="mouseMove"
+      @mouseup="mouseUp"
+      v-show="webexTeamsChatRequested"
+      >
+        <b-loading
+        :is-full-page="false"
+        :active="webexTeamsWidgetLoading"
+        :can-cancel="false"
+        />
+        <div id="my-webexteams-widget" />
+      </div>
+
       <!-- background iframe -->
       <iframe :src="model.iframe" class="demo-iframe"></iframe>
 
@@ -185,6 +202,8 @@
           <!-- /Contact Menu -->
         </div>
       </transition>
+
+      
     </span>
   </div>
 </template>
@@ -261,6 +280,12 @@ export default {
       task: null,
       loaded: false,
       qs: {},
+      pos1: 0,
+      pos2: 0,
+      pos3: 0,
+      pos4: 0,
+      dragging: false,
+      webexTeamsChatRequested: false,
       production: process.env.NODE_ENV === 'production',
       showSessionInfoModal: false,
       showContactPanel: false,
@@ -480,8 +505,17 @@ export default {
       'isWebexV4Prod',
       'isSfdc',
       'isServiceNow',
-      'isMsDynamics'
+      'isMsDynamics',
+      'isWebexTeams',
+      'webexTeamsWidgetStarted'
     ]),
+    webexTeamsWidgetLoading () {
+      if (this.webexTeamsChatRequested) {
+        return !this.webexTeamsWidgetStarted
+      } else {
+        return false
+      }
+    },
     contactOptions () {
       // build all possible contact options
       const chat = {
@@ -796,8 +830,34 @@ export default {
       'popEceChatWindow',
       'popUpstreamChatWindow',
       'popCconeChatWindow',
-      'startEceDockedChat'
+      'startEceDockedChat',
+      'makeDraggable',
+      'startWebexTeamsWidget'
     ]),
+    mouseMove (e) {
+      if (this.dragging) {
+        // calculate the new cursor position:
+        this.pos1 = this.pos3 - e.clientX
+        this.pos2 = this.pos4 - e.clientY
+        this.pos3 = e.clientX
+        this.pos4 = e.clientY
+        // set the element's new position:
+        this.$refs.teams.style.top = (this.$refs.teams.offsetTop - this.pos2) + 'px'
+        this.$refs.teams.style.left = (this.$refs.teams.offsetLeft - this.pos1) + 'px'
+      }
+    },
+    mouseDown (e) {
+      this.dragging = true
+      // get the mouse cursor position at startup:
+      this.pos3 = e.clientX
+      this.pos4 = e.clientY
+      // document.onmouseup = closeDragElement
+      // call a function whenever the cursor moves:
+      // document.onmousemove = elementDrag
+    },
+    mouseUp (e) {
+      this.dragging = false
+    },
     hideChatBot () {
       // change the chat bot iframe URL to kill the session
       this.chatIframe = ''
@@ -941,6 +1001,13 @@ export default {
         ciscoBubbleChat.showChatWindow()
         // close the contact menu
         this.showContactPanel = false
+      } else if (this.isWebexTeams) {
+         // close the contact menu
+        this.showContactPanel = false
+        // show loading box for teams widget
+        this.webexTeamsChatRequested = true
+        // start webex teams chat widget
+        this.startWebexTeamsWidget()
       } else if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
@@ -1130,7 +1197,7 @@ export default {
         }
       }
     },
-    checkConfig () {
+    async checkConfig () {
       if (!this.brand) {
         // no brand set. show relevant error message to user.
         if (this.isInstantDemo) {
@@ -1194,6 +1261,21 @@ export default {
         } else if (this.isSfdc) {
           // SalesForce.com chat for PCCE 12.5+
           window.initSfdcChat(this.datacenter, this.sessionId)
+        } else if (this.isWebexTeams) {
+          console.log('init webex teams space widget')
+          try {
+            // load the webex teams space widget javascript library
+            await window.initWebexTeamsWidget()
+            console.log('successfully loaded webex teams space widget library')
+            // make the teams widget draggable in the page
+            this.makeDraggable(document.getElementById('webex-teams-widget-container'))
+          } catch (e) {
+            this.$toast.open({
+              duration: 15000,
+              message: `Webex Teams widget failed to load: ${e.message}`,
+              type: 'is-danger'
+            })
+          }
         } else if (!this.demoConfig.uccxBubbleChat) {
           // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
           window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
@@ -1436,4 +1518,14 @@ body {
   color: black;
 }
 
+#webex-teams-widget-container {
+  position: absolute;
+  right: 3rem;
+  bottom: 0;
+}
+
+#my-webexteams-widget {
+  width: 500px;
+  height: 500px;
+}
 </style>

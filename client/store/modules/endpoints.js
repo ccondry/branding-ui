@@ -6,9 +6,9 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   // development environment
   // prefix base URL with localhost and port
-  // base = 'http://localhost:' + process.env.PORT + '/api/v1'
+  base = 'http://localhost:3037/api/v1'
   // use production REST API
-  base = 'https://mm-brand.cxdemo.net/api/v1'
+  // base = 'https://mm-brand.cxdemo.net/api/v1'
 }
 
 const state = {
@@ -36,7 +36,9 @@ const state = {
     // Sparky - Chat bot interface'
     sparky: 'https://mm-chat.cxdemo.net',
     // Upstream Works chat proxy'
-    upstreamProxy: 'https://mm-uwf.cxdemo.net'
+    upstreamProxy: 'https://mm-uwf.cxdemo.net',
+    // webex teams guest issuer
+    webexGuest: base + '/webex/guest'
   }
 }
 

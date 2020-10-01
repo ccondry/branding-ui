@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons"> -->
   <!-- <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css"> -->
+  <!-- Material Design icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/2.5.94/css/materialdesignicons.min.css">
+  <!-- style for Webex Teams Space Widget -->
+  <link rel="stylesheet" href="https://code.s4d.io/widget-space/production/main.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"> -->
   <title><%= htmlWebpackPlugin.options.title %></title>
   <!-- in development, connect to vue-devtools -->
@@ -369,6 +372,33 @@ function initSfdcChat (datacenter, sessionId) {
     initESW()
   }
   document.body.appendChild(s)
+}
+</script>
+
+<!-- Webex Teams Space Widget (chat/voice/video) -->
+<script>
+function initWebexTeamsWidget () {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script')
+    s.setAttribute('src', 'https://code.s4d.io/widget-space/production/bundle.js')
+    s.onload = function () {
+      resolve()
+    }
+    s.onerror = function (e) {
+      reject(e)
+    }
+    document.body.appendChild(s)
+  })
+}
+function startWebexTeamsWidget ({elementId, roomId, accessToken}) {
+  // get widget element ID
+  const widgetEl = document.getElementById(elementId)
+  // Init the space widget
+  return webex.widget(widgetEl).spaceWidget({
+    accessToken,
+    destinationId: roomId,
+    destinationType: 'spaceId'
+  })
 }
 </script>
 

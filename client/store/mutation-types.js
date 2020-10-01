@@ -23,3 +23,6 @@ export const SET_SESSION_INFO_ERROR = 'SET_SESSION_INFO_ERROR'
 
 // surfly cobrowse library loaded yet
 export const SET_SURFLY_LOADED = 'SET_SURFLY_LOADED'
+
+// webex teams space widget
+export const SET_WEBEX_TEAMS_WIDGET_STARTED = 'SET_WEBEX_TEAMS_WIDGET_STARTED'

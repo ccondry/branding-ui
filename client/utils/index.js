@@ -1,5 +1,23 @@
 import axios from 'axios'
 
+// helper function to append query parameters to a URL
+export const addUrlQueryParams = function (endpoint, params) {
+  let url = endpoint
+  if (params) {
+    url += '?'
+    const keys = Object.keys(params)
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
+      const value = params[key]
+      if (i !== 0) {
+        url += '&'
+      }
+      url += `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    }
+  }
+  return url
+}
+
 export const load = function (endpoint, query) {
   console.log('GET', endpoint)
   const options = {
