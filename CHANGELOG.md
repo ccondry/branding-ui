@@ -1,6 +1,14 @@
-# Change Log
+# branding-ui Change Log
 
 Dates are in YYYY-MM-DD format
+
+
+# 1.20.0 (2020-10-01)
+
+### Features
+
+* **Webex Teams:** improve experience by starting chat widget at load time, then
+requesting agent and unhiding the chat window when user submits chat form
 
 
 # 1.19.0 (2020-10-01)
