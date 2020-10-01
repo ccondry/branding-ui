@@ -7,6 +7,7 @@ import callback from './callback'
 import task from './task'
 import chat from './chat'
 import endpoints from './endpoints'
+import webexTeams from './webex-teams'
 
 export default {
   app,
@@ -17,5 +18,6 @@ export default {
   callback,
   task,
   chat,
-  endpoints
+  endpoints,
+  webexTeams
 }

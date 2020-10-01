@@ -38,7 +38,9 @@ const state = {
     // Upstream Works chat proxy'
     upstreamProxy: 'https://mm-uwf.cxdemo.net',
     // webex teams guest issuer
-    webexGuest: base + '/webex/guest'
+    webexGuest: base + '/webex/guest',
+    // webex teams agent request
+    webexAgent: base + '/webex/agent'
   }
 }
 

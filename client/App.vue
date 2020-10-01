@@ -123,14 +123,11 @@
       <!-- draggable Webex Teams Space Widget -->
       <div id="webex-teams-widget-container"
       ref="teams"
-      @mousedown="mouseDown"
-      @mousemove="mouseMove"
-      @mouseup="mouseUp"
       v-show="webexTeamsChatRequested"
       >
         <b-loading
         :is-full-page="false"
-        :active="webexTeamsWidgetLoading"
+        :active="!this.webexTeamsWidgetStarted"
         :can-cancel="false"
         />
         <div id="my-webexteams-widget" />
@@ -470,6 +467,17 @@ export default {
         this.updateUrlParameters()
       }
     }, false)
+
+    // watch for webex teams widget title to exist, and make it draggable
+    let interval
+    interval = setInterval(() => {
+      const elements = document.getElementsByClassName('webex-title-text')
+      if (elements.length) {
+        // console.log('found webex teams header:', elements)
+        this.makeWebexTeamsWidgetDraggable(elements[0])
+        window.clearInterval(interval)
+      }
+    }, 1000)
   },
 
   computed: {
@@ -509,13 +517,6 @@ export default {
       'isWebexTeams',
       'webexTeamsWidgetStarted'
     ]),
-    webexTeamsWidgetLoading () {
-      if (this.webexTeamsChatRequested) {
-        return !this.webexTeamsWidgetStarted
-      } else {
-        return false
-      }
-    },
     contactOptions () {
       // build all possible contact options
       const chat = {
@@ -831,32 +832,37 @@ export default {
       'popUpstreamChatWindow',
       'popCconeChatWindow',
       'startEceDockedChat',
-      'makeDraggable',
-      'startWebexTeamsWidget'
+      'startWebexTeamsWidget',
+      'getWebexTeamsAgent'
     ]),
-    mouseMove (e) {
-      if (this.dragging) {
-        // calculate the new cursor position:
-        this.pos1 = this.pos3 - e.clientX
-        this.pos2 = this.pos4 - e.clientY
+    makeWebexTeamsWidgetDraggable (element) {
+      // draggable by the title bar
+      element.onmousemove = (e) => {
+        if (this.dragging) {
+          // calculate the new cursor position:
+          this.pos1 = this.pos3 - e.clientX
+          this.pos2 = this.pos4 - e.clientY
+          this.pos3 = e.clientX
+          this.pos4 = e.clientY
+          // set the element's new position:
+          this.$refs.teams.style.top = (this.$refs.teams.offsetTop - this.pos2) + 'px'
+          this.$refs.teams.style.left = (this.$refs.teams.offsetLeft - this.pos1) + 'px'
+        }
+      }
+
+      element.onmousedown = (e) => {
+        this.dragging = true
+        // get the mouse cursor position at startup:
         this.pos3 = e.clientX
         this.pos4 = e.clientY
-        // set the element's new position:
-        this.$refs.teams.style.top = (this.$refs.teams.offsetTop - this.pos2) + 'px'
-        this.$refs.teams.style.left = (this.$refs.teams.offsetLeft - this.pos1) + 'px'
+        // document.onmouseup = closeDragElement
+        // call a function whenever the cursor moves:
+        // document.onmousemove = elementDrag
       }
-    },
-    mouseDown (e) {
-      this.dragging = true
-      // get the mouse cursor position at startup:
-      this.pos3 = e.clientX
-      this.pos4 = e.clientY
-      // document.onmouseup = closeDragElement
-      // call a function whenever the cursor moves:
-      // document.onmousemove = elementDrag
-    },
-    mouseUp (e) {
-      this.dragging = false
+
+      element.onmouseup = (e) => {
+        this.dragging = false
+      }
     },
     hideChatBot () {
       // change the chat bot iframe URL to kill the session
@@ -959,8 +965,21 @@ export default {
       console.log('clickSubmitChat', data)
       // update customer data cache
       this.name = data.name
+      // try to set first/last name
+      try {
+        const nameParts = this.name.split(' ')
+        this.firstName = nameParts.shift()
+        this.lastName = nameParts.join(' ')
+      } catch (e) {
+        console.log('clickSubmitChat - failed to parse firstName and lastName from', this.name)
+      }
       this.phone = data.phone
       this.email = data.email
+      // update URL query parameters to match cached data
+      setQueryStringParameter('firstName', this.firstName)
+      setQueryStringParameter('lastName', this.lastName)
+      setQueryStringParameter('phone', this.phone)
+      setQueryStringParameter('email', this.email)
       // close the modal
       this.showChatModal = false
       if (this.isCjpCcone || this.isCwccV1) {
@@ -970,6 +989,10 @@ export default {
       } else if (this.isUpstream) {
         // pop Upstream chat window
         this.popUpstreamChatWindow(data)
+      } else if (this.isWebexTeams) {
+        this.getWebexTeamsAgent(data)
+        // request an agent and show the webex teams chat
+        this.webexTeamsChatRequested = true
       }
     },
     clickChat (event) {
@@ -1002,12 +1025,14 @@ export default {
         // close the contact menu
         this.showContactPanel = false
       } else if (this.isWebexTeams) {
-         // close the contact menu
+        // show chat modal for webex teams chat
+        this.showChatModal = true
+        // close the contact menu
         this.showContactPanel = false
         // show loading box for teams widget
-        this.webexTeamsChatRequested = true
+        // this.webexTeamsChatRequested = true
         // start webex teams chat widget
-        this.startWebexTeamsWidget()
+        // this.startWebexTeamsWidget()
       } else if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
@@ -1257,7 +1282,7 @@ export default {
           })
         } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
           // Webex v3 production Abilene tenant for dCloud
-          window.initWebexChat(this.sessionConfig)
+          await window.initWebexChat(this.sessionConfig)
         } else if (this.isSfdc) {
           // SalesForce.com chat for PCCE 12.5+
           window.initSfdcChat(this.datacenter, this.sessionId)
@@ -1267,8 +1292,8 @@ export default {
             // load the webex teams space widget javascript library
             await window.initWebexTeamsWidget()
             console.log('successfully loaded webex teams space widget library')
-            // make the teams widget draggable in the page
-            this.makeDraggable(document.getElementById('webex-teams-widget-container'))
+            // start webex teams chat widget, joining an empty space
+            await this.startWebexTeamsWidget()
           } catch (e) {
             this.$toast.open({
               duration: 15000,
@@ -1431,6 +1456,7 @@ body {
     // hide anything that flows over the rounded corners
     overflow: hidden;
   }
+  z-index: 10;
 }
 
 // slide the drawer out
