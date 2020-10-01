@@ -69,15 +69,15 @@ const getters = {
   // is the configured multichannel type ECE?
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // is the configured multichannel type SalesForce?
-  // isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
-  isSfdc: (state, getters) => false,
+  isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
+  // isSfdc: (state, getters) => false,
   // is the configured multichannel type ServiceNow?
   isServiceNow: (state, getters) => getters.sessionConfig.multichannel === 'servicenow',
   // is the configured multichannel type MS Dynamics?
   isMsDynamics: (state, getters) => getters.sessionConfig.multichannel === 'msdynamics',
   // is the configured multichannel type Webex Teams?
-  // isWebexTeams: (state, getters) => getters.sessionConfig.multichannel === 'webex',
-  isWebexTeams: (state, getters) => true,
+  isWebexTeams: (state, getters) => getters.sessionConfig.multichannel === 'webex',
+  // isWebexTeams: (state, getters) => true,
   // brand ID (also known as vertical ID)
   brand: (state, getters) => getters.sessionConfig.vertical,
   // full vertical config
