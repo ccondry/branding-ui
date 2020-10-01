@@ -117,6 +117,23 @@ export default {
         }]
       }
 
+      // PCCE 12.5CVA lab
+      if (this.isPcce && this.demoVersion === '12.5CVA') {
+        return [{
+          label: this.mainLabel,
+          number: this.dids.DID7
+        }, {
+          label: 'DF',
+          number: this.dids.DID8
+        }, {
+          label: 'DF Param',
+          number: this.dids.DID9
+        }, {
+          label: 'DF Transcribe',
+          number: this.dids.DID10
+        }]
+      }
+
       // PCCE 12.5v2 demo or higher
       // TODO or higher
       if (this.isPcce && this.demoVersion === '12.5v2') {
@@ -171,22 +188,7 @@ export default {
 
       const ret = []
 
-      // PCCE 12.5CVA lab
-      if (this.isPcce && this.demoVersion === '12.5CVA') {
-        return [{
-          label: this.mainLabel,
-          number: this.dids.DID7
-        }, {
-          label: 'DF',
-          number: this.dids.DID8
-        }, {
-          label: 'DF Param',
-          number: this.dids.DID9
-        }, {
-          label: 'DF Transcribe',
-          number: this.dids.DID10
-        }]
-      } else if (this.isPcce && (this.demoVersion === 'wxccev1' || this.demoVersion === 'wxccev2')) {
+      if (this.isPcce && (this.demoVersion === 'wxccev1' || this.demoVersion === 'wxccev2')) {
         // Webex CCE v1/v2
         // main
         ret.push({
