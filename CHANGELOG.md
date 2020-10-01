@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.20.1 (2020-10-01)
+
+### Bug Fixes
+
+* **Multichannel:** remove test values for multichannel selection
+
+
 # 1.20.0 (2020-10-01)
 
 ### Features
