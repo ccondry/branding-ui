@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.20.2 (2020-10-01)
+
+### Bug Fixes
+
+* **PCCE 12.5CVA:** fix wrong phone number list displayed on Call Us form
+
+
 # 1.20.1 (2020-10-01)
 
 ### Bug Fixes
