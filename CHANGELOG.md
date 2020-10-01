@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.19.0 (2020-10-01)
+
+### Features
+
+* **Webex Teams:** add support for Webex Teams multichannel space widget 
+
+
 # 1.18.0 (2020-09-30)
 
 ### Features
