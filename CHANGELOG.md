@@ -3,6 +3,14 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.21.0 (2020-10-01)
+
+### Features
+
+* **Call Form:** use mongo dcloud.demo info to determine call form phone numbers
+* **Contact Panel:** use mongo dcloud.demo info to determine contact panel options	
+
+
 # 1.20.2 (2020-10-01)
 
 ### Bug Fixes
