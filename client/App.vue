@@ -86,20 +86,7 @@
 
     <!-- Inbound Voice Call modal -->
     <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
-      <call-form v-if="Object.keys(sessionInfo)"
-      :model="model"
-      :session-info="sessionInfo"
-      :session-config="sessionConfig"
-      :dids="dids"
-      :is-upstream="isUpstream"
-      :is-pcce="isPcce"
-      :is-uccx="isUccx"
-      :is-cwcc-v1="isCwccV1"
-      :cwcc-did="cwccDid"
-      :is-instant-demo="isInstantDemo"
-      :demo-version="demoVersion"
-      :is-webex-v3-prod="isWebexV3Prod"
-      />
+      <call-form v-if="Object.keys(sessionInfo)" :model="model" />
     </b-modal>
 
     <!-- Chat modal -->
@@ -503,6 +490,7 @@ export default {
       'datacenter',
       'sessionId',
       'sessionInfoError',
+      'demoBaseConfig',
       'demoConfig',
       'isCwcc',
       'isCwccV1',
@@ -584,234 +572,58 @@ export default {
       }
       // determine which options are enabled for this demo type and vertical
       const ret = []
+      if (this.demoBaseConfig && this.demoBaseConfig.channels) {
+        const channels = this.demoBaseConfig.channels
 
-      if (this.isCjpCcone) {
-        // CXDemo TSA users R10 demo tenant ("Gold Tenant")
         // chat
-        if (this.model.chatEnabled) {
-          ret.push(chat)
-        }
-        // voice call
-        if (this.model.callEnabled) {
-          ret.push(call)
-        }
-        // email
-        if (this.model.emailEnabled) {
-          ret.push(email)
-        }
-      } else if (this.isTsaCwcc) {
-        // CXDemo TSA users CWCC abilene demo tenant
-        // voice call
-        if (this.model.callEnabled) {
-          ret.push(call)
-        }
-        // email
-        if (this.model.emailEnabled) {
-          ret.push(email)
-        }
-      } else if (this.isCjpWebex) {
-        // CJP Webex Sandbox Spark Chat demo? meady's demo?
-        // chat
-        if (this.model.chatEnabled) {
-          ret.push(chat)
-        }
-        // voice call
-        if (this.model.callEnabled) {
-          ret.push(call)
-        }
-        // email
-        if (this.model.emailEnabled) {
-          ret.push(email)
-        }
-      } else if (this.isPcce) {
-        // dCloud PCCE demo
-        if (this.demoVersion === '12.5CVA') {
-          // PCCE 12.5CVA lab
-          // voice call
-          if (this.model.callEnabled) {
-            ret.push(call)
-          }
-          // show the right chat/chatbot option
+        if (channels.includes('chat')) {
+        // show either chat or chatbot option
           if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
             // direct chat to agent, no chat bot
             ret.push(chat)
-          } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
+          } else if (channels.includes('chat') && this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
             // chat bot, with option to escalate to agent
             ret.push(chatBot)
           }
-          // email
-          if (this.model.emailEnabled) {
-            ret.push(email)
-          }
-        } else {
-          // all other PCCE demos not 12.5CVA
-
-          if (this.isSfdc) {
-            // salesforce multichannel - offer only voice and email (chat is separate)
-            if (this.model.callEnabled) {
-              ret.push(call)
-            }
-            // email
-            if (this.model.emailEnabled) {
-              ret.push(email)
-            }
-            // socialminer callback
-            if (this.model.callbackEnabled) {
-              ret.push(callback)
-            }
-            // no more channels
-            return ret
-          } else if (this.isServiceNow || this.isMsDynamics) {
-            // ServiceNow has only voice
-            if (this.model.callEnabled) {
-              ret.push(call)
-            }
-            // socialminer callback
-            if (this.model.callbackEnabled) {
-              ret.push(callback)
-            }
-            // no more channels
-            return ret
-          }
-
-          // chat
-          // Upstream chat? don't have bot option for upstream, so always show "chat live"
-          if (this.isUpstream) {
-            // direct chat to agent, no chat bot
-            ret.push(chat)
-          } else if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
-            // direct chat to agent, no chat bot
-            ret.push(chat)
-          } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
-            // chat bot, with option to escalate to agent
-            ret.push(chatBot)
-          }
-          // SMS
-          if (!this.isUpstream) {
-            // disable any SMS option for upstream demos
-            if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-              // direct SMS to agent, no chat bot
-              ret.push(sms)
-            } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-              // SMS bot
-              ret.push(smsBot)
-            }
-          }
-          // voice call
-          if (this.model.callEnabled) {
-            ret.push(call)
-          }
-          // voice callback
-          if (this.model.callbackEnabled) {
-            ret.push(callback)
-          }
-          // email
-          if (this.model.emailEnabled) {
-            ret.push(email)
-          }
-          // task routing
-          if (!this.isUpstream && this.model.taskEnabled) {
-            ret.push(task)
-          }
-          // cobrowse
-          if (!this.isUpstream && this.model.cobrowseEnabled) {
-            ret.push(cobrowse)
-          }
         }
-      } else if (this.isUccx) {
-        // dCloud UCCX demo
-        // chat
-        if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
-          // direct chat to agent, no chat bot
-          ret.push(chat)
-        } else if (this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
-          // chat bot, with option to escalate to agent
-          ret.push(chatBot)
-        }
+
         // SMS
-        if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-          // direct SMS to agent, no chat bot
-          ret.push(sms)
-        } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-          // SMS bot
-          ret.push(smsBot)
+        if (channels.includes('sms')) {
+          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+            // direct SMS to agent, no chat bot
+            ret.push(sms)
+          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+            // SMS bot
+            ret.push(smsBot)
+          }
         }
+
         // voice call
-        if (this.model.callEnabled) {
+        if (channels.includes('voice') && this.model.callEnabled) {
           ret.push(call)
         }
+
         // voice callback
-        if (this.model.callbackEnabled) {
+        if (channels.includes('callback') && this.model.callbackEnabled) {
           ret.push(callback)
         }
+
         // email
-        if (this.model.emailEnabled) {
+        if (channels.includes('email') && this.model.emailEnabled) {
           ret.push(email)
         }
-      } else if (this.isCwccV1) {
-        // dCloud CWCC v1 instant demo
-        // chat
-        if (this.model.chatEnabled) {
-          ret.push(chat)
+
+        // task
+        if (channels.includes('task') && this.model.taskEnabled) {
+          ret.push(task)
         }
-        // voice call
-        if (this.model.callEnabled) {
-          ret.push(call)
-        }
-        // email
-        if (this.model.emailEnabled) {
-          ret.push(email)
-        }
-      } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
-        // dCloud Webex v3/v4 production (Abilene) instant demo
-        // voice call
-        if (this.model.callEnabled) {
-          ret.push(call)
-        }
-        // email
-        if (this.model.emailEnabled) {
-          ret.push(email)
+
+        // cobrowse
+        if (channels.includes('cobrowse') && this.model.cobrowseEnabled) {
+          ret.push(cobrowse)
         }
       }
-
-      //
-      // // chat
-      // if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
-      //   ret.push(chat)
-      // }
-      // // chat bot
-      // if (!this.isTsaCwcc && !this.isCjpWebex && this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
-      //   ret.push(chatBot)
-      // }
-      // // SMS
-      // if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-      //   ret.push(sms)
-      // }
-      // // SMS bot
-      // if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && !this.isUpstream && this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-      //   ret.push(smsBot)
-      // }
-      // // voice call
-      // if (this.model.callEnabled) {
-      //   ret.push(call)
-      // }
-      // // voice callback
-      // if (!this.isTsaCwcc && !this.isCwccV1 && !this.isCjp && this.model.callbackEnabled) {
-      //   ret.push(callback)
-      // }
-      // // email
-      // if (!this.isCwccV1 && !this.isCjpWebex && this.model.emailEnabled) {
-      //   ret.push(email)
-      // }
-      // // task routing
-      // if (this.isPcce && !this.isUpstream && this.model.taskEnabled) {
-      //   ret.push(task)
-      // }
-      // // cobrowse
-      // if (this.isPcce && !this.isUpstream && this.model.cobrowseEnabled) {
-      //   ret.push(cobrowse)
-      // }
-      // return the array of options
+      // done
       return ret
     }
   },
@@ -823,6 +635,7 @@ export default {
       'setSessionId',
       'setDatacenter',
       'getBrand',
+      'getDemoBaseConfig',
       'sendEmail',
       'sendSms',
       'sendCallback',
@@ -1311,11 +1124,16 @@ export default {
 
   watch: {
     model (val) {
-      console.log('model changed - update view')
+      console.log('model changed. updating view...')
       this.updateView(val)
     },
     sessionInfo (val) {
-      console.log('sessionInfo changed')
+      console.log('sessionInfo changed. getting base demo config...')
+      // get base demo config
+      this.getDemoBaseConfig()
+    },
+    demoBaseConfig (val) {
+      console.log('base demo config changed. processing text templates and checking configuration...')
       // process any templates into the final text value
       this.processTextTemplates()
       this.checkConfig(val)

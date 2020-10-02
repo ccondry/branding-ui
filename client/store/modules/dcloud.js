@@ -69,20 +69,20 @@ const getters = {
   // is the configured multichannel type ECE?
   isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
   // is the configured multichannel type SalesForce?
-  isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
-  // isSfdc: (state, getters) => false,
+  // isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
+  isSfdc: (state, getters) => false,
   // is the configured multichannel type ServiceNow?
   isServiceNow: (state, getters) => getters.sessionConfig.multichannel === 'servicenow',
   // is the configured multichannel type MS Dynamics?
   isMsDynamics: (state, getters) => getters.sessionConfig.multichannel === 'msdynamics',
   // is the configured multichannel type Webex Teams?
-  isWebexTeams: (state, getters) => getters.sessionConfig.multichannel === 'webex',
-  // isWebexTeams: (state, getters) => true,
+  // isWebexTeams: (state, getters) => getters.sessionConfig.multichannel === 'webex',
+  isWebexTeams: (state, getters) => true,
   // brand ID (also known as vertical ID)
   brand: (state, getters) => getters.sessionConfig.vertical,
   // full vertical config
   demoConfig: state => state.brandConfig,
-  // just the branding-specific config in the vertical
+  // just the website branding-specific config in the vertical config
   brandConfig: state => state.brandConfig.brand,
   // null if no errors, object if errors getting dCloud session info
   sessionInfoError: state => state.sessionInfoError,
@@ -145,6 +145,9 @@ const getters = {
   },
   demoVersion: state => {
     return state.sessionInfo.version
+  },
+  demoBaseConfig: state => {
+    return state.demoBaseConfig
   }
 }
 
@@ -154,7 +157,8 @@ const state = {
   userId: '',
   sessionInfo: {},
   brandConfig: '',
-  sessionInfoError: null
+  sessionInfoError: null,
+  demoBaseConfig: null
 }
 
 const mutations = {
@@ -179,6 +183,9 @@ const mutations = {
   },
   [types.SET_SESSION_INFO_ERROR] (state, data) {
     state.sessionInfoError = data
+  },
+  [types.SET_DEMO_BASE_CONFIG] (state, data) {
+    state.demoBaseConfig = data
   }
 }
 
@@ -249,6 +256,35 @@ const actions = {
       })
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'brand', value: false})
+    }
+  },
+  async getDemoBaseConfig ({getters, commit, dispatch}) {
+    // get the base config for this demo type (UCCX 12.0v2, PCCE 12.5v1, etc.)
+    const type = getters.sessionInfo.demo.toLowerCase()
+    const version = getters.sessionInfo.version ? getters.sessionInfo.version.toLowerCase() : null
+    const instant = getters.isInstantDemo
+    const operation = 'load base demo config'
+    try {
+      dispatch('setLoading', {group: 'dcloud', type: 'demo', value: true})
+      console.log(operation, 'for', type, version, instant ? 'instant...' : '...')
+      const query = {
+        type,
+        version,
+        instant
+      }
+      const response = await load(getters.endpoints.demo, query)
+      console.log(operation, 'for', type, version, instant ? 'instant:' : ':', response)
+      commit(types.SET_DEMO_BASE_CONFIG, response.data[0])
+    } catch (e) {
+      const message = `${operation} for ${type} ${version} ${instant ? 'instant' : ''} failed: ${e.message}`
+      console.log(message)
+      Toast.open({
+        duration: 8000,
+        message,
+        type: 'is-danger'
+      })
+    } finally {
+      dispatch('setLoading', {group: 'dcloud', type: 'demo', value: false})
     }
   }
 }

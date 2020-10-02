@@ -19,6 +19,8 @@ const state = {
     session: base + '/session',
     // Retrieves the brand config.'
     brand: base + '/brand',
+    // Retrieves the base demo config.'
+    demo: base + '/demo',
     // Sends an email into the demo on behalf of the user.'
     email: base + '/email',
     // Sends an SMS to the user from the demo SMS number.'

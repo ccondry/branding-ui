@@ -5,14 +5,13 @@
         <p class="modal-card-title">{{ heading }}</p>
       </header>
       <section class="modal-card-body">
-        <p class="content" v-html="text" />
         <table class="phone-list">
           <tr v-for="(number, index) of numbers" :key="index">
             <td>{{ number.label }}</td>
             <td>&gt;</td>
             <td>
               <strong>{{ number.number }}</strong>
-              <span v-show="showExtension">ext. <strong>{{ sessionConfig.queueId }}</strong></span>
+              <span v-show="number.extension">ext. <strong>{{ number.extension }}</strong></span>
             </td>
           </tr>
         </table>
@@ -26,227 +25,57 @@
 </template>
 
 <script>
-import {formatUnicorn} from '../utils'
+import {fillOption} from '../utils'
 import {mapGetters} from 'vuex'
 
 export default {
   props: [
-    'sessionInfo',
-    'sessionConfig',
-    'isPcce',
-    'isUccx',
-    'isInstantDemo',
-    'isUpstream',
-    'model',
-    'isCwccV1',
-    'dids',
-    'cwccDid',
-    'demoVersion',
-    'isWebexV3Prod'
+    'model'
   ],
   computed: {
     ...mapGetters([
-      'isWebexV4Prod'
+      'sessionInfo',
+      'sessionConfig',
+      'isPcce',
+      'isUccx',
+      'isInstantDemo',
+      'isUpstream',
+      'isCwccV1',
+      'dids',
+      'cwccDid',
+      'demoVersion',
+      'isWebexV3Prod',
+      'isWebexV4Prod',
+      'demoBaseConfig'
     ]),
-    showExtension () {
-      return this.isWebexV3Prod
-    },
     numbers () {
       // returns the phone numbers to display
-
-      // return only main number for webex CC v4
-      if (this.isWebexV4Prod) {
-        return [{
-          label: this.mainLabel,
-          number: '+1 469-270-6769'
-        }]
-      }
-
       // return only main number for upstream
       if (this.isUpstream) {
         return [{
-          label: this.mainLabel,
-          number: this.main
-        }]
-      }
-
-      // UCCX 12.5 enablement lab
-      if (this.isUccx && this.demoVersion === '12.5el') {
-        return [{
-          label: this.mainLabel,
-          number: this.main
-        }, {
-          label: 'Customer Service',
-          // 6021
-          number: this.dids.DID2
-        }, {
-          label: 'Language',
-          // 6022
-          number: this.dids.DID3
-        }]
-      }
-
-      // UCCX 12.5v2 demo
-      if (this.isUccx && this.demoVersion === '12.5v2') {
-        return [{
-          label: this.mainLabel,
-          number: this.main
-        }, {
-          label: this.wxmLabel,
-          number: this.dids.DID9
-        }, {
-          label: this._2RingLabel,
-          number: this.dids.DID10
-        }, {
-          label: this.aiLabel,
-          number: this.dids.DID6
-        }]
-      }
-
-      // UCCX 12.5 demo (any other revision)
-      if (this.isUccx && this.demoVersion.startsWith('12.5')) {
-        return [{
-          label: this.mainLabel,
-          number: this.main
-        }, {
-          label: this.wxmLabel,
-          number: this.dids.DID9
-        }, {
-          label: this.aiLabel,
-          number: this.dids.DID6
-        }]
-      }
-
-      // PCCE 12.5CVA lab
-      if (this.isPcce && this.demoVersion === '12.5CVA') {
-        return [{
-          label: this.mainLabel,
+          label: this.model.callModalMainLabel,
           number: this.dids.DID7
-        }, {
-          label: 'DF',
-          number: this.dids.DID8
-        }, {
-          label: 'DF Param',
-          number: this.dids.DID9
-        }, {
-          label: 'DF Transcribe',
-          number: this.dids.DID10
         }]
       }
+      // does this demo have base config from cumulus-api?
+      // use the demoBaseConfig to configure phone numbers
+      return this.demoBaseConfig.call.map(v => {
+        // replace values like ${model.callModalMainLabel} with data from this.model
+        const label = fillOption(v.label, 'model', this.model)
 
-      // PCCE 12.5v2 demo or higher
-      // TODO or higher
-      if (this.isPcce && this.demoVersion === '12.5v2') {
-        return [{
-          label: this.mainLabel,
-          number: this.main
-        }, {
-          label: this.wxmLabel,
-          number: this.dids.DID1
-        }, {
-          // CRM phone number
-          label: this.crmLabel,
-          number: this.dids.DID3
-        }, {
-          label: this.goldLabel,
-          number: this.gold
-        }, {
-          label: this.vivrLabel,
-          number: this.vivr
-        }, {
-          label: this.model.callModalCvaAiLabel,
-          number: this.dids.DID2
-        }, {
-          label: this.model.callModalCustomAiLabel,
-          number: this.dids.DID6
-        }]
-      }
+        let number = v.number
+        // replace values like ${dids.DID1} variables with data from this.dids
+        number = fillOption(number, 'dids', this.dids)
+        // replace ${cwccDid} variable
+        number = number.replace(/\${cwccDid}/, this.cwccDid)
+        // replace variables like ${sessionConfig.phone}
+        number = fillOption(number, 'sessionConfig', this.sessionConfig)
 
-      // PCCE 12.5 demo (any revision)
-      if (this.isPcce && this.demoVersion.startsWith('12.5')) {
-        // 12.5 no upstream
-        return [{
-          label: this.mainLabel,
-          number: this.main
-        }, {
-          label: this.wxmLabel,
-          number: this.dids.DID1
-        }, {
-          label: this.goldLabel,
-          number: this.gold
-        }, {
-          label: this.vivrLabel,
-          number: this.vivr
-        }, {
-          label: this.model.callModalCvaAiLabel,
-          number: this.dids.DID2
-        }, {
-          label: this.model.callModalCustomAiLabel,
-          number: this.dids.DID6
-        }]
-      }
+        // replace variables like ${sessionConfig.queueId}
+        const extension = fillOption(v.extension, 'sessionConfig', this.sessionConfig)
 
-      const ret = []
-
-      if (this.isPcce && (this.demoVersion === 'wxccev1' || this.demoVersion === 'wxccev2')) {
-        // Webex CCE v1/v2
-        // main
-        ret.push({
-          label: this.mainLabel,
-          number: this.dids.DID7
-        })
-        // gold
-        ret.push({
-          label: this.goldLabel,
-          number: this.gold
-        })
-        // AI
-        ret.push({
-          label: this.aiLabel,
-          number: this.ai
-        })
-        // Portal Demo
-        ret.push({
-          label: 'Portal Demo',
-          number: this.dids.DID2
-        })
-        // Portal Free
-        ret.push({
-          label: 'Portal Free',
-          number: this.dids.DID3
-        })
-
-        return ret
-      } else {
-        // else = all other demos
-        // main number for all demos
-        ret.push({
-          label: this.mainLabel,
-          number: this.main
-        })
-
-        // normal PCCE, not with Upstream and not 12.5CVA lab, has gold and VIVR numbers
-        if (this.isPcce && !this.isUpstream) {
-          ret.push({
-            label: this.goldLabel,
-            number: this.gold
-          })
-          ret.push({
-            label: this.vivrLabel,
-            number: this.vivr
-          })
-        }
-
-        // all 11.x and 12.0 PCCE and UCCX have AI number, though PCCE 12.5 has different AI
-        if (this.isUccx || (this.isPcce && this.demoVersion !== '12.5v1')) {
-          ret.push({
-            label: this.aiLabel,
-            number: this.ai
-          })
-        }
-      }
-
-      return ret
+        return {label, number, extension}
+      })
     },
     okButton () {
       return this.model.okButton
@@ -254,38 +83,8 @@ export default {
     cancelButton () {
       return this.model.cancelButton
     },
-    modalText () {
-      return this.model.callModalText
-    },
     heading () {
       return this.model.callText
-    },
-    mainLabel () {
-      return this.model.callModalMainLabel
-    },
-    wxmLabel () {
-      return this.model.callModalWxmLabel
-    },
-    crmLabel () {
-      return this.model.callModalCrmLabel
-    },
-    goldLabel () {
-      return this.model.callModalGoldLabel
-    },
-    vivrLabel () {
-      return this.model.callModalVivrLabel
-    },
-    aiLabel () {
-      return this.model.callModalAiLabel
-    },
-    customAiLabel () {
-      return this.model.callModalCustomAiLabel
-    },
-    _2RingLabel () {
-      return this.model.callModal2RingLabel
-    },
-    text () {
-      return formatUnicorn(this.modalText, this.main)
     },
     main () {
       // main phone number
@@ -298,19 +97,6 @@ export default {
       } else {
         // all others use the main 'phone' sent by the API
         return this.sessionInfo.phone.international
-      }
-    },
-    gold () {
-      return this.sessionInfo.pq.international
-    },
-    vivr () {
-      return this.sessionInfo.jacada.international
-    },
-    ai () {
-      if (this.demoVersion === '12.5CVA') {
-        return this.dids.DID2
-      } else {
-        return this.sessionInfo.ai.international
       }
     }
   }

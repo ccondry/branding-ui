@@ -20,6 +20,7 @@ export const SET_USER_ID = 'SET_USER_ID'
 export const SET_SESSION_INFO = 'SET_SESSION_INFO'
 export const SET_BRAND_CONFIG = 'SET_BRAND_CONFIG'
 export const SET_SESSION_INFO_ERROR = 'SET_SESSION_INFO_ERROR'
+export const SET_DEMO_BASE_CONFIG = 'SET_DEMO_BASE_CONFIG'
 
 // surfly cobrowse library loaded yet
 export const SET_SURFLY_LOADED = 'SET_SURFLY_LOADED'

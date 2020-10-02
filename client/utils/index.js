@@ -59,3 +59,51 @@ export const formatUnicorn = function () {
 
   return str
 }
+
+export const fillOption = function (value, storeName, store) {
+  try {
+    // don't operate on non-string values
+    if (typeof value !== 'string') {
+      return value
+    }
+    const s1 = '${' + storeName + '.'
+    // look for all variables to replace with store value
+    let v1 = value.indexOf(s1)
+    // console.log('v1 =', v1)
+    // return value
+    let ret = value
+    // loop to find all user values in this key
+    while (v1 >= 0) {
+      // found one. extract the name of the key.
+      const start = v1
+      const end = ret.indexOf('}', start)
+      const v1key = ret.substring(start + s1.length, end)
+      let storeValue
+      // set value if exists
+      if (store && store[v1key]) {
+        // find matching value in store
+        storeValue = store[v1key]
+        // extract string parts to combine as replacement value
+        const p1 = ret.substring(0, start)
+        const p2 = storeValue
+        const p3 = ret.substring(end + 1, ret.length)
+        const newValue = p1 + p2 + p3
+        // update ret var to the newValue as well, so the loop can continue
+        ret = newValue
+        // search for any more store values to loop on
+        v1 = ret.indexOf(s1)
+      } else {
+        // store or store value did not exist
+        console.log('required option not found in', storeName, ':', v1key)
+        // required but did not exist - return 400
+        throw Error(`Required parameter ${v1key} did not exist in ${storeName}.`)
+        // search for any more store values to loop on after this one
+      }
+    }
+    return ret
+  } catch (e) {
+    console.log('error in fillOption:', e)
+    // return original value
+    return value
+  }
+}
