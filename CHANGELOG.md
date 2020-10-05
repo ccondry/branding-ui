@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.22.1 (2020-10-06)
+
+### Features
+
+* **Demo Base Configs:** fix demo base config query for instant demos
+
+
 # 1.22.0 (2020-10-01)
 
 ### Features
