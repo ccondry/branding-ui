@@ -260,29 +260,54 @@ const actions = {
   },
   async getDemoBaseConfig ({getters, commit, dispatch}) {
     // get the base config for this demo type (UCCX 12.0v2, PCCE 12.5v1, etc.)
-    const type = getters.sessionInfo.demo.toLowerCase()
+    const type = getters.sessionInfo.demo
     const version = getters.sessionInfo.version ? getters.sessionInfo.version.toLowerCase() : null
     const instant = getters.isInstantDemo
     const operation = 'load base demo config'
     try {
       dispatch('setLoading', {group: 'dcloud', type: 'demo', value: true})
-      console.log(operation, 'for', type, version, instant ? 'instant...' : '...')
       const query = {
-        type,
-        version,
-        instant
+        type: {
+          $regex: getters.sessionInfo.demo,
+          $options: 'i'
+        }
       }
-      const response = await load(getters.endpoints.demo, query)
-      console.log(operation, 'for', type, version, instant ? 'instant:' : ':', response)
-      commit(types.SET_DEMO_BASE_CONFIG, response.data[0])
+      if (getters.sessionInfo.version) {
+        query.version = {
+          $regex: getters.sessionInfo.version,
+          $options: 'i'
+        }
+      }
+      if (getters.isInstantDemo) {
+        query.instant = {
+          $regex: getters.isInstantDemo,
+          $options: 'i'
+        }
+      }
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + getters.jwt
+        },
+        body: JSON.stringify(query)
+      }
+      const response = await window.fetch(getters.endpoints.demo + '/find', options)
+      const json = await response.json()
+      if (response.ok) {
+        commit(types.SET_DEMO_BASE_CONFIG, json[0])
+      } else {
+        const message = `${operation} for ${type} ${version} ${instant ? 'instant' : ''} failed: ${json.message}`
+        console.log(message)
+        Toast.open({
+          duration: 8000,
+          message,
+          type: 'is-danger'
+        })
+      }
     } catch (e) {
-      const message = `${operation} for ${type} ${version} ${instant ? 'instant' : ''} failed: ${e.message}`
-      console.log(message)
-      Toast.open({
-        duration: 8000,
-        message,
-        type: 'is-danger'
-      })
+      console.log(operation, 'failed:', e.message)
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'demo', value: false})
     }
