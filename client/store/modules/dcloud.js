@@ -279,10 +279,7 @@ const actions = {
         }
       }
       if (getters.isInstantDemo) {
-        query.instant = {
-          $regex: getters.isInstantDemo,
-          $options: 'i'
-        }
+        query.instant = getters.isInstantDemo
       }
       const options = {
         method: 'POST',
