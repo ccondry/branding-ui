@@ -3,6 +3,13 @@
 Dates are in YYYY-MM-DD format
 
 
+# 1.22.0 (2020-10-01)
+
+### Features
+
+* **Demo Base Configs:** use POST route to find demo base configs with JSON body as query
+
+
 # 1.21.0 (2020-10-01)
 
 ### Features
