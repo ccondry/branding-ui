@@ -54,7 +54,7 @@ export default {
       if (this.isUpstream) {
         return [{
           label: this.model.callModalMainLabel,
-          number: this.dids.DID7
+          number: this.dids.DID10
         }]
       }
       // does this demo have base config from cumulus-api?
