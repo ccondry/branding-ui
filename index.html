@@ -254,13 +254,20 @@ function initBubbleChat (smHost, widgetId) {
 <!-- ECE docked chat -->
 <script>
 function initEceDockedChat (host) {
-  console.log('window.initEceDockedChat', host)
-  const dockedScript = document.createElement('script')
-  const e = document.getElementsByTagName('script')[0]
-  dockedScript.src = 'https://' + host + '/system/templates/chat/egain-chat.js'
-  dockedScript.type = 'text/javascript'
-  dockedScript.setAttribute('charset', 'utf-8')
-  e.parentNode.insertBefore(dockedScript, e)
+  return new Promise((resolve, reject) => {
+    console.log('window.initEceDockedChat', host)
+    const s = document.createElement('script')
+    s.setAttribute('src', 'https://' + host + '/system/templates/chat/egain-chat.js')
+    s.setAttribute('type', 'text/javascript')
+    s.setAttribute('charset', 'utf-8')
+    s.onload = function () {
+      resolve()
+    }
+    s.onerror = function (e) {
+      reject(e)
+    }
+    document.body.appendChild(s)
+  })
 }
 </script>
 

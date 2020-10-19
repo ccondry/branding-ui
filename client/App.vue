@@ -1124,7 +1124,18 @@ export default {
         } else if (!this.demoConfig.uccxBubbleChat) {
           console.log('init ECE docked chat')
           // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
-          window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
+          try {
+            await window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
+          } catch (e) {
+            console.log('initEceDockedChat failed:', e.message)
+            this.$toast.open({
+              message: `ECE chat library failed to load. If you are using a
+              browser outside of the demo workstation, please make sure you are
+              connected to the demo VPN.`,
+              type: 'is-danger',
+              duration: 15000
+            })
+          }
         }
       }
     }
