@@ -1036,7 +1036,9 @@ export default {
       }
     },
     async checkConfig () {
+      console.log('checkConfig')
       if (!this.brand) {
+        console.log('checkConfig - no brand set')
         // no brand set. show relevant error message to user.
         if (this.isInstantDemo) {
           // instant demo
@@ -1078,12 +1080,15 @@ export default {
           })
         }
       } else {
+        console.log('checkConfig - brand is set')
         // brand is set
         // determine if we need to load another chat library
         if (this.isCjpWebex) {
+          console.log('init Spark Care chat')
           // init CJP chat from Webex Sandbox (old spark care chat)
           window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
         } else if (this.isTsaCwcc) {
+          console.log('init Webex chat')
           // this is for the Cisco TSA tenants on Webex Contact Center Abilene
           window.initWebexChat({
             async: typeof this.sessionConfig.async === 'boolean' ? this.sessionConfig.async : true,
@@ -1094,9 +1099,11 @@ export default {
             templateId: this.sessionConfig.templateId || 'ce28a900-a8bc-11e9-9dce-53872d5a6b64'
           })
         } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
+          console.log('init Webex chat')
           // Webex v3 production Abilene tenant for dCloud
           await window.initWebexChat(this.sessionConfig)
         } else if (this.isSfdc) {
+          console.log('init SFDC chat')
           // SalesForce.com chat for PCCE 12.5+
           window.initSfdcChat(this.datacenter, this.sessionId)
         } else if (this.isWebexTeams) {
@@ -1115,6 +1122,7 @@ export default {
             })
           }
         } else if (!this.demoConfig.uccxBubbleChat) {
+          console.log('init ECE docked chat')
           // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
           window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
         }
