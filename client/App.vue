@@ -471,7 +471,6 @@ export default {
     ...mapGetters([
       'loading',
       'endpoints',
-      'endpointsLoaded',
       'chatBotEnabled',
       'isUccx',
       'isPcce',

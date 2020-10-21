@@ -48,9 +48,7 @@ const state = {
 
 const getters = {
   // REST API endpoints
-  endpoints: state => state.endpoints,
-  // are the REST API endpoints loaded yet?
-  endpointsLoaded: state => true
+  endpoints: state => state.endpoints
 }
 
 export default {
