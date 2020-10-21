@@ -1,6 +1,17 @@
 # branding-ui Change Log
 
-Dates are in YYYY-MM-DD format
+
+Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
+is an optional revision number for that day.
+
+# 2020.10.21
+
+### Features
+* **ECE Chat Live:** show error message when the ECE chat library fails to load,
+and retry it when user clicks chat button.
+
+### Bug Fixes
+* **Upstream Call:** fix phone number displayed for Upstream Works
 
 
 # 1.22.1 (2020-10-06)
