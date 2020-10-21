@@ -928,7 +928,8 @@ export default {
         // is docked chat enabled? variable name uccxBubbleChat now applies to
         // UCCX and PCCE chat
         if (this.demoConfig.uccxBubbleChat) {
-          this.startEceDockedChat()
+          // docked chat
+          this.initEceDockedChat().then(this.startEceDockedChat)
         } else {
         // no docked chat - pop ECE chat window
           this.popEceChatWindow()
