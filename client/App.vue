@@ -895,7 +895,7 @@ export default {
         // set chat iframe URL
         this.chatIframe = chatUrl
       } else if (this.isUccx) {
-        // UCCX demo and chat bot not enabled
+        // UCCX demo and chat bot not enabled and bubble chat not enabled
         // run chat bot with bot turned off for CCX
         // hide contact panel menu and show chat bot
         this.showChatBot = true
