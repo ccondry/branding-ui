@@ -253,6 +253,7 @@ export default {
 
   data () {
     return {
+      eceDockedChatLoaded: false,
       name: '',
       firstName: '',
       lastName: '',
@@ -647,6 +648,27 @@ export default {
       'startWebexTeamsWidget',
       'getWebexTeamsAgent'
     ]),
+    async initEceDockedChat () {
+      console.log('init ECE docked chat')
+      // don't do anything if init already done
+      if (this.eceDockedChatLoaded) {
+        return
+      }
+      try {
+        await window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
+        this.eceDockedChatLoaded = true
+        return
+      } catch (e) {
+        console.log('initEceDockedChat failed:', e.message)
+        this.$toast.open({
+          message: `Failed to load Chat Live. Please make sure you are
+          connected to the demo VPN.`,
+          type: 'is-danger',
+          duration: 15000
+        })
+        throw e
+      }
+    },
     makeWebexTeamsWidgetDraggable (element) {
       // draggable by the title bar
       element.onmousemove = (e) => {
@@ -1120,21 +1142,9 @@ export default {
               type: 'is-danger'
             })
           }
-        } else if (!this.demoConfig.uccxBubbleChat) {
-          console.log('init ECE docked chat')
-          // PCCE docked ECE chat. it shares the uccxBubbleChat config var name
-          try {
-            await window.initEceDockedChat('cceeceweb.dcloud.cisco.com')
-          } catch (e) {
-            console.log('initEceDockedChat failed:', e.message)
-            this.$toast.open({
-              message: `ECE chat library failed to load. If you are using a
-              browser outside of the demo workstation, please make sure you are
-              connected to the demo VPN.`,
-              type: 'is-danger',
-              duration: 15000
-            })
-          }
+        } else if (this.isPcce && !this.demoConfig.uccxBubbleChat) {
+          // PCCE docked ECE chat. it shares the uccxBubbleChat config var name.
+          this.initEceDockedChat()
         }
       }
     }
