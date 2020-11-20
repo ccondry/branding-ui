@@ -62,7 +62,7 @@ const getters = {
   isTsaCwcc: (state, getters) => state.datacenter.toLowerCase() === 'cwcc' && state.sessionId.toLowerCase().startsWith('tsa'),
   // is this an RCDN (Compete Lab) demo?
   isRcdn: (state, getters) => state.datacenter.toLowerCase() === 'rcdn',
-  // is this a an instant demo?
+  // is this an instant demo?
   isInstantDemo: (state, getters) => getters.sessionInfo.instant === true,
   // is the configured multichannel type Upstream Works?
   isUpstream: (state, getters) => getters.sessionConfig.multichannel === 'upstream',
@@ -148,7 +148,8 @@ const getters = {
   },
   demoBaseConfig: state => {
     return state.demoBaseConfig
-  }
+  },
+  multichannelOptions: state => state.multichannelOptions
 }
 
 const state = {
@@ -158,7 +159,8 @@ const state = {
   sessionInfo: {},
   brandConfig: '',
   sessionInfoError: null,
-  demoBaseConfig: null
+  demoBaseConfig: null,
+  multichannelOptions: []
 }
 
 const mutations = {
@@ -186,6 +188,9 @@ const mutations = {
   },
   [types.SET_DEMO_BASE_CONFIG] (state, data) {
     state.demoBaseConfig = data
+  },
+  [types.SET_MULTICHANNEL_OPTIONS] (state, data) {
+    state.multichannelOptions = data.channels
   }
 }
 
@@ -308,6 +313,18 @@ const actions = {
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'demo', value: false})
     }
+  },
+  getMultichannelOptions ({getters, dispatch}) {
+    console.log('getMultichannelOptions', getters.sessionConfig.multichannel)
+    // default to ECE multichannel
+    const multichannel = getters.sessionConfig.multichannel || 'ece'
+    return dispatch('fetch', {
+      group: 'admin',
+      type: 'multichannel',
+      url: getters.endpoints.multichannel + '/' + multichannel,
+      message: 'get multichannel options',
+      mutation: types.SET_MULTICHANNEL_OPTIONS
+    })
   }
 }
 

@@ -503,7 +503,8 @@ export default {
       'isServiceNow',
       'isMsDynamics',
       'isWebexTeams',
-      'webexTeamsWidgetStarted'
+      'webexTeamsWidgetStarted',
+      'multichannelOptions'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -576,7 +577,7 @@ export default {
         const channels = this.demoBaseConfig.channels
 
         // chat
-        if (channels.includes('chat')) {
+        if (channels.includes('chat') && this.multichannelOptions.includes('chat')) {
         // show either chat or chatbot option
           if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
             // direct chat to agent, no chat bot
@@ -588,7 +589,7 @@ export default {
         }
 
         // SMS
-        if (channels.includes('sms')) {
+        if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
           if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
             // direct SMS to agent, no chat bot
             ret.push(sms)
@@ -599,27 +600,27 @@ export default {
         }
 
         // voice call
-        if (channels.includes('voice') && this.model.callEnabled) {
+        if (channels.includes('voice') && this.multichannelOptions.includes('voice') && this.model.callEnabled) {
           ret.push(call)
         }
 
         // voice callback
-        if (channels.includes('callback') && this.model.callbackEnabled) {
+        if (channels.includes('callback') && this.multichannelOptions.includes('callback') && this.model.callbackEnabled) {
           ret.push(callback)
         }
 
         // email
-        if (channels.includes('email') && this.model.emailEnabled) {
+        if (channels.includes('email') && this.multichannelOptions.includes('email') && this.model.emailEnabled) {
           ret.push(email)
         }
 
         // task
-        if (channels.includes('task') && this.model.taskEnabled) {
+        if (channels.includes('task') && this.multichannelOptions.includes('task') && this.model.taskEnabled) {
           ret.push(task)
         }
 
         // cobrowse
-        if (channels.includes('cobrowse') && this.model.cobrowseEnabled) {
+        if (channels.includes('cobrowse') && this.multichannelOptions.includes('cobrowse') && this.model.cobrowseEnabled) {
           ret.push(cobrowse)
         }
       }
@@ -646,7 +647,8 @@ export default {
       'popCconeChatWindow',
       'startEceDockedChat',
       'startWebexTeamsWidget',
-      'getWebexTeamsAgent'
+      'getWebexTeamsAgent',
+      'getMultichannelOptions'
     ]),
     async initEceDockedChat () {
       console.log('init ECE docked chat')
@@ -1157,9 +1159,11 @@ export default {
       this.updateView(val)
     },
     sessionInfo (val) {
-      console.log('sessionInfo changed. getting base demo config...')
+      console.log('sessionInfo changed. getting base demo config and multichannel options...')
       // get base demo config
       this.getDemoBaseConfig()
+      // get multichannel options
+      this.getMultichannelOptions()
     },
     demoBaseConfig (val) {
       console.log('base demo config changed. processing text templates and checking configuration...')

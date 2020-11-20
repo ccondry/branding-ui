@@ -42,7 +42,9 @@ const state = {
     // webex teams guest issuer
     webexGuest: base + '/webex/guest',
     // webex teams agent request
-    webexAgent: base + '/webex/agent'
+    webexAgent: base + '/webex/agent',
+    // multichannel options list
+    multichannel: base + '/multichannel'
   }
 }
 
