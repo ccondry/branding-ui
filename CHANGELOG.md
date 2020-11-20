@@ -4,6 +4,12 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2020.11.20
+
+### Features
+* **Channels:** get channel options from multichannel options in database
+
+
 # 2020.10.21
 
 ### Features
