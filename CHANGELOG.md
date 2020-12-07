@@ -4,6 +4,13 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2020.12.7
+
+### Bug Fixes
+* **ECE Chat Live:** use "aqua" chat template for all versions of PCCE demo
+instead of "cumulus_aqua"
+
+
 # 2020.11.20
 
 ### Features
