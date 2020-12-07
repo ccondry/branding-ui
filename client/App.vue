@@ -133,61 +133,62 @@
 
       <!-- contact panel -->
       <transition name="slide">
-        <div id="contact-panel" v-show="showContactPanel">
-          <!-- Chat Bot -->
-          <b-collapse class="card" v-show="showChatBot">
-            <div class="card-header" role="button" @click="hideChatBot">
-              <p class="card-header-title contact-title">
-                {{ model.chatMenuTitle }}
-              </p>
+        <div id="contact-panel-container" v-show="showContactPanel">
+          <div id="contact-panel">
+            <!-- Chat Bot -->
+            <b-collapse class="card" v-show="showChatBot">
+              <div class="card-header" role="button" @click="hideChatBot">
+                <p class="card-header-title contact-title">
+                  {{ model.chatMenuTitle }}
+                </p>
 
-              <a class="card-header-icon contact-close-icon">
-                <b-icon icon="close" />
-              </a>
-            </div>
+                <a class="card-header-icon contact-close-icon">
+                  <b-icon icon="close" />
+                </a>
+              </div>
 
-            <div style="height: 70vh;">
-              <iframe :src="chatIframe" class="demo-iframe" />
-            </div>
-          </b-collapse>
-          <!-- /Chat Bot -->
-          <!-- Contact Menu -->
-          <b-collapse class="card" v-show="!showChatBot">
-            <div class="card-header" role="button" @click="showContactPanel = false">
-              <p class="card-header-title contact-title">
-                {{ model.menuTitle }}
-              </p>
+              <div style="height: 70vh;">
+                <iframe :src="chatIframe" class="demo-iframe" />
+              </div>
+            </b-collapse>
+            <!-- /Chat Bot -->
+            <!-- Contact Menu -->
+            <b-collapse class="card" v-show="!showChatBot">
+              <div class="card-header" role="button" @click="showContactPanel = false">
+                <p class="card-header-title contact-title">
+                  {{ model.menuTitle }}
+                </p>
 
-              <a class="card-header-icon contact-close-icon">
-                <b-icon icon="close" />
-              </a>
-            </div>
+                <a class="card-header-icon contact-close-icon">
+                  <b-icon icon="close" />
+                </a>
+              </div>
 
-            <div class="card-content contact-content" v-if="model.advisorEnabled">
-              <img :src="model.advisorImage" style="height: 7em;">
-              <span style="float: right; font-size: 1.8em;">
-                <p>{{ model.advisorHeading }}</p>
-                <p>{{ model.advisorText }}</p>
-              </span>
-            </div>
+              <div class="card-content contact-content" v-if="model.advisorEnabled">
+                <img :src="model.advisorImage" style="height: 7em;">
+                <span style="float: right; font-size: 1.8em;">
+                  <p>{{ model.advisorHeading }}</p>
+                  <p>{{ model.advisorText }}</p>
+                </span>
+              </div>
 
-            <!-- render each contact option -->
-            <footer v-for="(item, key) of contactOptions" class="card-footer contact-item" :key="key">
-              <a @click="item.click" class="card-footer-item">
-                <b-icon class="contact-icon" :icon="item.icon" />
-                <div class="content">
-                  <h4>{{ item.heading }}<small v-if="item.waitTime"> - {{ item.waitTime }}</small></h4>
-                  <p class="contact-subtext">{{ item.subtext }}</p>
-                </div>
-              </a>
-            </footer>
+              <!-- render each contact option -->
+              <footer v-for="(item, key) of contactOptions" class="card-footer contact-item" :key="key">
+                <a @click="item.click" class="card-footer-item">
+                  <b-icon class="contact-icon" :icon="item.icon" />
+                  <div class="content">
+                    <h4>{{ item.heading }}<small v-if="item.waitTime"> - {{ item.waitTime }}</small></h4>
+                    <p class="contact-subtext">{{ item.subtext }}</p>
+                  </div>
+                </a>
+              </footer>
 
-          </b-collapse>
-          <!-- /Contact Menu -->
+            </b-collapse>
+            <!-- /Contact Menu -->
+          </div>
         </div>
       </transition>
 
-      
     </span>
   </div>
 </template>
@@ -1290,17 +1291,24 @@ body {
   border-color: var(--color-2);
 }
 
-#contact-panel {
-  // calculate height based on how many options are enabled
-  top: calc(4em + 20% - var(--active-options) * 20px);
-  min-width: 450px;
-  right: 0 !important;
+// transition container for contact-panel
+#contact-panel-container {
+  // flex item centered vertically
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  // fixed position on the top-right of the screen
   position: fixed;
-  -webkit-transform-origin: 100% 100%;
-  transform-origin: 100% 100%;
-  // slide the drawer out
-  // -webkit-transition:right .5s ease;
-  // transition:right .5s ease;
+  top: 0;
+  right: 0 !important;
+  // full height
+  height: 100%;
+}
+
+// the slide-out contact options panel
+#contact-panel {
+  min-width: 450px;
   .card {
     // nice rounded corners
     border-radius: 1em;
