@@ -6,13 +6,7 @@ const getters = {
   entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001',
   tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
   chatTemplate: (state, getters) => {
-    // determine chat template name
-    if (getters.demoVersion.startsWith('11.6') || getters.demoVersion.startsWith('12.0')) {
-      return 'aqua'
-    } else {
-      // 12.5 and newer demos use cumulus_aqua
-      return 'cumulus_aqua'
-    }
+    return 'aqua'
   }
 }
 
