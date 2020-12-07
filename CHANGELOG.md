@@ -1,8 +1,13 @@
 # branding-ui Change Log
 
-
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
+
+# 2020.12.7-1
+
+### Bug Fixes
+* **Contact Panel:** center the contact panel vertically in the window
+
 
 # 2020.12.7
 
