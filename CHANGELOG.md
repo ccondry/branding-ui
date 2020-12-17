@@ -3,6 +3,12 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2020.12.17
+
+### Features
+* **Demos:** add support for webex-custom demo
+
+
 # 2020.12.7-1
 
 ### Bug Fixes
