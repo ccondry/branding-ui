@@ -480,6 +480,7 @@ export default {
       'isCjpCcone',
       'isCjpWebex',
       'isTsaCwcc',
+      'isWebexCustom',
       'isRcdn',
       'isUpstream',
       'sessionInfo',
@@ -1123,7 +1124,7 @@ export default {
             orgId: this.sessionConfig.orgId || '83f66514-200c-47cd-8310-4a5711e7b356',
             templateId: this.sessionConfig.templateId || 'ce28a900-a8bc-11e9-9dce-53872d5a6b64'
           })
-        } else if (this.isWebexV3Prod || this.isWebexV4Prod) {
+        } else if (this.isWebexV3Prod || this.isWebexV4Prod || this.isWebexCustom) {
           console.log('init Webex chat')
           // Webex v3 production Abilene tenant for dCloud
           await window.initWebexChat(this.sessionConfig)

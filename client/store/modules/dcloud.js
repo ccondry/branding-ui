@@ -60,6 +60,8 @@ const getters = {
   isCjpWebex: (state, getters) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'webex',
   // is this a CWCC Abilene demo on the Cisco TSA tenant?
   isTsaCwcc: (state, getters) => state.datacenter.toLowerCase() === 'cwcc' && state.sessionId.toLowerCase().startsWith('tsa'),
+  // is this a the Custom Stack 1 Webex Demo?
+  isWebexCustom: state => state.datacenter.toLowerCase() === 'webex' && state.sessionId.toLowerCase() === 'custom',
   // is this an RCDN (Compete Lab) demo?
   isRcdn: (state, getters) => state.datacenter.toLowerCase() === 'rcdn',
   // is this an instant demo?
