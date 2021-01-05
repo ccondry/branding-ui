@@ -1,4 +1,5 @@
-// import { Toast } from 'buefy/dist/components/toast'
+// import { ToastProgrammatic as Toast } from 'buefy'
+import { Toast } from 'buefy/dist/components/toast'
 
 const getters = {
 }
@@ -29,13 +30,29 @@ const actions = {
     dispatch('setWorking', {group: 'dcloud', type: 'email', value: true})
     console.debug('starting send email:', data)
     // send email request to REST API
-    await dispatch('postData', {
-      endpoint: getters.endpoints.email,
-      data,
-      success: `We have received your email and the next available expert will
-      reply to your message.`,
-      fail: 'Failed to send your email message'
+    const response = await dispatch('fetch', {
+      url: getters.endpoints.email,
+      options: {
+        method: 'POST',
+        body: data
+      }
     })
+    if (response instanceof Error) {
+      // failed
+      Toast.open({
+        type: 'is-danger',
+        message: `Failed to send your email: ${response.message}`,
+        duration: 14 * 1000,
+        queue: false
+      })
+    } else {
+      Toast.open({
+        type: 'is-success',
+        message: `We have received your email and the next available expert will
+        reply to your message.`
+      })
+      // success
+    }
     // reset working state
     dispatch('setWorking', {group: 'dcloud', type: 'email', value: false})
   }
