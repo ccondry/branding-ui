@@ -124,7 +124,7 @@ const actions = {
         error.status = response.status
         error.statusText = response.statusText
         error.text = m
-        throw error
+        return error
       }
     } catch (e) {
       console.error(`${message} failed: ${e.message}`)
