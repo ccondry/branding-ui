@@ -3,6 +3,12 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2021.1.5
+
+### Features
+* **Email:** improve error message display when sending email fails
+
+
 # 2020.12.17
 
 ### Features
