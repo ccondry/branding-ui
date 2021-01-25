@@ -853,14 +853,18 @@ export default {
         // use bubble chat!
         let smHost
         if (this.isRcdn) {
+          // RCDN Compete Lab demo
           smHost = 'chat.cdxdemo.net'
         } else {
-          smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
+          // smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
+          smHost = 'sm2-uccx.dcloud.cisco.com'
         }
         const widgetId = this.sessionConfig.widgetId || '3'
         console.log('opening bubble chat with smHost =', smHost)
         console.log('opening bubble chat with widget ID =', widgetId)
+        // init UCCX bubble chat
         const ciscoBubbleChat = window.initBubbleChat(smHost, widgetId)
+        // show the UCCX bubble chat start form
         ciscoBubbleChat.showChatWindow()
         // close the contact menu
         this.showContactPanel = false
