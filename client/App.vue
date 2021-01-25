@@ -666,13 +666,13 @@ export default {
         return
       } catch (e) {
         console.log('initEceDockedChat failed:', e.message)
-        // this.$toast.open({
-        //   message: `Failed to load Chat Live. Please make sure you are
-        //   connected to the demo VPN.`,
-        //   type: 'is-danger',
-        //   duration: 15000
-        // })
-        // throw e
+        this.$toast.open({
+          message: `Failed to load Chat Live. Please make sure you are
+          connected to the demo VPN.`,
+          type: 'is-danger',
+          duration: 15000
+        })
+        throw e
       }
     },
     makeWebexTeamsWidgetDraggable (element) {
@@ -1149,9 +1149,6 @@ export default {
               type: 'is-danger'
             })
           }
-        } else if (this.isPcce && !this.demoConfig.uccxBubbleChat) {
-          // PCCE docked ECE chat. it shares the uccxBubbleChat config var name.
-          this.initEceDockedChat()
         }
       }
     }
