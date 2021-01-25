@@ -3,6 +3,16 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2021.1.25
+
+### Features
+* **WXM:** add support for WXM Email and WXM SMS labels in call modal
+* **ECE Chat Live:** add error message when ECE chat live library fails to load
+* **UCCX Chat Live:** load UCCX chat live (bubble chat) directly from the
+CCP server's normal FQDN, instead of using the proxy which no longer seems to
+work
+
+
 # 2021.1.5
 
 ### Features
