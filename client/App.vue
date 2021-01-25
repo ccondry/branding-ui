@@ -1005,7 +1005,7 @@ export default {
       } else {
         console.log('failed to start cobrowse - window.eGain and document.eGain are undefined.')
         this.$toast.open({
-          duration: 15000,
+          duration: 8000,
           message: `eGain Cobrowse library failed to load. If you are using a
           browser outside of the demo workstation, please make sure you are
           connected to your demo VPN.`,
