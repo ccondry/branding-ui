@@ -3,6 +3,13 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2021.1.26-1
+
+### Features
+* **Instant Demo:** prompt for instant demo user ID if session ID and datacenter
+were provided in URL but user ID was not
+
+
 # 2021.1.26
 
 ### Features
