@@ -3,6 +3,12 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2021.1.26
+
+### Features
+* **UCCX Chat Live:** add updated bubble chat code for UCCX v12.5 demos
+
+
 # 2021.1.25
 
 ### Features
