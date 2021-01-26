@@ -859,11 +859,19 @@ export default {
           // smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
           smHost = 'sm2-uccx.dcloud.cisco.com'
         }
+        console.log('sessionConfig', this.sessionConfig)
         const widgetId = this.sessionConfig.widgetId || '3'
         console.log('opening bubble chat with smHost =', smHost)
         console.log('opening bubble chat with widget ID =', widgetId)
         // init UCCX bubble chat
-        const ciscoBubbleChat = window.initBubbleChat(smHost, widgetId)
+        let ciscoBubbleChat
+        if (this.demoVersion.startsWith('12.0')) {
+          // UCCX 12.0
+          ciscoBubbleChat = window.initBubbleChat(smHost, widgetId)
+        } else {
+          // UCCX 12.5 and higher
+          ciscoBubbleChat = window.init125BubbleChat(smHost, widgetId)
+        }
         // show the UCCX bubble chat start form
         ciscoBubbleChat.showChatWindow()
         // close the contact menu
