@@ -1172,11 +1172,21 @@ export default {
       this.updateView(val)
     },
     sessionInfo (val) {
-      console.log('sessionInfo changed. getting base demo config and multichannel options...')
-      // get base demo config
-      this.getDemoBaseConfig()
-      // get multichannel options
-      this.getMultichannelOptions()
+      console.log('sessionInfo changed')
+      // make sure instant demo has user ID set
+      if (val.instant && (!this.userId || this.userId.length !== 4)) {
+        console.log('this is instant demo, but user did not provide user ID. popping session info modal...')
+        // pop session info modal again
+        this.showSessionInfoModal = true
+      } else {
+        // console.log('getting base demo config and multichannel options...')
+        // get base demo config
+        this.getDemoBaseConfig()
+        // get multichannel options
+        this.getMultichannelOptions()
+        // get brand (vertical) config
+        this.getBrand(false)
+      }
     },
     demoBaseConfig (val) {
       console.log('base demo config changed. processing text templates and checking configuration...')
@@ -1243,7 +1253,7 @@ export default {
     },
     brand (val) {
       // brand ID has been set - load this brand now
-      this.getBrand(false)
+      // this.getBrand(false)
     }
   }
 }
