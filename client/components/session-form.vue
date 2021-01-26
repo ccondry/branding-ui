@@ -137,7 +137,7 @@ export default {
     },
     checkConfig () {
       if (!this.brand && this.isInstantDemo && !this.userId) {
-        // userId is not set, but we know now it neds to be. alert user.
+        // userId is not set, but we know now it needs to be. alert user.
         this.userIdRequired = true
         this.userIdMessage = 'This demo is an instant demo, so your 4-digit user ID is required'
         this.userIdClass = 'is-danger'
