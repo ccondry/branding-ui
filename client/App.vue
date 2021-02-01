@@ -358,6 +358,7 @@ export default {
         callModalCvaAiLabel: 'CVA AI',
         callModalCustomAiLabel: 'Custom AI',
         callModal2RingLabel: '2Ring',
+        callModalCcaiLabel: 'CCAI',
         // callback
         callbackEnabled: true,
         callbackIcon: 'phone-forward',
