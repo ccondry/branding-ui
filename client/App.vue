@@ -534,7 +534,7 @@ export default {
         waitTime: this.model.chatBotWaitTime
       }
       const chatTranslation = {
-        click: this.clickChat,
+        click: this.clickChatTranslation,
         icon: this.model.chatTranslationIcon,
         heading: this.model.chatTranslationHeading,
         subtext: this.model.chatTranslationText,
@@ -984,6 +984,36 @@ export default {
         // we should not be here. Abilene chats should be started by clicking
         // the bubble chat icon, which is not in the contact panel
       }
+    },
+    clickChatTranslation (event) {
+      // this starts the chat bot with translation
+      // hide contact panel menu and show chat bot
+      this.showChatBot = true
+      // build chat bot iframe URL
+      let chatUrl = `https://mm-chat.cxdemo.net/?`
+      const options = {
+        expand: true,
+        session: this.sessionId,
+        datacenter: this.datacenter,
+        userId: this.userId,
+        firstName: this.firstName,
+        lastName: this.firstName,
+        phone: this.phone,
+        email: this.email,
+        botDisabled: false,
+        host: 'bucher-suter.dcloud.cisco.com:1880/ws/webchat'
+      }
+      // append URL options
+      let count = 0
+      for (const key of Object.keys(options)) {
+        if (count !== 0) {
+          chatUrl += '&'
+        }
+        chatUrl += `${key}=${options[key]}`
+        count++
+      }
+      // set chat iframe URL
+      this.chatIframe = chatUrl
     },
     clickSms (event) {
       // clicked SMS option from contact panel
