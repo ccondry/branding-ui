@@ -320,6 +320,12 @@ export default {
         chatBotHeading: 'Chat with Bot',
         chatBotText: 'An AI-driven chat bot will assist you',
         chatBotWaitTime: 'No wait time',
+        // chat bot with translation
+        chatTranslationEnabled: true,
+        chatTranslationIcon: 'message-processing',
+        chatTranslationHeading: 'Chat with Translation',
+        chatTranslationText: 'An AI-driven chat bot will assist you and translate for you',
+        chatTranslationWaitTime: 'No wait time',
         // sms
         smsEnabled: true,
         smsIcon: 'message-processing',
@@ -527,6 +533,13 @@ export default {
         subtext: this.model.chatBotText,
         waitTime: this.model.chatBotWaitTime
       }
+      const chatTranslation = {
+        click: this.clickChat,
+        icon: this.model.chatTranslationIcon,
+        heading: this.model.chatTranslationHeading,
+        subtext: this.model.chatTranslationText,
+        waitTime: this.model.chatTranslationWaitTime
+      }
       const sms = {
         click: this.clickSms,
         icon: this.model.smsIcon,
@@ -592,6 +605,20 @@ export default {
             ret.push(chatBot)
           }
         }
+
+        // chat translation (PCCE 12.6 EFT)
+        if (
+          // demo base config has chat translation enabled
+          channels.includes('chatTranslation') &&
+          // demo multichannel base config has chat translation
+          this.multichannelOptions.includes('chatTranslation') && 
+          // vertical config has chat translation enabled (default true)
+          this.demoConfig.chatTranslationEnabled
+        ) {
+          // add chat translation option to side panel
+          ret.push(chatTranslation)
+        }
+        
 
         // SMS
         if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
