@@ -323,8 +323,8 @@ export default {
         // chat bot with translation
         chatTranslationEnabled: true,
         chatTranslationIcon: 'message-processing',
-        chatTranslationHeading: 'Chat with Translation',
-        chatTranslationText: 'An AI-driven chat bot will assist you and translate for you',
+        chatTranslationHeading: 'Chat Translation',
+        chatTranslationText: 'Live chat with automatic translation',
         chatTranslationWaitTime: 'No wait time',
         // sms
         smsEnabled: true,
