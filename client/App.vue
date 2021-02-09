@@ -609,11 +609,9 @@ export default {
         // chat translation (PCCE 12.6 EFT)
         if (
           // demo base config has chat translation enabled
-          channels.includes('chatTranslation') &&
-          // demo multichannel base config has chat translation
-          this.multichannelOptions.includes('chatTranslation') &&
-          // vertical config has chat translation enabled (default true)
-          this.demoConfig.chatTranslationEnabled
+          this.demoBaseConfig.channels.includes('chatTranslation') &&
+          // does vertical config have chat translation enabled (default true)
+          this.model.chatTranslationEnabled
         ) {
           // add chat translation option to side panel
           ret.push(chatTranslation)
