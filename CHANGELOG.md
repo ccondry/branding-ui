@@ -3,6 +3,12 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+# 2021.2.9-1
+
+### Bug Fixes
+* **Chat Translation:** fix Chat Translation option not appearing
+
+
 # 2021.2.9
 
 ### Features
