@@ -611,14 +611,13 @@ export default {
           // demo base config has chat translation enabled
           channels.includes('chatTranslation') &&
           // demo multichannel base config has chat translation
-          this.multichannelOptions.includes('chatTranslation') && 
+          this.multichannelOptions.includes('chatTranslation') &&
           // vertical config has chat translation enabled (default true)
           this.demoConfig.chatTranslationEnabled
         ) {
           // add chat translation option to side panel
           ret.push(chatTranslation)
         }
-        
 
         // SMS
         if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
