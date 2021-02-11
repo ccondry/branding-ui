@@ -998,7 +998,7 @@ export default {
         phone: this.phone,
         email: this.email,
         botDisabled: false,
-        host: 'bucher-suter.dcloud.cisco.com:1880/ws/webchat'
+        host: 'bucher-suter.dcloud.cisco.com:1880'
       }
       // append URL options
       let count = 0
