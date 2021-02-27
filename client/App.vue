@@ -1490,4 +1490,9 @@ body {
   width: 500px;
   height: 500px;
 }
+
+// hide the broken tooltip from webex CC chat
+#welcomeTooltip {
+  display: none;
+}
 </style>
