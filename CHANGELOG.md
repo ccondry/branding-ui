@@ -3,6 +3,14 @@
 Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
+
+# 2021.2.27
+
+### Bug Fixes
+* **Webex CC Chat:** Hide the tooltip that gets in the way of clicking the
+button to start Webex CC chat.
+
+
 # 2021.2.9-1
 
 ### Bug Fixes
