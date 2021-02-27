@@ -1,0 +1,89 @@
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #welcomeTooltip {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    var webexLoading = false
+
+    // helper function to append query parameters to a URL for fetch
+    function addUrlQueryParams (endpoint, params) {
+      let url = endpoint
+      if (typeof params === 'object') {
+        // append URL query paramenters
+        const keys = Object.keys(params)
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i]
+          const value = params[key]
+          if (i === 0) {
+            url += '?'
+          } else {
+            url += '&'
+          }
+          url += encodeURIComponent(key) + '=' + encodeURIComponent(value)
+        }
+      }
+      return url
+    }
+
+    function getUrlQueryParams() {
+      // get current URL query parameters
+      const query = {}
+      const pairs = window.location.search.slice(1).split('&')
+      for (const pair of pairs) {
+        const parts = pair.split('=')
+        const key = decodeURIComponent(parts[0])
+        const value = decodeURIComponent(parts[1])
+        if (key && value !== undefined) {
+          query[key] = value
+        }
+      }
+      return query
+    }
+    function initWebexChat (config) {
+      console.log('initWebexChat:', config)
+      const bubbleScript = document.createElement('script')
+      const element = document.getElementsByTagName('script')[0]
+      bubbleScript.async = config.async
+      bubbleScript.CiscoAppId = config.CiscoAppId
+      bubbleScript.appPrefix = config.appPrefix || ''
+      bubbleScript.DC = config.DC
+      bubbleScript.orgId = config.orgId
+      bubbleScript.templateId = config.templateId
+      bubbleScript.src = 'https://' + bubbleScript.appPrefix + 'bubble.' + bubbleScript.DC + '/bubble.js'
+      bubbleScript.type = 'text/javascript'
+      bubbleScript.setAttribute('charset', 'utf-8')
+      element.parentNode.insertBefore(bubbleScript, element)
+      element.onload = function () {
+        webexLoading = false
+      }
+    }
+
+    function getSessionInfo (query) {
+      const url = 'https://mm.cxdemo.net/api/v1/sessions'
+      return fetch(addUrlQueryParams(url, query))
+    }
+    
+    // go
+    getSessionInfo(getUrlQueryParams())
+    .then(response => response.json())
+    .then(sessionConfig => {
+      const config = sessionConfig.configuration
+      initWebexChat({
+        async: typeof config.async === 'boolean' ? config.async : true,
+        CiscoAppId: config.CiscoAppId,
+        appPrefix: config.appPrefix,
+        DC: config.DC,
+        orgId: config.orgId,
+        templateId: config.templateId
+      })
+    })
+  </script>
+</body>
+</html>
