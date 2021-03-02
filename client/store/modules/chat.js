@@ -105,7 +105,7 @@ const actions = {
     const egainDockChat = window.egainDockChat || {}
     egainDockChat.serverURL = 'https://cceeceweb.dcloud.cisco.com/system'
     // eGain Chat Entry Point
-    egainDockChat.EntryPointId = '1001'
+    egainDockChat.EntryPointId = getters.entryPointId
     // eGain Chat Locale
     egainDockChat.Locale = 'en-US'
     // eGain template name
