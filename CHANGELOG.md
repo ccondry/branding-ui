@@ -4,6 +4,14 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2021.3.2
+
+### Bug Fixes
+* **ECE Docked Chat:** Fixed ECE docked chat (chat live) entry point ID only
+using the default 1001. Now it will use the appropriate ID for the demo and
+user.
+
+
 # 2021.2.27
 
 ### Bug Fixes
