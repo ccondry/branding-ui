@@ -355,6 +355,7 @@ export default {
         callModalText: 'You can reach one of our experts by phone:',
         callModalMainLabel: 'Main',
         callModalWxmLabel: 'WXM',
+        callModalWxmVoiceLabel: 'WXM (Voice)',
         callModalWxmEmailLabel: 'WXM (Email)',
         callModalWxmSmsLabel: 'WXM (SMS)',
         callModalCrmLabel: 'CRM',
