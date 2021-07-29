@@ -491,6 +491,7 @@ export default {
       'isCjpWebex',
       'isTsaCwcc',
       'isWebexCustom',
+      'isEce',
       'isRcdn',
       'isUpstream',
       'sessionInfo',
@@ -596,26 +597,41 @@ export default {
         const channels = this.demoBaseConfig.channels
 
         // chat
+        // if demo has chat and the current multichannel type has chat
         if (channels.includes('chat') && this.multichannelOptions.includes('chat')) {
-        // show either chat or chatbot option
-          if (this.model.chatEnabled && !this.demoConfig.chatBotEnabled) {
-            // direct chat to agent, no chat bot
+          // show either chat or chatbot option
+          // if chat is enabled in the vertical and multichannel is upstream
+          if (this.model.chatEnabled && this.isUpstream) {
+            // add Chat Live option
             ret.push(chat)
-          } else if (channels.includes('chat') && this.model.chatBotEnabled && this.demoConfig.chatBotEnabled) {
-            // chat bot, with option to escalate to agent
+          } else if (
+            // if chat is enabled
+            this.model.chatEnabled &&
+            // and chat bot is disabled
+            !this.demoConfig.chatBotEnabled
+          ) {
+            // add Chat Live option
+            ret.push(chat)
+          } else if (
+            // if vertical has chat bot enabled
+            this.model.chatBotEnabled &&
+            // and the demo has chat bot enabled
+            this.demoConfig.chatBotEnabled
+          ) {
+            // add Chat Bot option
             ret.push(chatBot)
+            if (
+              // if chat translation is enabled in demo base config
+              channels.includes('chatTranslation') &&
+              // and if multichannel is set to ECE
+              this.isEce &&
+              // and if vertical config has chat translation enabled (default true)
+              this.model.chatTranslationEnabled
+            ) {
+              // add Chat Translation option
+              ret.push(chatTranslation)
+            }
           }
-        }
-
-        // chat translation (PCCE 12.6 EFT)
-        if (
-          // demo base config has chat translation enabled
-          this.demoBaseConfig.channels.includes('chatTranslation') &&
-          // does vertical config have chat translation enabled (default true)
-          this.model.chatTranslationEnabled
-        ) {
-          // add chat translation option to side panel
-          ret.push(chatTranslation)
         }
 
         // SMS
