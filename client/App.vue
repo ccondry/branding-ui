@@ -484,38 +484,38 @@ export default {
       'loading',
       'endpoints',
       'chatBotEnabled',
-      'isUccx',
-      'isPcce',
       'isCjp',
       'isCjpCcone',
       'isCjpWebex',
-      'isTsaCwcc',
-      'isWebexCustom',
+      'isCwcc',
+      'isCwccV1',
       'isEce',
+      'isInstantDemo',
+      'isMsDynamics',
+      'isPcce',
       'isRcdn',
+      'isServiceNow',
+      'isSfdc',
+      'isTsaCwcc',
+      'isUccx',
       'isUpstream',
+      'isWebexCustom',
+      'isWebexV3Prod',
+      'isWebexV4Prod',
+      'isWebexTeams',
       'sessionInfo',
       'sessionConfig',
       'brand',
       'brandConfig',
-      'isInstantDemo',
       'userId',
       'datacenter',
       'sessionId',
       'sessionInfoError',
       'demoBaseConfig',
       'demoConfig',
-      'isCwcc',
-      'isCwccV1',
       'dids',
       'cwccDid',
       'demoVersion',
-      'isWebexV3Prod',
-      'isWebexV4Prod',
-      'isSfdc',
-      'isServiceNow',
-      'isMsDynamics',
-      'isWebexTeams',
       'webexTeamsWidgetStarted',
       'multichannelOptions'
     ]),
@@ -593,7 +593,12 @@ export default {
       }
       // determine which options are enabled for this demo type and vertical
       const ret = []
-      if (this.demoBaseConfig && this.demoBaseConfig.channels) {
+      if (
+        // if the demo base config exists
+        this.demoBaseConfig &&
+        // and the demo base config has channels defined
+        this.demoBaseConfig.channels
+      ) {
         const channels = this.demoBaseConfig.channels
 
         // chat
@@ -646,30 +651,51 @@ export default {
         }
 
         // voice call
-        if (channels.includes('voice') && this.multichannelOptions.includes('voice') && this.model.callEnabled) {
+        if (
+          channels.includes('voice') &&
+          this.multichannelOptions.includes('voice') &&
+          this.model.callEnabled
+        ) {
           ret.push(call)
         }
 
         // voice callback
-        if (channels.includes('callback') && this.multichannelOptions.includes('callback') && this.model.callbackEnabled) {
+        if (
+          channels.includes('callback') &&
+          this.multichannelOptions.includes('callback') &&
+          this.model.callbackEnabled
+        ) {
           ret.push(callback)
         }
 
         // email
-        if (channels.includes('email') && this.multichannelOptions.includes('email') && this.model.emailEnabled) {
+        if (
+          channels.includes('email') &&
+          this.multichannelOptions.includes('email') &&
+          this.model.emailEnabled
+        ) {
           ret.push(email)
         }
 
         // task
-        if (channels.includes('task') && this.multichannelOptions.includes('task') && this.model.taskEnabled) {
+        if (
+          channels.includes('task') &&
+          this.multichannelOptions.includes('task') &&
+          this.model.taskEnabled
+        ) {
           ret.push(task)
         }
 
         // cobrowse
-        if (channels.includes('cobrowse') && this.multichannelOptions.includes('cobrowse') && this.model.cobrowseEnabled) {
+        if (
+          channels.includes('cobrowse') &&
+          this.multichannelOptions.includes('cobrowse') &&
+          this.model.cobrowseEnabled
+        ) {
           ret.push(cobrowse)
         }
       }
+
       // done
       return ret
     }
