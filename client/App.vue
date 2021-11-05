@@ -365,6 +365,7 @@ export default {
         callModalCvaAiLabel: 'CVA AI',
         callModalCustomAiLabel: 'Custom AI',
         callModal2RingLabel: '2Ring',
+        callModalSalesforceLabel: 'Salesforce',
         callModalCcaiLabel: 'CCAI',
         // callback
         callbackEnabled: true,
