@@ -4,6 +4,12 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2021.11.5
+
+### Features
+* **Call:** Add callModalSalesforceLabel.
+
+
 # 2021.4.27
 
 ### Features
