@@ -5,9 +5,8 @@ const getters = {
   // ECE chat entry point ID
   entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001',
   tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
-  chatTemplate: (state, getters) => {
-    return 'aqua'
-  }
+  // ECE chat template name (aqua, aria, etc.)
+  chatTemplate: (state, getters) => getters.demoBaseConfig.chatTemplate || 'aqua'
 }
 
 const actions = {
