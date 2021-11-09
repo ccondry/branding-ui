@@ -4,6 +4,7 @@ import queryString from 'query-string'
 const getters = {
   // ECE chat entry point ID
   entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001',
+  // chat HTTPS proxy tunnel address
   tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
   // ECE chat template name (aqua, aria, etc.)
   chatTemplate: (state, getters) => getters.demoBaseConfig.chatTemplate || 'aqua'
