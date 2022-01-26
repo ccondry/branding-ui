@@ -190,6 +190,9 @@
       </transition>
 
     </span>
+
+    <!-- IMI Connect chat -->
+    <div id="divicw" :data-bind="sessionConfig.imiConnectId" data-org="" />
   </div>
 </template>
 
@@ -1219,8 +1222,8 @@ export default {
           })
         }
       } else {
-        console.log('checkConfig - brand is set')
         // brand is set
+        console.log('checkConfig - brand is set')
         // determine if we need to load another chat library
         if (this.isCjpWebex) {
           console.log('init Spark Care chat')
@@ -1240,7 +1243,17 @@ export default {
         } else if (this.isWebexV3Prod || this.isWebexV4Prod || this.isWebexCustom) {
           console.log('init Webex chat')
           // Webex v3 production Abilene tenant for dCloud
-          await window.initWebexChat(this.sessionConfig)
+          // are they using IMI Connect?
+          if (this.sessionConfig.imiConnectId) {
+            // use IMI chat
+            await window.initImiConnect()
+          } else {
+            // use old webex chat
+            await window.initWebexChat(this.sessionConfig)
+          }
+        } else if (this.isWebexV6) {
+          // use IMI Connect chat for webex v6
+          await window.initImiConnect()
         } else if (this.isSfdc) {
           console.log('init SFDC chat')
           // SalesForce.com chat for PCCE 12.5+
