@@ -4,6 +4,14 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2022.1.26
+
+### Features
+* **Build:** Update build libraries and build scripts.
+* **Webex v6:** Add IMI Connect for Webex v6 demo.
+* **Webex Custom:** Add IMI Connect for Webex Custom demo.
+
+
 # 2021.11.5
 
 ### Features
