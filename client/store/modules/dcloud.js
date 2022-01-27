@@ -121,6 +121,14 @@ const getters = {
       return false
     }
   },
+  // is this Webex CC v6?
+  isWebexV6: (state, getters) => {
+    try {
+      return getters.sessionInfo.demo.toLowerCase() === 'webex' && state.sessionInfo.version.toLowerCase() === 'v6'
+    } catch (e) {
+      return false
+    }
+  },
   dids: (state, getters) => {
     try {
       return getters.sessionInfo.dids

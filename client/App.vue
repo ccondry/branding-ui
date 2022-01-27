@@ -434,6 +434,7 @@ export default {
       'isWebexCustom',
       'isWebexV3Prod',
       'isWebexV4Prod',
+      'isWebexV6',
       'isWebexTeams',
       'sessionInfo',
       'sessionConfig',

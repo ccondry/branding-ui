@@ -55,6 +55,7 @@ export default {
       'demoVersion',
       'isWebexV3Prod',
       'isWebexV4Prod',
+      'isWebexV6',
       'demoBaseConfig'
     ]),
     numbers () {
@@ -97,7 +98,7 @@ export default {
     },
     main () {
       // main phone number
-      if (this.isCwccV1 || this.isWebexV3Prod || this.isWebexV4Prod) {
+      if (this.isCwccV1 || this.isWebexV3Prod || this.isWebexV4Prod || this.isWebexV6) {
         // webex CC v1/v2/v3/4
         return this.cwccDid
       } else if (this.isUpstream) {
