@@ -95,7 +95,7 @@ export default {
     },
     brand: {
       type: String,
-      required: false
+      default: ''
     },
     sessionInfoError: {
       type: String,
