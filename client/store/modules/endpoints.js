@@ -6,9 +6,9 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   // development environment
   // prefix base URL with localhost and port
-  base = 'http://localhost:3037/api/v1'
+  // base = 'http://localhost:3037/api/v1'
   // use production REST API
-  // base = 'https://mm-brand.cxdemo.net/api/v1'
+  base = 'https://mm-brand.cxdemo.net/api/v1'
 }
 
 const state = {

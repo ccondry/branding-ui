@@ -2,7 +2,9 @@
   <form @submit.prevent="$parent.close()">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ heading }}</p>
+        <p class="modal-card-title">
+          {{ heading }}
+        </p>
       </header>
       <section class="modal-card-body">
         <table class="phone-list">
@@ -17,8 +19,12 @@
         </table>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
-        <button class="button is-success" @click="$parent.close()">{{ okButton }}</button>
+        <button class="button" type="button" @click="$parent.close()">
+          {{ cancelButton }}
+        </button>
+        <button class="button is-success" @click="$parent.close()">
+          {{ okButton }}
+        </button>
       </footer>
     </div>
   </form>
@@ -29,9 +35,12 @@ import {fillOption} from '../utils'
 import {mapGetters} from 'vuex'
 
 export default {
-  props: [
-    'model'
-  ],
+  props: {
+    model: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     ...mapGetters([
       'sessionInfo',

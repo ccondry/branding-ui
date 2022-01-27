@@ -72,7 +72,7 @@ const actions = {
       })
     }
   },
-  async getWebexTeamsAgent ({commit, getters}, data) {
+  async getWebexTeamsAgent ({getters}, data) {
     console.log('getting webex teams agent...')
     const url = getters.endpoints.webexAgent
     const body = {

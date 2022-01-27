@@ -2,23 +2,29 @@
   <form @submit.prevent="$emit('submit', formData)">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ heading }}</p>
+        <p class="modal-card-title">
+          {{ heading }}
+        </p>
       </header>
       <section class="modal-card-body">
-        <p class="content" v-html="modalText" />
+        <p class="content">
+          {{ modalText }}
+        </p>
 
         <b-field :label="nameLabel">
           <b-input
           v-model="formData.name"
           placeholder="Jane Smith"
-          required />
+          required
+          />
         </b-field>
 
         <b-field :label="phoneLabel">
           <b-input
           v-model="formData.phone"
           placeholder="5551112222"
-          required />
+          required
+          />
         </b-field>
 
         <!-- <b-field :label="messageLabel" v-if="!isUccx">
@@ -28,11 +34,14 @@
           placeholder="Message"
           />
         </b-field> -->
-
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
-        <button class="button is-success" type="submit">{{ sendButton }}</button>
+        <button class="button" type="button" @click="$parent.close()">
+          {{ cancelButton }}
+        </button>
+        <button class="button is-success" type="submit">
+          {{ sendButton }}
+        </button>
       </footer>
     </div>
   </form>
@@ -40,25 +49,47 @@
 
 <script>
 export default {
-  props: [
-    'phone',
-    'name',
-    'message',
-    'heading',
-    'modalText',
-    'nameLabel',
-    'phoneLabel',
-    // 'messageLabel',
-    'cancelButton',
-    'sendButton',
-    'isUccx'
-  ],
-
-  mounted () {
-    // copy props to data
-    this.formData.phone = this.phone
-    this.formData.name = this.name
-    // this.formData.message = this.message
+  props: {
+    phone: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    message: {
+      type: String,
+      default: ''
+    },
+    heading: {
+      type: String,
+      default: ''
+    },
+    modalText: {
+      type: String,
+      default: ''
+    },
+    nameLabel: {
+      type: String,
+      default: ''
+    },
+    phoneLabel: {
+      type: String,
+      default: ''
+    },
+    cancelButton: {
+      type: String,
+      default: ''
+    },
+    sendButton: {
+      type: String,
+      default: ''
+    },
+    isUccx: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data () {
@@ -69,6 +100,13 @@ export default {
         // message: ''
       }
     }
+  },
+
+  mounted () {
+    // copy props to data
+    this.formData.phone = this.phone
+    this.formData.name = this.name
+    // this.formData.message = this.message
   }
 }
 </script>

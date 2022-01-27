@@ -46,7 +46,7 @@ const mutations = {
 }
 
 const actions = {
-  async loadDefaults ({getters, commit, dispatch}, {type, showNotification = true}) {
+  async loadDefaults ({getters, dispatch}, {type, showNotification = true}) {
     dispatch('setLoading', {group: 'app', type: 'defaults', value: true})
     await dispatch('loadToState', {
       endpoint: getters.endpoints.defaults,
@@ -63,7 +63,7 @@ const actions = {
     })
     dispatch('setLoading', {group: 'app', type: 'defaults', value: false})
   },
-  async putDefaults ({commit, getters, dispatch}, data) {
+  async putDefaults ({getters, dispatch}, data) {
     dispatch('setWorking', {group: 'app', type: 'defaults', value: true})
     await dispatch('putData', {
       endpoint: getters.endpoints.defaults,

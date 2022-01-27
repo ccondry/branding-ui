@@ -26,7 +26,7 @@ const actions = {
     window.open(url, '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)
     // window.resize('400', '600')
   },
-  async sendCallback ({getters, commit, dispatch}, data) {
+  async sendCallback ({getters, dispatch}, data) {
     // attach dCloud session information
     data.session = getters.sessionId
     data.datacenter = getters.datacenter

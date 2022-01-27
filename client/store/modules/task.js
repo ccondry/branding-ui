@@ -10,7 +10,7 @@ const mutations = {
 }
 
 const actions = {
-  async sendTask ({getters, commit, dispatch}, data) {
+  async sendTask ({getters, dispatch}, data) {
     // attach dCloud session information
     data.session = getters.sessionId
     data.datacenter = getters.datacenter

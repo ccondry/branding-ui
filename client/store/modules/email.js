@@ -11,7 +11,7 @@ const mutations = {
 }
 
 const actions = {
-  async sendEmail ({getters, commit, dispatch}, data) {
+  async sendEmail ({getters, dispatch}, data) {
     // attach dCloud session information
     data.session = getters.sessionId
     data.datacenter = getters.datacenter

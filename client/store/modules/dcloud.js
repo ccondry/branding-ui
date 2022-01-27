@@ -53,17 +53,17 @@ const getters = {
   // is this a PCCE demo?
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
   // is this a CJP demo?
-  isCjp: (state, getters) => state.datacenter.toLowerCase() === 'cjp',
+  isCjp: (state) => state.datacenter.toLowerCase() === 'cjp',
   // is this a CJP CCOne demo?
-  isCjpCcone: (state, getters) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'ccone',
+  isCjpCcone: (state) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'ccone',
   // is this a CJP Webex Sandbox Spark Chat demo?
-  isCjpWebex: (state, getters) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'webex',
+  isCjpWebex: (state) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'webex',
   // is this a CWCC Abilene demo on the Cisco TSA tenant?
-  isTsaCwcc: (state, getters) => state.datacenter.toLowerCase() === 'cwcc' && state.sessionId.toLowerCase().startsWith('tsa'),
+  isTsaCwcc: (state) => state.datacenter.toLowerCase() === 'cwcc' && state.sessionId.toLowerCase().startsWith('tsa'),
   // is this a the Custom Stack 1 Webex Demo?
   isWebexCustom: state => state.datacenter.toLowerCase() === 'webex' && state.sessionId.toLowerCase() === 'custom',
   // is this an RCDN (Compete Lab) demo?
-  isRcdn: (state, getters) => state.datacenter.toLowerCase() === 'rcdn',
+  isRcdn: (state) => state.datacenter.toLowerCase() === 'rcdn',
   // is this an instant demo?
   isInstantDemo: (state, getters) => getters.sessionInfo.instant === true,
   // is the configured multichannel type Upstream Works?

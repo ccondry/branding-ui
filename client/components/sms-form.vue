@@ -2,22 +2,30 @@
   <form @submit.prevent="$emit('submit', formData)">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ heading }}</p>
+        <p class="modal-card-title">
+          {{ heading }}
+        </p>
       </header>
       <section class="modal-card-body">
-        <p class="content" v-html="text" />
+        <p class="content">
+          {{ text }}
+        </p>
 
         <b-field :label="phoneLabel">
           <b-input
           v-model="formData.phone"
           placeholder="5551112222"
-          required />
+          required
+          />
         </b-field>
-
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">{{ cancelButton }}</button>
-        <button class="button is-success" type="submit">{{ sendButton }}</button>
+        <button class="button" type="button" @click="$parent.close()">
+          {{ cancelButton }}
+        </button>
+        <button class="button is-success" type="submit">
+          {{ sendButton }}
+        </button>
       </footer>
     </div>
   </form>
@@ -27,19 +35,35 @@
 import {formatUnicorn} from '../utils'
 
 export default {
-  props: [
-    'phone',
-    'heading',
-    'modalText',
-    'dnis',
-    'phoneLabel',
-    'cancelButton',
-    'sendButton'
-  ],
-
-  mounted () {
-    // copy props to data
-    this.formData.phone = this.phone
+  props: {
+    phone: {
+      type: String,
+      default: ''
+    },
+    heading: {
+      type: String,
+      default: ''
+    },
+    modalText: {
+      type: String,
+      default: ''
+    },
+    dnis: {
+      type: String,
+      default: ''
+    },
+    phoneLabel: {
+      type: String,
+      default: ''
+    },
+    cancelButton: {
+      type: String,
+      default: ''
+    },
+    sendButton: {
+      type: String,
+      default: ''
+    }
   },
 
   data () {
@@ -54,6 +78,11 @@ export default {
     text () {
       return formatUnicorn(this.modalText, this.dnis)
     }
+  },
+
+  mounted () {
+    // copy props to data
+    this.formData.phone = this.phone
   }
 }
 

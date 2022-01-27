@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <b-loading :is-full-page="true" :active="loading.dcloud.sessionInfo || loading.dcloud.brand" :can-cancel="false"></b-loading>
+    <b-loading :is-full-page="true" :active="loading.dcloud.sessionInfo || loading.dcloud.brand" :can-cancel="false" />
 
     <!-- Session info modal -->
-    <b-modal :active.sync="showSessionInfoModal" :can-cancel="false" has-modal-card width="960">
+    <b-modal :active.sync="showSessionInfoModal"
+    :can-cancel="false"
+    has-modal-card
+    width="960"
+    >
       <session-form
-      @submit="clickSubmitSessionInfo"
       :loading="loading.dcloud.sessionInfo"
       :datacenter="datacenter"
       :session-id="sessionId"
@@ -13,13 +16,18 @@
       :session-info="sessionInfo"
       :session-info-error="sessionInfoError"
       :brand="brand"
-      :user-id="userId" />
+      :user-id="userId"
+      @submit="clickSubmitSessionInfo"
+      />
     </b-modal>
 
     <!-- Email modal -->
-    <b-modal :active.sync="showEmailModal" :can-cancel="true" has-modal-card width="960">
-      <email-form @submit="clickSubmitEmail"
-      :send-button="model.sendButton"
+    <b-modal :active.sync="showEmailModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
+      <email-form :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.emailText"
       :modal-text="model.emailModalText"
@@ -31,26 +39,35 @@
       :email="email"
       :subject="subject"
       :body="body"
+      @submit="clickSubmitEmail"
       />
     </b-modal>
 
     <!-- SMS modal -->
-    <b-modal :active.sync="showSmsModal" :can-cancel="true" has-modal-card width="960">
+    <b-modal :active.sync="showSmsModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
       <sms-form v-if="sessionInfo.sms"
       :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :dnis="sessionInfo.sms.international"
       :phone-label="model.phoneLabel"
-      @submit="clickSubmitSms"
       :modal-text="model.smsModalText"
       :heading="model.smsText"
-      :phone="phone" />
+      :phone="phone"
+      @submit="clickSubmitSms"
+      />
     </b-modal>
 
     <!-- Task Routing modal -->
-    <b-modal :active.sync="showTaskModal" :can-cancel="true" has-modal-card width="960">
-      <task-form @submit="clickSubmitTask"
-      :send-button="model.sendButton"
+    <b-modal :active.sync="showTaskModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
+      <task-form :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.taskText"
       :modal-text="model.taskModalText"
@@ -63,13 +80,18 @@
       :name="name"
       :phone="phone"
       :email="email"
-      :task="task" />
+      :task="task"
+      @submit="clickSubmitTask"
+      />
     </b-modal>
 
     <!-- Voice Callback modal -->
-    <b-modal :active.sync="showCallbackModal" :can-cancel="true" has-modal-card width="960">
-      <callback-form @submit="clickSubmitCallback"
-      :send-button="model.sendButton"
+    <b-modal :active.sync="showCallbackModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
+      <callback-form :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.callbackText"
       :modal-text="model.callbackModalText"
@@ -81,18 +103,26 @@
       :name="name"
       :phone="phone"
       :message="message"
+      @submit="clickSubmitCallback"
       />
     </b-modal>
 
     <!-- Inbound Voice Call modal -->
-    <b-modal :active.sync="showCallModal" :can-cancel="true" has-modal-card width="960">
+    <b-modal :active.sync="showCallModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
       <call-form v-if="Object.keys(sessionInfo)" :model="model" />
     </b-modal>
 
     <!-- Chat modal -->
-    <b-modal :active.sync="showChatModal" :can-cancel="true" has-modal-card width="960">
-      <chat-form @submit="clickSubmitChat"
-      :send-button="model.sendButton"
+    <b-modal :active.sync="showChatModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
+      <chat-form :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.chatHeading"
       :email-label="model.emailLabel"
@@ -101,42 +131,46 @@
       :message-label="model.messageLabel"
       :name="name"
       :email="email"
-      :phone="phone" />
+      :phone="phone"
+      @submit="clickSubmitChat"
+      />
     </b-modal>
 
     <!-- Main page content -->
     <span id="main-content">
 
       <!-- draggable Webex Teams Space Widget -->
-      <div id="webex-teams-widget-container"
+      <div v-show="webexTeamsChatRequested"
+      id="webex-teams-widget-container"
       ref="teams"
-      v-show="webexTeamsChatRequested"
       >
         <b-loading
         :is-full-page="false"
-        :active="!this.webexTeamsWidgetStarted"
+        :active="!webexTeamsWidgetStarted"
         :can-cancel="false"
         />
         <div id="my-webexteams-widget" />
       </div>
 
       <!-- background iframe -->
-      <iframe :src="model.iframe" class="demo-iframe"></iframe>
+      <iframe :src="model.iframe" class="demo-iframe" />
 
       <!-- talk to an expert button (button to open contact panel) -->
       <transition name="slide">
-        <button id="contact-toggle-button" class="button"
-        v-show="!showContactPanel && loaded"
-        @click="showContactPanel = true">
-        <strong>{{ model.contactButtonText }}</strong></button>
+        <button v-show="!showContactPanel && loaded"
+        id="contact-toggle-button"
+        class="button"
+        @click="showContactPanel = true"
+        >
+          <strong>{{ model.contactButtonText }}</strong></button>
       </transition>
 
       <!-- contact panel -->
       <transition name="slide">
-        <div id="contact-panel-container" v-show="showContactPanel">
+        <div v-show="showContactPanel" id="contact-panel-container">
           <div id="contact-panel">
             <!-- Chat Bot -->
-            <b-collapse class="card" v-show="showChatBot">
+            <b-collapse v-show="showChatBot" class="card">
               <div class="card-header" role="button" @click="hideChatBot">
                 <p class="card-header-title contact-title">
                   {{ model.chatMenuTitle }}
@@ -153,7 +187,7 @@
             </b-collapse>
             <!-- /Chat Bot -->
             <!-- Contact Menu -->
-            <b-collapse class="card" v-show="!showChatBot">
+            <b-collapse v-show="!showChatBot" class="card">
               <div class="card-header" role="button" @click="showContactPanel = false">
                 <p class="card-header-title contact-title">
                   {{ model.menuTitle }}
@@ -164,7 +198,7 @@
                 </a>
               </div>
 
-              <div class="card-content contact-content" v-if="model.advisorEnabled">
+              <div v-if="model.advisorEnabled" class="card-content contact-content">
                 <img :src="model.advisorImage" style="height: 7em;">
                 <span style="float: right; font-size: 1.8em;">
                   <p>{{ model.advisorHeading }}</p>
@@ -173,8 +207,8 @@
               </div>
 
               <!-- render each contact option -->
-              <footer v-for="(item, key) of contactOptions" class="card-footer contact-item" :key="key">
-                <a @click="item.click" class="card-footer-item">
+              <footer v-for="(item, key) of contactOptions" :key="key" class="card-footer contact-item">
+                <a class="card-footer-item" @click="item.click">
                   <b-icon class="contact-icon" :icon="item.icon" />
                   <div class="content">
                     <h4>{{ item.heading }}<small v-if="item.waitTime"> - {{ item.waitTime }}</small></h4>
@@ -214,36 +248,6 @@ function setQueryStringParameter (name, value) {
 }
 
 export default {
-  created () {
-    // get query string and put the object into this component's data
-    let uri = window.location.search.substring(1)
-    this.qs = new window.URLSearchParams(uri)
-    // add chat iframe event listener for postMessage
-    window.addEventListener('message', (message) => {
-      // console.log('iframe message:', message)
-      try {
-        if (message.data.type === 'sparky.command') {
-          console.log('setting iframe to', message.data.data)
-          this.model.iframe = message.data.data
-        } else if (message.data.type === 'sparky.submit') {
-          const d = message.data.data
-          // save submitted data as cached user info
-          this.firstName = d.firstName
-          this.lastName = d.lastName
-          this.phone = d.phone
-          this.email = d.email
-          // update URL query parameters to match cached data
-          setQueryStringParameter('firstName', this.firstName)
-          setQueryStringParameter('lastName', this.lastName)
-          setQueryStringParameter('phone', this.phone)
-          setQueryStringParameter('email', this.email)
-        }
-      } catch (e) {
-        // failed to process postMessage from iframe
-        console.error('failed to process postMessage from iframe. message:', e)
-      }
-    })
-  },
 
   components: {
     SessionForm,
@@ -310,7 +314,7 @@ export default {
         advisorEnabled: true,
         advisorImage: 'https://mm.cxdemo.net/static/images/cumulus/common/author1.png',
         advisorHeading: 'Expert Advisor',
-        advisorText: `We're here to help`,
+        advisorText: 'We\'re here to help',
         // chat
         chatEnabled: true,
         chatIcon: 'message-processing',
@@ -373,7 +377,7 @@ export default {
         // callback
         callbackEnabled: true,
         callbackIcon: 'phone-forward',
-        callbackHeading: `We'll Call You`,
+        callbackHeading: 'We\'ll Call You',
         callbackText: 'Receive a call back from an expert',
         callbackWaitTime: '8 min wait time',
         callbackModalText: `Enter your name and phone number and one of our
@@ -405,82 +409,6 @@ export default {
         cobrowseWaitTime: '8 min wait time'
       }
     }
-  },
-
-  async mounted () {
-    // update view now - probably remove this later for production
-    this.updateView(this.model)
-    // set dCloud session ID and datacenter from query parameters
-    if (this.qs.get('session')) {
-      this.setSessionId(this.qs.get('session'))
-    }
-    if (this.qs.get('datacenter')) {
-      this.setDatacenter(this.qs.get('datacenter'))
-    }
-    if (this.qs.get('userId')) {
-      this.setUserId(this.qs.get('userId'))
-    }
-    // set user/contact info from query parameters
-    if (this.qs.get('firstName')) {
-      this.firstName = this.qs.get('firstName')
-      this.name = this.firstName + ' ' + this.lastName
-    }
-    if (this.qs.get('lastName')) {
-      this.lastName = this.qs.get('lastName')
-      this.name = this.firstName + ' ' + this.lastName
-    }
-    if (this.qs.get('phone')) {
-      this.phone = this.qs.get('phone')
-    }
-    if (this.qs.get('email')) {
-      this.email = this.qs.get('email')
-    }
-    // set cached email parameters from query parameters
-    if (this.qs.get('body')) {
-      this.body = this.qs.get('body')
-    }
-    if (this.qs.get('subject')) {
-      this.subject = this.qs.get('subject')
-    }
-    // are datacenter and sessionID set?
-    if (this.datacenter && this.sessionId) {
-      // load dcloud session info
-      console.log('getting session info...')
-      this.getSessionInfo(false)
-    } else {
-      // pop modal to ask for datacenter and session ID
-      this.showSessionInfoModal = true
-    }
-    // set up event listener for submitter user info, to cache it here
-    // make a cross-browser compatible event listener
-    const eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
-    const eventer = window[eventMethod]
-    const messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
-
-    // attach event listener for message from iframe
-    eventer(messageEvent, e => {
-      // console.log('parent received message!:', e.data)
-      if (e.data.event === 'submit-chat') {
-        const d = e.data.data
-        // save submitted data as cached user info
-        this.firstName = d.firstName
-        this.lastName = d.lastName
-        this.phone = d.phone
-        this.email = d.email
-        this.updateUrlParameters()
-      }
-    }, false)
-
-    // watch for webex teams widget title to exist, and make it draggable
-    let interval
-    interval = setInterval(() => {
-      const elements = document.getElementsByClassName('webex-title-text')
-      if (elements.length) {
-        // console.log('found webex teams header:', elements)
-        this.makeWebexTeamsWidgetDraggable(elements[0])
-        window.clearInterval(interval)
-      }
-    }, 1000)
   },
 
   computed: {
@@ -705,6 +633,204 @@ export default {
     }
   },
 
+  watch: {
+    model (val) {
+      console.log('model changed. updating view...')
+      this.updateView(val)
+    },
+    sessionInfo (val) {
+      console.log('sessionInfo changed')
+      // make sure instant demo has user ID set
+      if (val.instant && (!this.userId || this.userId.length !== 4)) {
+        console.log('this is instant demo, but user did not provide user ID. popping session info modal...')
+        // pop session info modal again
+        this.showSessionInfoModal = true
+      } else {
+        // console.log('getting base demo config and multichannel options...')
+        // get base demo config
+        this.getDemoBaseConfig()
+        // get multichannel options
+        this.getMultichannelOptions()
+        // get brand (vertical) config
+        this.getBrand(false)
+      }
+    },
+    demoBaseConfig (val) {
+      console.log('base demo config changed. processing text templates and checking configuration...')
+      // process any templates into the final text value
+      this.processTextTemplates()
+      this.checkConfig(val)
+    },
+    sessionInfoError (val) {
+      // error getting session info. display message
+      if (val.status === 404) {
+        // session not found - probably user entered invalid data
+        // pop session modal again
+        this.showSessionInfoModal = true
+      } else {
+        // other error - display message
+        // display error message
+        this.$dialog.alert({
+          title: 'Error Retreiving dCloud Session Info',
+          message: `There was an error retreiving your dCloud
+          session information. Please refresh the page to try again, or
+          contact dCloud support if you continue to have this issue.
+          <br />
+          Status Code: <strong>${val.status}</strong>
+          <br />
+          Error Message: <strong>${val.data}</strong>`,
+          type: 'is-danger',
+          canCancel: false,
+          hasIcon: true,
+          icon: 'close-circle',
+          iconPack: 'mdi'
+        })
+      }
+    },
+    brandConfig (val) {
+      // brand config loaded
+      console.log('brandConfig changed - copying changes to local model')
+      // update query string with the valid data we have now
+      setQueryStringParameter('session', this.sessionId)
+      setQueryStringParameter('datacenter', this.datacenter)
+      setQueryStringParameter('userId', this.userId)
+      // configuration info loaded - merge into model
+      for (const key of Object.keys(val)) {
+        // ignore id and owner keys
+        if (['_id', 'id', 'owner'].includes(key)) {
+          continue
+        } else if (typeof val[key] !== 'string' || val[key].length) {
+          // set model value for each brand config value, if the value is not
+          // an empty string
+          this.$set(this.model, key, val[key])
+        }
+      }
+      // process any templates into the final text value
+      this.processTextTemplates()
+      // brand has now loaded
+      this.loaded = true
+      // hide session modal
+      this.showSessionInfoModal = false
+      // update colors, favicon, html title
+      this.updateView(val)
+      // set default iframe to cumulus website if there was no iframe configured
+      if (!(this.model.iframe && this.model.iframe.trim().length)) {
+        this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
+      }
+    },
+    brand () {
+      // brand ID has been set - load this brand now
+      // this.getBrand(false)
+    }
+  },
+
+  created () {
+    // get query string and put the object into this component's data
+    let uri = window.location.search.substring(1)
+    this.qs = new window.URLSearchParams(uri)
+    // add chat iframe event listener for postMessage
+    window.addEventListener('message', (message) => {
+      // console.log('iframe message:', message)
+      try {
+        if (message.data.type === 'sparky.command') {
+          console.log('setting iframe to', message.data.data)
+          this.model.iframe = message.data.data
+        } else if (message.data.type === 'sparky.submit') {
+          const d = message.data.data
+          // save submitted data as cached user info
+          this.firstName = d.firstName
+          this.lastName = d.lastName
+          this.phone = d.phone
+          this.email = d.email
+          // update URL query parameters to match cached data
+          setQueryStringParameter('firstName', this.firstName)
+          setQueryStringParameter('lastName', this.lastName)
+          setQueryStringParameter('phone', this.phone)
+          setQueryStringParameter('email', this.email)
+        }
+      } catch (e) {
+        // failed to process postMessage from iframe
+        console.error('failed to process postMessage from iframe. message:', e)
+      }
+    })
+  },
+
+  async mounted () {
+    // update view now - probably remove this later for production
+    this.updateView(this.model)
+    // set dCloud session ID and datacenter from query parameters
+    if (this.qs.get('session')) {
+      this.setSessionId(this.qs.get('session'))
+    }
+    if (this.qs.get('datacenter')) {
+      this.setDatacenter(this.qs.get('datacenter'))
+    }
+    if (this.qs.get('userId')) {
+      this.setUserId(this.qs.get('userId'))
+    }
+    // set user/contact info from query parameters
+    if (this.qs.get('firstName')) {
+      this.firstName = this.qs.get('firstName')
+      this.name = this.firstName + ' ' + this.lastName
+    }
+    if (this.qs.get('lastName')) {
+      this.lastName = this.qs.get('lastName')
+      this.name = this.firstName + ' ' + this.lastName
+    }
+    if (this.qs.get('phone')) {
+      this.phone = this.qs.get('phone')
+    }
+    if (this.qs.get('email')) {
+      this.email = this.qs.get('email')
+    }
+    // set cached email parameters from query parameters
+    if (this.qs.get('body')) {
+      this.body = this.qs.get('body')
+    }
+    if (this.qs.get('subject')) {
+      this.subject = this.qs.get('subject')
+    }
+    // are datacenter and sessionID set?
+    if (this.datacenter && this.sessionId) {
+      // load dcloud session info
+      console.log('getting session info...')
+      this.getSessionInfo(false)
+    } else {
+      // pop modal to ask for datacenter and session ID
+      this.showSessionInfoModal = true
+    }
+    // set up event listener for submitter user info, to cache it here
+    // make a cross-browser compatible event listener
+    const eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
+    const eventer = window[eventMethod]
+    const messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
+
+    // attach event listener for message from iframe
+    eventer(messageEvent, e => {
+      // console.log('parent received message!:', e.data)
+      if (e.data.event === 'submit-chat') {
+        const d = e.data.data
+        // save submitted data as cached user info
+        this.firstName = d.firstName
+        this.lastName = d.lastName
+        this.phone = d.phone
+        this.email = d.email
+        this.updateUrlParameters()
+      }
+    }, false)
+
+    // watch for webex teams widget title to exist, and make it draggable
+    let interval
+    interval = setInterval(() => {
+      const elements = document.getElementsByClassName('webex-title-text')
+      if (elements.length) {
+        // console.log('found webex teams header:', elements)
+        this.makeWebexTeamsWidgetDraggable(elements[0])
+        window.clearInterval(interval)
+      }
+    }, 1000)
+  },
+
   methods: {
     ...mapActions([
       'getSessionInfo',
@@ -772,7 +898,7 @@ export default {
         // document.onmousemove = elementDrag
       }
 
-      element.onmouseup = (e) => {
+      element.onmouseup = () => {
         this.dragging = false
       }
     },
@@ -961,7 +1087,7 @@ export default {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
         // build chat bot iframe URL
-        let chatUrl = `https://mm-chat.cxdemo.net/?`
+        let chatUrl = 'https://mm-chat.cxdemo.net/?'
         const options = {
           expand: true,
           session: this.sessionId,
@@ -990,7 +1116,7 @@ export default {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
         // build chat bot iframe URL
-        let chatUrl = `https://mm-chat.cxdemo.net/?`
+        let chatUrl = 'https://mm-chat.cxdemo.net/?'
         const options = {
           expand: true,
           session: this.sessionId,
@@ -1029,12 +1155,12 @@ export default {
         // the bubble chat icon, which is not in the contact panel
       }
     },
-    clickChatTranslation (event) {
+    clickChatTranslation () {
       // this starts the chat bot with translation
       // hide contact panel menu and show chat bot
       this.showChatBot = true
       // build chat bot iframe URL
-      let chatUrl = `https://mm-chat.cxdemo.net/?`
+      let chatUrl = 'https://mm-chat.cxdemo.net/?'
       const options = {
         expand: true,
         session: this.sessionId,
@@ -1275,97 +1401,6 @@ export default {
           }
         }
       }
-    }
-  },
-
-  watch: {
-    model (val) {
-      console.log('model changed. updating view...')
-      this.updateView(val)
-    },
-    sessionInfo (val) {
-      console.log('sessionInfo changed')
-      // make sure instant demo has user ID set
-      if (val.instant && (!this.userId || this.userId.length !== 4)) {
-        console.log('this is instant demo, but user did not provide user ID. popping session info modal...')
-        // pop session info modal again
-        this.showSessionInfoModal = true
-      } else {
-        // console.log('getting base demo config and multichannel options...')
-        // get base demo config
-        this.getDemoBaseConfig()
-        // get multichannel options
-        this.getMultichannelOptions()
-        // get brand (vertical) config
-        this.getBrand(false)
-      }
-    },
-    demoBaseConfig (val) {
-      console.log('base demo config changed. processing text templates and checking configuration...')
-      // process any templates into the final text value
-      this.processTextTemplates()
-      this.checkConfig(val)
-    },
-    sessionInfoError (val) {
-      // error getting session info. display message
-      if (val.status === 404) {
-        // session not found - probably user entered invalid data
-        // pop session modal again
-        this.showSessionInfoModal = true
-      } else {
-        // other error - display message
-        // display error message
-        this.$dialog.alert({
-          title: 'Error Retreiving dCloud Session Info',
-          message: `There was an error retreiving your dCloud
-          session information. Please refresh the page to try again, or
-          contact dCloud support if you continue to have this issue.
-          <br />
-          Status Code: <strong>${val.status}</strong>
-          <br />
-          Error Message: <strong>${val.data}</strong>`,
-          type: 'is-danger',
-          canCancel: false,
-          hasIcon: true,
-          icon: 'close-circle',
-          iconPack: 'mdi'
-        })
-      }
-    },
-    brandConfig (val) {
-      // brand config loaded
-      console.log('brandConfig changed - copying changes to local model')
-      // update query string with the valid data we have now
-      setQueryStringParameter('session', this.sessionId)
-      setQueryStringParameter('datacenter', this.datacenter)
-      setQueryStringParameter('userId', this.userId)
-      // configuration info loaded - merge into model
-      for (const key of Object.keys(val)) {
-        // ignore id and owner keys
-        if (['_id', 'id', 'owner'].includes(key)) {
-          continue
-        } else if (typeof val[key] !== 'string' || val[key].length) {
-          // set model value for each brand config value, if the value is not
-          // an empty string
-          this.$set(this.model, key, val[key])
-        }
-      }
-      // process any templates into the final text value
-      this.processTextTemplates()
-      // brand has now loaded
-      this.loaded = true
-      // hide session modal
-      this.showSessionInfoModal = false
-      // update colors, favicon, html title
-      this.updateView(val)
-      // set default iframe to cumulus website if there was no iframe configured
-      if (!(this.model.iframe && this.model.iframe.trim().length)) {
-        this.model.iframe = `https://mm.cxdemo.net/?session=${this.sessionId}&datacenter=${this.datacenter}&userId=${this.userId}`
-      }
-    },
-    brand (val) {
-      // brand ID has been set - load this brand now
-      // this.getBrand(false)
     }
   }
 }
