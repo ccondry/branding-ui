@@ -1146,7 +1146,7 @@ export default {
         // UCCX and PCCE chat
         if (this.demoConfig.uccxBubbleChat) {
           // docked chat
-          this.initEceDockedChat().then(this.startEceDockedChat)
+          this.startEceDockedChat()
         } else {
         // no docked chat - pop ECE chat window
           this.popEceChatWindow()
@@ -1400,6 +1400,8 @@ export default {
               type: 'is-danger'
             })
           }
+        } else if (this.isPcce && this.demoConfig.uccxBubbleChat) {
+          this.initEceDockedChat()
         }
       }
     }
