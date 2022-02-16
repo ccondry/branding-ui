@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2022.2.16
+
+### Fixes
+* **ECE Docked Chat:** Fix ECE docked chat when using "aria" chat template -
+init ECE docked chat at brand load time instead of when user clicks chat button.
+
+
 # 2022.1.26
 
 ### Features
