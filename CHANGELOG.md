@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2022.3.1
+
+### Fixes
+* **Webex v6:** Get IMI Connect ID from demo base configuration instead of
+session configuration.
+
+
 # 2022.2.16
 
 ### Fixes
