@@ -5,7 +5,8 @@ const getters = {
   // ECE chat entry point ID
   entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001',
   // chat HTTPS proxy tunnel address
-  tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
+  // tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
+  tunnelAddress: (state, getters) => `cceeceweb.dcloud.cisco.com`,
   // ECE chat template name (aqua, aria, etc.)
   chatTemplate: (state, getters) => getters.demoBaseConfig.chatTemplate || 'aqua'
 }
