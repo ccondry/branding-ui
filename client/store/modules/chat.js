@@ -6,7 +6,7 @@ const getters = {
   entryPointId: (state, getters) => getters.sessionConfig.entryPointId || '1001',
   // chat HTTPS proxy tunnel address
   // tunnelAddress: (state, getters) => `${getters.datacenter}-${getters.sessionId}.tunnel.cc-dcloud.com`,
-  tunnelAddress: (state, getters) => `cceeceweb.dcloud.cisco.com`,
+  tunnelAddress: (state, getters) => 'cceeceweb.dcloud.cisco.com',
   // ECE chat template name (aqua, aria, etc.)
   chatTemplate: (state, getters) => getters.demoBaseConfig.chatTemplate || 'aqua'
 }
@@ -91,7 +91,7 @@ const actions = {
   popEceChatWindow ({getters}) {
     console.log('popEceChatWindow')
     // create ECE chat url
-    let url = `https://${getters.tunnelAddress}/ece/system/templates/chat/${getters.chatTemplate}/index.html?subActivity=Chat&entryPointId=${getters.entryPointId}&templateName=${getters.chatTemplate}&ver=v11&locale=en-US`
+    let url = `https://${getters.tunnelAddress}/system/templates/chat/${getters.chatTemplate}/index.html?subActivity=Chat&entryPointId=${getters.entryPointId}&templateName=${getters.chatTemplate}&ver=v11&locale=en-US`
     console.log('ECE chat URL:', url)
     let w = 400
     let h = 600
