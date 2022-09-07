@@ -226,7 +226,12 @@
     </span>
 
     <!-- IMI Connect chat -->
-    <div id="divicw" :data-bind="demoBaseConfig.imiConnectId" data-org="" />
+    <div
+    v-if="demoBaseConfig"
+    id="divicw"
+    :data-bind="demoBaseConfig.imiConnectId"
+    data-org=""
+    />
   </div>
 </template>
 
