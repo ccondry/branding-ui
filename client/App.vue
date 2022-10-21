@@ -1406,6 +1406,7 @@ export default {
             })
           }
         } else if (this.isPcce && this.demoConfig.uccxBubbleChat) {
+          // use ECE docked chat for PCCE live chat
           this.initEceDockedChat()
         }
       }
