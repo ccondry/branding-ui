@@ -638,9 +638,11 @@ export default {
 
         // JDS buttons
         if (
+          // if the demo has JDS feature enabled
           this.demoBaseConfig.features.includes('jds') &&
-          // this.multichannelOptions.includes('jds') &&
+          // and the brand has JDS buttons enabled
           this.model.jdsEnabled &&
+          // and jdsButtons is an array
           Array.isArray(this.model.jdsButtons)
         ) {
           // create an entry for each JDS button
