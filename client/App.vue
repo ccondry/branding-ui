@@ -529,6 +529,9 @@ export default {
         subtext: this.model.cobrowseText,
         waitTime: this.model.cobrowseWaitTime
       }
+
+      const jds = []
+      
       // determine which options are enabled for this demo type and vertical
       const ret = []
       if (
@@ -631,6 +634,25 @@ export default {
           this.model.cobrowseEnabled
         ) {
           ret.push(cobrowse)
+        }
+
+        // JDS buttons
+        if (
+          this.demoBaseConfig.features.includes('jds') &&
+          // this.multichannelOptions.includes('jds') &&
+          this.model.jdsEnabled &&
+          Array.isArray(this.model.jdsButtons)
+        ) {
+          // create an entry for each JDS button
+          for (const j of this.model.jdsButtons) {
+            ret.push({
+              icon: j.icon,
+              heading: j.heading,
+              subtext: j.subtext,
+              waitTime: j.waitTime,
+              click: this.clickJds(j)
+            })
+          }
         }
       }
 
@@ -846,6 +868,7 @@ export default {
       'getBrand',
       'getDemoBaseConfig',
       'sendEmail',
+      'sendJdsData',
       'sendSms',
       'sendCallback',
       'sendTask',
@@ -1210,6 +1233,29 @@ export default {
       //     type: 'is-primary'
       //   })
       // })
+    },
+    clickJds (jds) {
+      return async function (event) {
+        // clicked one of the JDS options from contact panel
+        console.log('clickJds', jds, event)
+        try {
+          // this.jdsBusy[i] = true
+          await this.sendJdsData(jds)
+          this.$toast.open({
+            duration: 8000,
+            message: jds.successMessage,
+            type: 'is-success'
+          })
+        } catch (e) {
+          this.$toast.open({
+            duration: 8000,
+            message: jds.failMessage + ' ' + e.message,
+            type: 'is-danger'
+          })
+        } finally {
+          // this.jdsBusy[i] = false
+        }
+      }
     },
     clickCall (event) {
       // clicked call option from contact panel

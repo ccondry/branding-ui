@@ -1,23 +1,24 @@
 import app from './app'
-import defaults from './defaults'
+import callback from './callback'
+import chat from './chat'
 import dcloud from './dcloud'
+import defaults from './defaults'
+import endpoints from './endpoints'
 import email from './email'
 import sms from './sms'
-import callback from './callback'
 import task from './task'
-import chat from './chat'
-import endpoints from './endpoints'
 import webexTeams from './webex-teams'
 
 export default {
   app,
-  defaults,
-  dcloud,
-  email,
-  sms,
   callback,
-  task,
   chat,
+  dcloud,
+  defaults,
+  email,
   endpoints,
+  jds,
+  sms,
+  task,
   webexTeams
 }
