@@ -639,6 +639,8 @@ export default {
         // JDS buttons
         if (
           // if the demo has JDS feature enabled
+          typeof this.demoBaseConfig === 'object' &&
+          Array.isArray(this.demoBaseConfig.features) &&
           this.demoBaseConfig.features.includes('jds') &&
           // and the brand has JDS buttons enabled
           this.model.jdsEnabled &&
