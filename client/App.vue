@@ -157,12 +157,14 @@
 
       <!-- talk to an expert button (button to open contact panel) -->
       <transition name="slide">
-        <button v-show="!showContactPanel && loaded"
+        <button
+        v-show="!showContactPanel && loaded"
         id="contact-toggle-button"
         class="button"
         @click="showContactPanel = true"
         >
-          <strong>{{ model.contactButtonText }}</strong></button>
+          <strong>{{ model.contactButtonText }}</strong>
+        </button>
       </transition>
 
       <!-- contact panel -->
@@ -654,7 +656,7 @@ export default {
               heading: j.heading,
               subtext: j.subtext,
               waitTime: j.waitTime,
-              click: this.clickJds(j)
+              click: () => this.clickJds(j)
             })
           }
         }
@@ -1238,28 +1240,10 @@ export default {
       //   })
       // })
     },
-    clickJds (jds) {
-      return async function (event) {
-        // clicked one of the JDS options from contact panel
-        console.log('clickJds', jds, event)
-        try {
-          // this.jdsBusy[i] = true
-          await this.sendJdsData(jds)
-          this.$toast.open({
-            duration: 8000,
-            message: jds.successMessage,
-            type: 'is-success'
-          })
-        } catch (e) {
-          this.$toast.open({
-            duration: 8000,
-            message: jds.failMessage + ' ' + e.message,
-            type: 'is-danger'
-          })
-        } finally {
-          // this.jdsBusy[i] = false
-        }
-      }
+    async clickJds (jds) {
+      // clicked one of the JDS options from contact panel
+      console.log('clickJds', jds)
+      this.sendJdsData(jds.data)
     },
     clickCall (event) {
       // clicked call option from contact panel

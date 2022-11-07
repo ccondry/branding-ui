@@ -23,6 +23,8 @@ const state = {
     demo: base + '/demo',
     // Sends an email into the demo on behalf of the user.'
     email: base + '/email',
+    // Sends a JDS event
+    jds: base + '/jds',
     // Sends an SMS to the user from the demo SMS number.'
     sms: base + '/sms',
     // Sends a request to an agent to call the user back using agent request API for PCCE or UCCX web trigger callback.'

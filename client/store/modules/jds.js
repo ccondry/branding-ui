@@ -1,4 +1,4 @@
-// import { Toast } from 'buefy/dist/components/toast'
+import { Toast } from 'buefy/dist/components/toast'
 
 const getters = {
 }
@@ -10,58 +10,39 @@ const mutations = {
 }
 
 const actions = {
-  async sendTask ({getters, dispatch}, data) {
-    // attach dCloud session information
-    data.session = getters.sessionId
-    data.datacenter = getters.datacenter
-    data.userId = getters.userId
-
-    // construct the task request object
-    data.task = {
-      // customer name
-      cv1: data.name,
-      // the task option, like 'Request a Parking'
-      cv2: data.task,
-      // customer phone
-      cv3: data.phone,
-      // customer email
-      cv4: data.email,
-      // the task description, like 'Request a Parking'
-      description: data.task,
-      // customer email
-      email: data.email,
-      // customer name
-      name: data.name,
-      // customer phone
-      phone: data.phone,
-      // the task title, like 'Request a Parking'
-      title: data.task
-    }
-
-    // task PQ ID for routing
-    if (getters.sessionConfig.taskPqId) {
-      data.task.cv5 = getters.sessionConfig.taskPqId
-      data.task.pqId = getters.sessionConfig.taskPqId
-    }
-    // task call type ID, for reporting
-    if (getters.sessionConfig.taskCtId) {
-      data.task.cv6 = getters.sessionConfig.taskCtId
-      data.task.ctId = getters.sessionConfig.taskCtId
-    }
-
+  async sendJdsData ({getters, dispatch}, data) {
+    const operation = 'send JDS request'
     // set working state
-    dispatch('setWorking', {group: 'dcloud', type: 'task', value: true})
-    console.debug('starting send task request:', data)
+    console.debug('starting', operation, data)
+    // reduce array data to an object
+    const body = data.reduce((prev, current) => {
+      return {...prev, [current.key]: current.value}
+    }, {})
     // send email request to REST API
-    await dispatch('postData', {
-      endpoint: getters.endpoints.task,
-      data,
-      success: `We have received your task request and the next available expert
-      will begin working on it.`,
-      fail: 'Failed to send your task request'
+    const response = await dispatch('fetch', {
+      group: 'jds',
+      type: 'send',
+      url: getters.endpoints.jds + '/' + getters.userId,
+      options: {
+        method: 'POST',
+        body
+      }
     })
-    // reset working state
-    dispatch('setWorking', {group: 'dcloud', type: 'task', value: false})
+    if (response instanceof Error) {
+      console.log(operation, 'failed', response)
+      Toast.open({
+        // duration: 5000,
+        message: operation + ' failed: ' + response.message,
+        type: 'is-danger'
+      })
+    } else {
+      console.log(operation, 'success!', response)
+      Toast.open({
+        // duration: 5000,
+        message: operation + ' succeeded',
+        type: 'is-success'
+      })
+    }
   }
 }
 

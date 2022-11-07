@@ -19,12 +19,14 @@ const state = {
   working: {
     app: {},
     session: {},
-    dcloud: {}
+    dcloud: {},
+    jds: {}
   },
   loading: {
     app: {},
     session: {},
-    dcloud: {}
+    dcloud: {},
+    jds: {}
   }
 }
 
