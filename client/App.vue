@@ -1391,7 +1391,11 @@ export default {
         // brand is set
         console.log('checkConfig - brand is set')
         // determine if we need to load another chat library
-        if (this.isCjpWebex) {
+        if (this.isWebexConnect) {
+          console.log('init Webex Connect chat')
+          // init CJP chat from Webex Sandbox (old spark care chat)
+          window.initWebexConnectChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+        } else if (this.isCjpWebex) {
           console.log('init Spark Care chat')
           // init CJP chat from Webex Sandbox (old spark care chat)
           window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)

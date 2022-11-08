@@ -52,6 +52,8 @@ const getters = {
   isUccx: (state, getters) => getters.sessionInfo.demo === 'uccx',
   // is this a PCCE demo?
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
+  // is this a Webex Connect demo?
+  isWebexConnect: (state) => state.datacenter.toLowerCase() === 'webexconnect',
   // is this a CJP demo?
   isCjp: (state) => state.datacenter.toLowerCase() === 'cjp',
   // is this a CJP CCOne demo?
