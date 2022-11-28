@@ -2,6 +2,7 @@ import * as types from '../mutation-types'
 import {load} from '../../utils'
 import { Toast } from 'buefy/dist/components/toast'
 import Vue from 'vue'
+import defaultBrandConfig from './default-brand-config'
 
 // const didMap = [{
 //   name: 'DID1',
@@ -161,7 +162,16 @@ const getters = {
   demoBaseConfig: state => {
     return state.demoBaseConfig
   },
-  multichannelOptions: state => state.multichannelOptions
+  multichannelOptions: state => state.multichannelOptions,
+  demoUsesVoice: (state, getters) => {
+    try {
+      return getters.demoBaseConfig.channels.includes('voice') &&
+      this.multichannelOptions.includes('voice') &&
+      this.getters.brandConfig.callEnabled
+    } catch (e) {
+      return false
+    }
+  }
 }
 
 const state = {
@@ -169,7 +179,7 @@ const state = {
   datacenter: '',
   userId: '',
   sessionInfo: {},
-  brandConfig: '',
+  brandConfig: defaultBrandConfig,
   sessionInfoError: null,
   demoBaseConfig: null,
   multichannelOptions: []
