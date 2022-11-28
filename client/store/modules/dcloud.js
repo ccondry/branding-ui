@@ -163,7 +163,7 @@ const getters = {
     return state.demoBaseConfig
   },
   multichannelOptions: state => state.multichannelOptions,
-  demoUsesVoice: (state, getters) => {
+  demoUsesInboundVoice: (state, getters) => {
     try {
       return getters.demoBaseConfig.channels.includes('voice') &&
       this.multichannelOptions.includes('voice') &&

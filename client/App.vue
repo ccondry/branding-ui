@@ -307,7 +307,8 @@ export default {
       'loading',
       'endpoints',
       'chatBotEnabled',
-      'demoUsesVoice',
+      'demoUsesInboundVoice',
+      'demoUsesCallQr',
       'isCjp',
       'isCjpCcone',
       'isCjpWebex',
@@ -1209,7 +1210,7 @@ export default {
     },
     processTextTemplates () {
       // don't do anything if this demo doesn't use voice
-      if (!this.demoUsesVoice) {
+      if (!this.demoUsesInboundVoice) {
         return
       }
       // session config loaded
