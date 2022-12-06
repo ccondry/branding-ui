@@ -227,13 +227,21 @@
 
     </span>
 
-    <!-- IMI Connect chat -->
+    <!-- old IMI Connect chat -->
     <div
     v-if="demoBaseConfig"
     id="divicw"
     :data-bind="demoBaseConfig.imiConnectId"
     data-org=""
     />
+
+    <!-- new IMI Connect chat 2022.12.6 -->
+    <div
+    v-if="isWebexConnect"
+    id="divicw"
+    :data-bind="demoBaseConfig.imiConnectId"
+    data-org=""
+    ></div>
   </div>
 </template>
 
@@ -1298,7 +1306,7 @@ export default {
         if (this.isWebexConnect) {
           console.log('init Webex Connect chat')
           // init CJP chat from Webex Sandbox (old spark care chat)
-          window.initWebexConnectChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
+          window.initWebexConnectChat()
         } else if (this.isCjpWebex) {
           console.log('init Spark Care chat')
           // init CJP chat from Webex Sandbox (old spark care chat)
