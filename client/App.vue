@@ -439,8 +439,14 @@ export default {
         const channels = this.demoBaseConfig.channels
 
         // chat
-        // if demo has chat and the current multichannel type has chat
-        if (channels.includes('chat') && this.multichannelOptions.includes('chat')) {
+        if (
+          // if demo has chat
+          channels.includes('chat') &&
+          // and the current multichannel type has chat
+          this.multichannelOptions.includes('chat') &&
+          // and is not webex connect demo (which uses separate chat UI)
+          !this.isWebexConnect
+        ) {
           // show either chat or chatbot option
           // if chat is enabled in the vertical and multichannel is upstream
           if (this.model.chatEnabled && this.isUpstream) {
