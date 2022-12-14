@@ -36,6 +36,17 @@ import defaultBrandConfig from './default-brand-config'
 //   internal: '6019'
 // }]
 
+const state = {
+  sessionId: '',
+  datacenter: '',
+  userId: '',
+  sessionInfo: {},
+  brandConfig: defaultBrandConfig,
+  sessionInfoError: null,
+  demoBaseConfig: null,
+  multichannelOptions: []
+}
+
 const getters = {
   // dCloud session ID
   sessionId: state => state.sessionId,
@@ -54,7 +65,13 @@ const getters = {
   // is this a PCCE demo?
   isPcce: (state, getters) => getters.sessionInfo.demo === 'pcce',
   // is this a Webex Connect demo?
-  isWebexConnect: (state) => state.datacenter.toLowerCase() === 'webexconnect',
+  isWebexConnect: (state, getters) => {
+    try {
+      return state.datacenter.toLowerCase() === 'webexconnect'
+    } catch (e) {
+      return false
+    }
+  },
   // is this a CJP demo?
   isCjp: (state) => state.datacenter.toLowerCase() === 'cjp',
   // is this a CJP CCOne demo?
@@ -172,17 +189,6 @@ const getters = {
       return false
     }
   }
-}
-
-const state = {
-  sessionId: '',
-  datacenter: '',
-  userId: '',
-  sessionInfo: {},
-  brandConfig: defaultBrandConfig,
-  sessionInfoError: null,
-  demoBaseConfig: null,
-  multichannelOptions: []
 }
 
 const mutations = {

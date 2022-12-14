@@ -237,7 +237,7 @@
 
     <!-- new IMI Connect chat 2022.12.6 -->
     <div
-    v-if="isWebexConnect"
+    v-if="demoBaseConfig && isWebexConnect"
     id="divicw"
     :data-bind="demoBaseConfig.imiConnectId"
     data-org=""
@@ -333,6 +333,7 @@ export default {
       'isUccx',
       'isUpstream',
       'isWebexCustom',
+      'isWebexConnect',
       'isWebexV3Prod',
       'isWebexV4Prod',
       'isWebexV6',
