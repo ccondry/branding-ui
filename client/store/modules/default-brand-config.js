@@ -82,6 +82,11 @@ const brandConfig = {
   callModal2RingLabel: '2Ring',
   callModalSalesforceLabel: 'Salesforce',
   callModalCcaiLabel: 'CCAI',
+  // call QR
+  callQrIcon: 'phone',
+  callQrHeading: 'Call Us',
+  callQrText: 'Call an expert now',
+  callQrWaitTime: '8 min wait time',
   // callback
   callbackEnabled: true,
   callbackIcon: 'phone-forward',

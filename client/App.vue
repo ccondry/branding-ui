@@ -116,6 +116,15 @@
       <call-form v-if="Object.keys(sessionInfo)" :model="model" />
     </b-modal>
 
+    <!-- Voice Call QR modal -->
+    <b-modal :active.sync="showCallModal"
+    :can-cancel="true"
+    has-modal-card
+    width="960"
+    >
+      <call-qr-form v-if="hasSessionInfo" />
+    </b-modal>
+
     <!-- Chat modal -->
     <b-modal :active.sync="showChatModal"
     :can-cancel="true"
@@ -253,6 +262,7 @@ import SmsForm from './components/sms-form.vue'
 import TaskForm from './components/task-form.vue'
 import CallbackForm from './components/callback-form.vue'
 import CallForm from './components/call-form.vue'
+import CallQrForm from './components/call-qr-form.vue'
 import ChatForm from './components/chat-form.vue'
 import defaultBrandConfig from './store/modules/default-brand-config'
 import {formatUnicorn} from './utils'
@@ -272,6 +282,7 @@ export default {
     TaskForm,
     CallbackForm,
     CallForm,
+    CallQrForm,
     ChatForm
   },
 
@@ -303,6 +314,7 @@ export default {
       showTaskModal: false,
       showCallbackModal: false,
       showCallModal: false,
+      showCallQrModal: false,
       showChatModal: false,
       showChatBot: false,
       chatIframe: '',
@@ -317,6 +329,7 @@ export default {
       'chatBotEnabled',
       'demoUsesInboundVoice',
       'demoUsesCallQr',
+      'hasSessionInfo',
       'isCjp',
       'isCjpCcone',
       'isCjpWebex',
@@ -397,6 +410,13 @@ export default {
         heading: this.model.callHeading,
         subtext: this.model.callText,
         waitTime: this.model.callWaitTime
+      }
+      const callQr = {
+        click: this.clickCallQr,
+        icon: this.model.callQrIcon,
+        heading: this.model.callQrHeading,
+        subtext: this.model.callQrText,
+        waitTime: this.model.callQrWaitTime
       }
       const callback = {
         click: this.clickCallback,
@@ -501,6 +521,11 @@ export default {
           this.model.callEnabled
         ) {
           ret.push(call)
+        }
+
+        // voice call using QR code
+        if (this.demoUsesCallQr) {
+          ret.push(callQr)
         }
 
         // voice callback
@@ -1165,6 +1190,12 @@ export default {
       console.log('clickCall', event)
       // open the call modal
       this.showCallModal = true
+    },
+    clickCallQr (event) {
+      // clicked call QR option from contact panel
+      console.log('clickCallQr', event)
+      // open the call modal
+      this.showCallQrModal = true
     },
     clickCallback (event) {
       // clicked callback option from contact panel

@@ -188,6 +188,18 @@ const getters = {
     } catch (e) {
       return false
     }
+  },
+  demoUsesCallQr: (state, getters) => {
+    try {
+      return getters.demoBaseConfig.channels.includes('callQr') &&
+      this.multichannelOptions.includes('callQr') &&
+      this.getters.brandConfig.callQrEnabled
+    } catch (e) {
+      return false
+    }
+  },
+  hasSessionInfo: (state, getters) => {
+    return Object.keys(getters.sessionInfo).length > 0
   }
 }
 
