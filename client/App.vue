@@ -116,15 +116,6 @@
       <call-form v-if="Object.keys(sessionInfo)" :model="model" />
     </b-modal>
 
-    <!-- Voice Call QR modal -->
-    <b-modal :active.sync="showCallModal"
-    :can-cancel="true"
-    has-modal-card
-    width="960"
-    >
-      <call-qr-form v-if="hasSessionInfo" />
-    </b-modal>
-
     <!-- Chat modal -->
     <b-modal :active.sync="showChatModal"
     :can-cancel="true"
@@ -282,7 +273,6 @@ export default {
     TaskForm,
     CallbackForm,
     CallForm,
-    CallQrForm,
     ChatForm
   },
 
@@ -314,7 +304,6 @@ export default {
       showTaskModal: false,
       showCallbackModal: false,
       showCallModal: false,
-      showCallQrModal: false,
       showChatModal: false,
       showChatBot: false,
       chatIframe: '',
@@ -447,8 +436,6 @@ export default {
         waitTime: this.model.cobrowseWaitTime
       }
 
-      const jds = []
-      
       // determine which options are enabled for this demo type and vertical
       const ret = []
       if (
@@ -524,8 +511,17 @@ export default {
         }
 
         // voice call using QR code
-        if (this.demoUsesCallQr) {
-          ret.push(callQr)
+        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
+          // create an entry for each QR code button
+          for (const j of this.demoBaseConfig.callQr) {
+            ret.push({
+              icon: j.icon,
+              heading: j.heading,
+              subtext: j.subtext,
+              waitTime: j.waitTime,
+              click: () => this.clickCallQr(j)
+            })
+          }
         }
 
         // voice callback
@@ -1180,22 +1176,34 @@ export default {
       //   })
       // })
     },
-    async clickJds (jds) {
-      // clicked one of the JDS options from contact panel
+    clickJds (jds) {
+      // clicked one of the JDS options from contact panel (webex CC v8 demo)
       console.log('clickJds', jds)
       this.sendJdsData(jds.data)
+    },
+    clickCallQr (option) {
+      // clicked one of the QR options from contact panel (webex connect demo)
+      console.log('clickCallQr', option)
+      // open the call QR modal
+      // this.showCallQrModal = true
+      this.$modal.open({
+        parent: this,
+        component: CallQrForm,
+        hasModalCard: true,
+        trapFocus: true,
+        canCancel: ['escape', 'x'],
+        props: {
+          heading: option.modalHeading,
+          value: option.url,
+          description: option.urlDescription
+        }
+      })
     },
     clickCall (event) {
       // clicked call option from contact panel
       console.log('clickCall', event)
       // open the call modal
       this.showCallModal = true
-    },
-    clickCallQr (event) {
-      // clicked call QR option from contact panel
-      console.log('clickCallQr', event)
-      // open the call modal
-      this.showCallQrModal = true
     },
     clickCallback (event) {
       // clicked callback option from contact panel

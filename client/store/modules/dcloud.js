@@ -191,9 +191,7 @@ const getters = {
   },
   demoUsesCallQr: (state, getters) => {
     try {
-      return getters.demoBaseConfig.channels.includes('callQr') &&
-      this.multichannelOptions.includes('callQr') &&
-      this.getters.brandConfig.callQrEnabled
+      return getters.demoBaseConfig.channels.includes('callQr')
     } catch (e) {
       return false
     }
