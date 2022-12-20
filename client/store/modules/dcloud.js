@@ -37,13 +37,27 @@ import defaultBrandConfig from './default-brand-config'
 // }]
 
 const state = {
+  // the dcloud session ID, or the key of the demo like v3 or v7
   sessionId: '',
+  // the dcloud datacenter like RTP/LON/SNG, or the demo type like webexConnect
   datacenter: '',
+  // the user's 4-digit toolbox user ID for loading instant demo config for user
   userId: '',
+  // the dcloud session information, including phone numbers, user's demo
+  // session configuration, etc.
   sessionInfo: {},
+  // the full JSON of the brand/vertical that is being used for the current demo
   brandConfig: defaultBrandConfig,
+  // if there was an error getting dcloud session information, the error string
+  // will be here
   sessionInfoError: null,
+  // the base configuration for the type of demo that this dcloud session is an
+  // instance of. configured by dcloud collab toolbox admin.
   demoBaseConfig: null,
+  // the available channel options for the multichannel type that this demo
+  // session uses, according to the user's demo session configuration selection.
+  // Only used by PCCE demos.
+  // example: ['chat', 'voice', 'email']
   multichannelOptions: []
 }
 
