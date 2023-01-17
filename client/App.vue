@@ -603,6 +603,9 @@ export default {
         this.showSessionInfoModal = true
       } else {
         // console.log('getting base demo config and multichannel options...')
+        if (this.isWebexConnect) {
+          this.model.contactButtonText = 'Showcase'
+        }
         // get base demo config
         this.getDemoBaseConfig()
         // get multichannel options
