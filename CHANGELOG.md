@@ -4,6 +4,12 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.1.18-1
+
+### Updates
+* **PCCE:** Fix Webex Connect chat not loading.
+
+
 # 2024.1.18
 
 ### Updates
