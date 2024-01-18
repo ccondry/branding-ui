@@ -4,6 +4,12 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.1.18-2
+
+### Updates
+* **PCCE:** Use demo config IMI ID for PCCE Webex Connect chat div data ID.
+
+
 # 2024.1.18-1
 
 ### Updates
