@@ -243,10 +243,11 @@
     data-org=""
     ></div>
 
+    <!-- PCCE with Webex Connect -->
     <div
     v-if="demoBaseConfig && isPcceWebexConnect"
     id="divicw"
-    data-bind="10c10331-889a-11ee-aec0-06d32164fa93"
+    :data-bind="demoBaseConfig.imiConnectId"
     data-org=""
     ></div>
   </div>
