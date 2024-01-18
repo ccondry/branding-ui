@@ -4,6 +4,12 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.1.18
+
+### Updates
+* **PCCE:** Add support for Webex Connect multichannel chat.
+
+
 # 2022.3.1
 
 ### Fixes
