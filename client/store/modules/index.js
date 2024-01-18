@@ -8,7 +8,6 @@ import email from './email'
 import jds from './jds'
 import sms from './sms'
 import task from './task'
-import webexTeams from './webex-teams'
 
 export default {
   app,
@@ -21,5 +20,4 @@ export default {
   jds,
   sms,
   task,
-  webexTeams
 }

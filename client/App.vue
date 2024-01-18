@@ -228,18 +228,25 @@
     </span>
 
     <!-- old IMI Connect chat -->
-    <div
+    <!-- <div
     v-if="demoBaseConfig"
     id="divicw"
     :data-bind="demoBaseConfig.imiConnectId"
     data-org=""
-    />
+    /> -->
 
     <!-- new IMI Connect chat 2022.12.6 -->
     <div
     v-if="demoBaseConfig && isWebexConnect"
     id="divicw"
     :data-bind="demoBaseConfig.imiConnectId"
+    data-org=""
+    ></div>
+
+    <div
+    v-if="demoBaseConfig && isPcceWebexConnect"
+    id="divicw"
+    data-bind="10c10331-889a-11ee-aec0-06d32164fa93"
     data-org=""
     ></div>
   </div>
@@ -339,7 +346,7 @@ export default {
       'isWebexV3Prod',
       'isWebexV4Prod',
       'isWebexV6',
-      'isWebexTeams',
+      'isPcceWebexConnect',
       'sessionInfo',
       'sessionConfig',
       'brand',
@@ -822,8 +829,6 @@ export default {
       'popUpstreamChatWindow',
       'popCconeChatWindow',
       'startEceDockedChat',
-      'startWebexTeamsWidget',
-      'getWebexTeamsAgent',
       'getMultichannelOptions'
     ]),
     async initEceDockedChat () {
@@ -1001,10 +1006,6 @@ export default {
       } else if (this.isUpstream) {
         // pop Upstream chat window
         this.popUpstreamChatWindow(data)
-      } else if (this.isWebexTeams) {
-        this.getWebexTeamsAgent(data)
-        // request an agent and show the webex teams chat
-        this.webexTeamsChatRequested = true
       }
     },
     clickChat (event) {
@@ -1048,15 +1049,6 @@ export default {
         ciscoBubbleChat.showChatWindow()
         // close the contact menu
         this.showContactPanel = false
-      } else if (this.isWebexTeams) {
-        // show chat modal for webex teams chat
-        this.showChatModal = true
-        // close the contact menu
-        this.showContactPanel = false
-        // show loading box for teams widget
-        // this.webexTeamsChatRequested = true
-        // start webex teams chat widget
-        // this.startWebexTeamsWidget()
       } else if (this.chatBotEnabled) {
         // hide contact panel menu and show chat bot
         this.showChatBot = true
@@ -1124,9 +1116,14 @@ export default {
         // no docked chat - pop ECE chat window
           this.popEceChatWindow()
         }
-      } else if (this.isTsaCwcc || this.isWebexV3Prod || this.isWebexV4Prod) {
-        // we should not be here. Abilene chats should be started by clicking
-        // the bubble chat icon, which is not in the contact panel
+      } else if (
+        this.isTsaCwcc ||
+        this.isWebexV3Prod ||
+        this.isWebexV4Prod ||
+        this.isPcceWebexConnect
+      ) {
+        // we should not be here. these chats should be started by clicking
+        // their bubble chat icon, which is not in our contact panel
       }
     },
     clickChatTranslation () {
@@ -1389,18 +1386,16 @@ export default {
           console.log('init SFDC chat')
           // SalesForce.com chat for PCCE 12.5+
           window.initSfdcChat(this.datacenter, this.sessionId)
-        } else if (this.isWebexTeams) {
-          console.log('init webex teams space widget')
+        } else if (this.isPcceWebexConnect) {
+          console.log('init PCCE Webex Connect chat widget')
           try {
             // load the webex teams space widget javascript library
-            await window.initWebexTeamsWidget()
-            console.log('successfully loaded webex teams space widget library')
-            // start webex teams chat widget, joining an empty space
-            await this.startWebexTeamsWidget()
+            await window.initWebexConnectWidget()
+            console.log('successfully loaded Webex Connect widget library')
           } catch (e) {
             this.$toast.open({
               duration: 15000,
-              message: `Webex Teams widget failed to load: ${e.message}`,
+              message: `Webex Connect chat widget failed to load: ${e.message}`,
               type: 'is-danger'
             })
           }
