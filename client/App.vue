@@ -138,20 +138,6 @@
 
     <!-- Main page content -->
     <span id="main-content">
-
-      <!-- draggable Webex Teams Space Widget -->
-      <div v-show="webexTeamsChatRequested"
-      id="webex-teams-widget-container"
-      ref="teams"
-      >
-        <b-loading
-        :is-full-page="false"
-        :active="!webexTeamsWidgetStarted"
-        :can-cancel="false"
-        />
-        <div id="my-webexteams-widget" />
-      </div>
-
       <!-- background iframe -->
       <iframe :src="model.iframe" class="demo-iframe" />
 
@@ -227,25 +213,9 @@
 
     </span>
 
-    <!-- old IMI Connect chat -->
-    <!-- <div
+    <!-- any IMI / Webex Connect chat-->
+    <div
     v-if="demoBaseConfig"
-    id="divicw"
-    :data-bind="demoBaseConfig.imiConnectId"
-    data-org=""
-    /> -->
-
-    <!-- new IMI Connect chat 2022.12.6 -->
-    <div
-    v-if="demoBaseConfig && isWebexConnect"
-    id="divicw"
-    :data-bind="demoBaseConfig.imiConnectId"
-    data-org=""
-    ></div>
-
-    <!-- PCCE with Webex Connect -->
-    <div
-    v-if="demoBaseConfig && isPcceWebexConnect"
     id="divicw"
     :data-bind="demoBaseConfig.imiConnectId"
     data-org=""
@@ -303,7 +273,6 @@ export default {
       pos3: 0,
       pos4: 0,
       dragging: false,
-      webexTeamsChatRequested: false,
       production: process.env.NODE_ENV === 'production',
       showSessionInfoModal: false,
       showContactPanel: false,
@@ -361,7 +330,6 @@ export default {
       'dids',
       'cwccDid',
       'demoVersion',
-      'webexTeamsWidgetStarted',
       'multichannelOptions'
     ]),
     contactOptions () {
@@ -1574,17 +1542,6 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   color: black;
-}
-
-#webex-teams-widget-container {
-  position: absolute;
-  right: 3rem;
-  bottom: 0;
-}
-
-#my-webexteams-widget {
-  width: 500px;
-  height: 500px;
 }
 
 // hide the broken tooltip from webex CC chat
