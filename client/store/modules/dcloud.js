@@ -223,7 +223,7 @@ const getters = {
         return 'webex'
       }
       // if neither of those are available, choose the first option
-      return getters.multichannelOptions[0]
+      return getters.multichannelOptions[0] || 'ece'
     } catch (e) {
       // multichannel options not loaded yet?
       return 'ece'
