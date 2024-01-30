@@ -103,7 +103,7 @@ const getters = {
   // is the configured multichannel type Upstream Works?
   isUpstream: (state, getters) => getters.sessionConfig.multichannel === 'upstream',
   // is the configured multichannel type ECE?
-  isEce: (state, getters) => !getters.sessionConfig.multichannel || getters.sessionConfig.multichannel === 'ece',
+  isEce: (state, getters) => getters.sessionConfig.multichannel === 'ece',
   // is the configured multichannel type SalesForce?
   isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
   // isSfdc: (state, getters) => false,
@@ -211,6 +211,23 @@ const getters = {
   },
   hasSessionInfo: (state, getters) => {
     return Object.keys(getters.sessionInfo).length > 0
+  },
+  defaultMultichannel (state, getters) {
+    try {
+      // default to ECE if ECE is available
+      if (getters.multichannelOptions.includes('ece')) {
+        return 'ece'
+      }
+      // otherwise default to Webex Connect
+      if (getters.multichannelOptions.includes('webex')) {
+        return 'webex'
+      }
+      // if neither of those are available, choose the first option
+      return getters.multichannelOptions[0]
+    } catch (e) {
+      // multichannel options not loaded yet?
+      return 'ece'
+    }
   }
 }
 
@@ -368,7 +385,7 @@ const actions = {
   getMultichannelOptions ({getters, dispatch}) {
     console.log('getMultichannelOptions', getters.sessionConfig.multichannel)
     // default to ECE multichannel
-    const multichannel = getters.sessionConfig.multichannel || 'ece'
+    const multichannel = getters.sessionConfig.multichannel || getters.defaultMultichannel
     return dispatch('fetch', {
       group: 'admin',
       type: 'multichannel',
