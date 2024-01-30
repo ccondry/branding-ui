@@ -196,8 +196,8 @@ const getters = {
   demoUsesInboundVoice: (state, getters) => {
     try {
       return getters.demoBaseConfig.channels.includes('voice') &&
-      this.multichannelOptions.includes('voice') &&
-      this.getters.brandConfig.callEnabled
+      getters.multichannelOptions.includes('voice') &&
+      getters.brandConfig.callEnabled
     } catch (e) {
       return false
     }
