@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.1.30
+
+### Updates
+* **Multichannel:** Set default multichannel to Webex Connect if ECE is not
+available, or set it to the first option if neither of those is available.
+
+
 # 2024.1.19
 
 ### Fixes
