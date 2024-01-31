@@ -600,8 +600,8 @@ export default {
       if (!val) {
         // network error?
         this.$dialog.alert({
-          title: 'Error Retreiving dCloud Session Info',
-          message: `There was an error retreiving your dCloud
+          title: 'Error Retrieving dCloud Session Info',
+          message: `There was an error retrieving your dCloud
           session information. Please refresh the page to try again, or
           contact dCloud support if you continue to have this issue.`,
           type: 'is-danger',
@@ -620,8 +620,8 @@ export default {
         // other error - display message
         // display error message
         this.$dialog.alert({
-          title: 'Error Retreiving dCloud Session Info',
-          message: `There was an error retreiving your dCloud
+          title: 'Error Retrieving dCloud Session Info',
+          message: `There was an error retrieving your dCloud
           session information. Please refresh the page to try again, or
           contact dCloud support if you continue to have this issue.
           <br />
