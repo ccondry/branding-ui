@@ -584,14 +584,14 @@ export default {
         }
         // get base demo config
         this.getDemoBaseConfig()
-        // get multichannel options
-        this.getMultichannelOptions()
-        // get brand (vertical) config
-        this.getBrand(false)
       }
     },
     demoBaseConfig (val) {
       console.log('base demo config changed. processing text templates and checking configuration...')
+      // get multichannel options
+      this.getMultichannelOptions()
+      // get brand (vertical) config
+      this.getBrand(false)
       // process any templates into the final text value
       this.processTextTemplates()
       this.checkConfig(val)
