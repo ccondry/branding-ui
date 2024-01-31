@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.1.31
+
+### Fixes
+* **Site:** Fix channel options for Webex Connect demos with default
+configuration still showing ECE channels.
+
+
 # 2024.1.30-1
 
 ### Fixes
