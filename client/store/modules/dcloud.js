@@ -215,18 +215,19 @@ const getters = {
   defaultMultichannel (state, getters) {
     try {
       // default to ECE if ECE is available
-      if (getters.multichannelOptions.includes('ece')) {
+      if (getters.demoBaseConfig.multichannel.includes('ece')) {
         return 'ece'
       }
       // otherwise default to Webex Connect
-      if (getters.multichannelOptions.includes('webex')) {
+      if (getters.demoBaseConfig.multichannel.includes('webex')) {
         return 'webex'
       }
       // if neither of those are available, choose the first option
-      return getters.multichannelOptions[0] || 'ece'
+      return getters.demoBaseConfig.multichannel[0]
     } catch (e) {
       // multichannel options not loaded yet?
-      return 'ece'
+      // return 'ece'
+      return undefined
     }
   }
 }
