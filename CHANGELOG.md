@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.2.1
+
+### Fixes
+* **Site:** Fix using default multichannel when no multichannel has been set in
+session configuration.
+
+
 # 2024.1.31
 
 ### Fixes
