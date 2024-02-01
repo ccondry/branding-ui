@@ -1320,7 +1320,7 @@ export default {
         // determine if we need to load another chat library
         if (this.isWebexConnect) {
           console.log('init Webex Connect chat')
-          // init CJP chat from Webex Sandbox (old spark care chat)
+          // init webex connect chat for webex connect demo
           window.initWebexConnectChat()
         } else if (this.isCjpWebex) {
           console.log('init Spark Care chat')
@@ -1343,14 +1343,14 @@ export default {
           // are they using IMI Connect?
           if (this.sessionConfig.imiConnectId) {
             // use IMI chat
-            await window.initImiConnect()
+            await window.initWebexConnectChat()
           } else {
             // use old webex chat
             await window.initWebexChat(this.sessionConfig)
           }
         } else if (this.isWebexV6) {
           // use IMI Connect chat for webex v6
-          await window.initImiConnect()
+          await window.initWebexConnectChat()
         } else if (this.isSfdc) {
           console.log('init SFDC chat')
           // SalesForce.com chat for PCCE 12.5+
@@ -1359,7 +1359,7 @@ export default {
           console.log('init PCCE Webex Connect chat widget')
           try {
             // load the webex teams space widget javascript library
-            await window.initWebexConnectWidget()
+            await window.initWebexConnectChat()
             console.log('successfully loaded Webex Connect widget library')
           } catch (e) {
             this.$toast.open({
