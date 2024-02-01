@@ -101,18 +101,18 @@ const getters = {
   // is this an instant demo?
   isInstantDemo: (state, getters) => getters.sessionInfo.instant === true,
   // is the configured multichannel type Upstream Works?
-  isUpstream: (state, getters) => getters.sessionConfig.multichannel === 'upstream',
+  isUpstream: (state, getters) => getters.currentMultichannel === 'upstream',
   // is the configured multichannel type ECE?
-  isEce: (state, getters) => getters.sessionConfig.multichannel === 'ece',
+  isEce: (state, getters) => getters.currentMultichannel === 'ece',
   // is the configured multichannel type SalesForce?
-  isSfdc: (state, getters) => getters.sessionConfig.multichannel === 'salesforce',
+  isSfdc: (state, getters) => getters.currentMultichannel === 'salesforce',
   // isSfdc: (state, getters) => false,
   // is the configured multichannel type ServiceNow?
-  isServiceNow: (state, getters) => getters.sessionConfig.multichannel === 'servicenow',
+  isServiceNow: (state, getters) => getters.currentMultichannel === 'servicenow',
   // is the configured multichannel type MS Dynamics?
-  isMsDynamics: (state, getters) => getters.sessionConfig.multichannel === 'msdynamics',
+  isMsDynamics: (state, getters) => getters.currentMultichannel === 'msdynamics',
   // is this a PCCE demo with Webex Connect as multichannel?
-  isPcceWebexConnect: (state, getters) => getters.sessionConfig.multichannel === 'webex',
+  isPcceWebexConnect: (state, getters) => getters.currentMultichannel === 'webex',
   // brand ID (also known as vertical ID)
   brand: (state, getters) => getters.sessionConfig.vertical,
   // full vertical config
@@ -229,6 +229,14 @@ const getters = {
       // return 'ece'
       return undefined
     }
+  },
+  currentMultichannel (state, getters) {
+    // if session configuration has multichannel configured, use that
+    if (getters.sessionConfig.multichannel) {
+      return getters.sessionConfig.multichannel
+    }
+    // otherwise use the default
+    return getters.defaultMultichannel
   }
 }
 
@@ -384,9 +392,9 @@ const actions = {
     }
   },
   getMultichannelOptions ({getters, dispatch}) {
-    console.log('getMultichannelOptions', getters.sessionConfig.multichannel)
+    console.log('getMultichannelOptions', getters.currentMultichannel)
     // default to ECE multichannel
-    const multichannel = getters.sessionConfig.multichannel || getters.defaultMultichannel
+    const multichannel = getters.currentMultichannel
     return dispatch('fetch', {
       group: 'admin',
       type: 'multichannel',
