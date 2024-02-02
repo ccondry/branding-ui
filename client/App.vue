@@ -330,7 +330,8 @@ export default {
       'dids',
       'cwccDid',
       'demoVersion',
-      'multichannelOptions'
+      'multichannelOptions',
+      'currentMultichannel'
     ]),
     contactOptions () {
       // build all possible contact options
@@ -588,13 +589,15 @@ export default {
     },
     demoBaseConfig (val) {
       console.log('base demo config changed. processing text templates and checking configuration...')
-      // get multichannel options
-      this.getMultichannelOptions()
       // get brand (vertical) config
       this.getBrand(false)
       // process any templates into the final text value
       this.processTextTemplates()
       this.checkConfig(val)
+    },
+    currentMultichannel () {
+      // get multichannel options
+      this.getMultichannelOptions()
     },
     sessionInfoError (val) {
       if (!val) {
