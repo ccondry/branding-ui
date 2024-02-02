@@ -4,6 +4,12 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.2.2
+
+### Fixes
+* **Site:** Fix UCCX channel options not appearing.
+
+
 # 2024.2.1
 
 ### Fixes
