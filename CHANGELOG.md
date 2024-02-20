@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.2.20
+
+### Fixes
+* **Site:** Fix chat translation option appearing when it is disabled in the
+current multichannel options.
+
+
 # 2024.2.2
 
 ### Fixes
