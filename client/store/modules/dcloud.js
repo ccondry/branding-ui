@@ -108,9 +108,9 @@ const getters = {
   isSfdc: (state, getters) => getters.currentMultichannel === 'salesforce',
   // isSfdc: (state, getters) => false,
   // is the configured multichannel type ServiceNow?
-  isServiceNow: (state, getters) => getters.currentMultichannel === 'servicenow',
+  // isServiceNow: (state, getters) => getters.currentMultichannel === 'servicenow',
   // is the configured multichannel type MS Dynamics?
-  isMsDynamics: (state, getters) => getters.currentMultichannel === 'msdynamics',
+  // isMsDynamics: (state, getters) => getters.currentMultichannel === 'msdynamics',
   // is this a PCCE demo with Webex Connect as multichannel?
   isPcceWebexConnect: (state, getters) => getters.currentMultichannel === 'webex',
   // brand ID (also known as vertical ID)
