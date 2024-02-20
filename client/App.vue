@@ -454,11 +454,13 @@ export default {
             // add Chat Bot option
             ret.push(chatBot)
             if (
-              // if chat translation is enabled in demo base config
-              channels.includes('chatTranslation') &&
-              // and if multichannel is set to ECE
+              // if chat translation is enabled in the demo base config 
+              this.demoBaseConfig.channels.includes('chatTranslation') && 
+              // and chat translation is enabled in current multichannel
+              this.multichannelOptions.includes('chatTranslation') &&
+              // and multichannel is set to ECE
               this.isEce &&
-              // and if vertical config has chat translation enabled (default true)
+              // and vertical config has chat translation enabled (default true)
               this.model.chatTranslationEnabled
             ) {
               // add Chat Translation option
