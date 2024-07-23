@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.7.23
+
+### Updates
+* **SMS:** Add US/UK country selection to the SMS modal form, and remove the
+SMS deflection message as it is no longer used.
+
+
 # 2024.2.20
 
 ### Fixes
