@@ -921,7 +921,7 @@ export default {
       // close the modal
       this.showSmsModal = false
       // attach the SMS message
-      data.message = this.model.smsDeflectionMessage
+      // data.message = this.model.smsDeflectionMessage
       // send the SMS
       this.sendSms(data)
     },

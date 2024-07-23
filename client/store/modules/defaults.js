@@ -26,7 +26,7 @@ const state = {
       region: 'US',
       multichannel: 'ece',
       vertical: 'finance',
-      smsDeflectionMessage: 'Hello, this is Cumulus. Please reply to this message to begin chatting with one of our agents.',
+      // smsDeflectionMessage: 'Hello, this is Cumulus. Please reply to this message to begin chatting with one of our agents.',
       duoFraudSmsNumber: '',
       duoWelcomeMessage: 'Hello, and thanks for calling Cumulus internal service center.',
       duoFraudSmsMessage: 'Mr Littlefoot,\n\nDue to a recorded fraudulent login attempt, we recommend changing your account information as it may be compromised. You can do that here:\n\nwww.cumulus.com/memberportal\n\nYou can also call us at 1-555-942-9464 if you would rather speak to a fraud specialist.',
