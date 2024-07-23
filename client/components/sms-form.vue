@@ -18,6 +18,14 @@
           required
           />
         </b-field>
+        <b-field label="Country">
+          <b-select
+          v-model="formData.country"
+          >
+            <option value="US">US</option>
+            <option value="UK">UK</option>
+          </b-select>
+        </b-field>
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="$parent.close()">
@@ -69,7 +77,8 @@ export default {
   data () {
     return {
       formData: {
-        phone: ''
+        phone: '',
+        country: 'US',
       }
     }
   },
