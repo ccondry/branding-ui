@@ -423,6 +423,58 @@ export default {
       ) {
         const channels = this.demoBaseConfig.channels
 
+        // voice call
+        if (
+          channels.includes('voice') &&
+          this.multichannelOptions.includes('voice') &&
+          this.model.callEnabled
+        ) {
+          ret.push(call)
+        }
+
+        // voice call using QR code
+        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
+          // create an entry for each QR code button
+          for (const j of this.demoBaseConfig.callQr) {
+            ret.push({
+              icon: j.icon,
+              heading: j.heading,
+              subtext: j.subtext,
+              waitTime: j.waitTime,
+              click: () => this.clickCallQr(j)
+            })
+          }
+        }
+
+        // voice callback
+        if (
+          channels.includes('callback') &&
+          this.multichannelOptions.includes('callback') &&
+          this.model.callbackEnabled
+        ) {
+          ret.push(callback)
+        }
+
+        // email
+        if (
+          channels.includes('email') &&
+          this.multichannelOptions.includes('email') &&
+          this.model.emailEnabled
+        ) {
+          ret.push(email)
+        }
+        
+        // SMS
+        if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
+          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+            // direct SMS to agent, no chat bot
+            ret.push(sms)
+          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+            // SMS bot
+            ret.push(smsBot)
+          }
+        }
+
         // chat
         if (
           // if demo has chat
@@ -467,58 +519,6 @@ export default {
               ret.push(chatTranslation)
             }
           }
-        }
-
-        // SMS
-        if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
-          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-            // direct SMS to agent, no chat bot
-            ret.push(sms)
-          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-            // SMS bot
-            ret.push(smsBot)
-          }
-        }
-
-        // voice call
-        if (
-          channels.includes('voice') &&
-          this.multichannelOptions.includes('voice') &&
-          this.model.callEnabled
-        ) {
-          ret.push(call)
-        }
-
-        // voice call using QR code
-        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
-          // create an entry for each QR code button
-          for (const j of this.demoBaseConfig.callQr) {
-            ret.push({
-              icon: j.icon,
-              heading: j.heading,
-              subtext: j.subtext,
-              waitTime: j.waitTime,
-              click: () => this.clickCallQr(j)
-            })
-          }
-        }
-
-        // voice callback
-        if (
-          channels.includes('callback') &&
-          this.multichannelOptions.includes('callback') &&
-          this.model.callbackEnabled
-        ) {
-          ret.push(callback)
-        }
-
-        // email
-        if (
-          channels.includes('email') &&
-          this.multichannelOptions.includes('email') &&
-          this.model.emailEnabled
-        ) {
-          ret.push(email)
         }
 
         // task
