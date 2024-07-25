@@ -377,13 +377,13 @@ export default {
         subtext: this.model.callText,
         waitTime: this.model.callWaitTime
       }
-      const callQr = {
-        click: this.clickCallQr,
-        icon: this.model.callQrIcon,
-        heading: this.model.callQrHeading,
-        subtext: this.model.callQrText,
-        waitTime: this.model.callQrWaitTime
-      }
+      // const callQr = {
+      //   click: this.clickCallQr,
+      //   icon: this.model.callQrIcon,
+      //   heading: this.model.callQrHeading,
+      //   subtext: this.model.callQrText,
+      //   waitTime: this.model.callQrWaitTime
+      // }
       const callback = {
         click: this.clickCallback,
         icon: this.model.callbackIcon,
