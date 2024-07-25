@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2024.7.25
+
+### Updates
+* **Contact Panel:** Organize contact menu options to voice call, callback,
+email, sms, chat, task, other.
+
+
 # 2024.7.23
 
 ### Updates
