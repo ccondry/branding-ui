@@ -27,7 +27,8 @@
     has-modal-card
     width="960"
     >
-      <email-form :send-button="model.sendButton"
+      <email-form
+      :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.emailText"
       :modal-text="model.emailModalText"
@@ -67,7 +68,8 @@
     has-modal-card
     width="960"
     >
-      <task-form :send-button="model.sendButton"
+      <task-form
+      :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.taskText"
       :modal-text="model.taskModalText"
@@ -91,7 +93,8 @@
     has-modal-card
     width="960"
     >
-      <callback-form :send-button="model.sendButton"
+      <callback-form
+      :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :heading="model.callbackText"
       :modal-text="model.callbackModalText"
