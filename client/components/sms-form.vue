@@ -11,10 +11,18 @@
           {{ text }}
         </p>
 
+        <b-field :label="nameLabel">
+          <b-input
+          v-model="formData.name"
+          placeholder=""
+          required
+          />
+        </b-field>
+
         <b-field :label="phoneLabel">
           <b-input
           v-model="formData.phone"
-          placeholder="5551112222"
+          placeholder="15551112222"
           required
           />
         </b-field>
@@ -60,9 +68,17 @@ export default {
       type: String,
       default: ''
     },
-    phoneLabel: {
+    name: {
       type: String,
       default: ''
+    },
+    nameLabel: {
+      type: String,
+      default: 'Name'
+    },
+    phoneLabel: {
+      type: String,
+      default: 'Phone Number'
     },
     cancelButton: {
       type: String,
@@ -77,6 +93,7 @@ export default {
   data () {
     return {
       formData: {
+        name: '',
         phone: '',
         country: 'US',
       }
@@ -91,6 +108,7 @@ export default {
 
   mounted () {
     // copy props to data
+    this.formData.name = this.name
     this.formData.phone = this.phone
   }
 }

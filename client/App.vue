@@ -55,9 +55,11 @@
       :cancel-button="model.cancelButton"
       :dnis="sessionInfo.sms.international"
       :phone-label="model.phoneLabel"
+      :name-label="model.nameLabel"
       :modal-text="model.smsModalText"
       :heading="model.smsText"
       :phone="phone"
+      :name="name"
       @submit="clickSubmitSms"
       />
     </b-modal>
@@ -917,10 +919,11 @@ export default {
       this.sendEmail(data)
     },
     clickSubmitSms (data) {
-      // update customer data cache
-      this.phone = data.phone
       // clicked submit on the SMS modal form
       console.log('clickSubmitSms', data)
+      // update customer data cache
+      this.phone = data.phone
+      this.name = data.name
       // close the modal
       this.showSmsModal = false
       // attach the SMS message
