@@ -23,7 +23,7 @@ const actions = {
       endpoint: getters.endpoints.sms,
       data,
       success: `We have sent you a text message. Reply to this message to
-      beging chatting with one of our experts.`,
+      begin chatting with one of our experts.`,
       fail: 'Failed to send you a text message'
     })
     // reset working state
