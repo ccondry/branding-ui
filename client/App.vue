@@ -54,7 +54,7 @@
       :send-button="model.sendButton"
       :cancel-button="model.cancelButton"
       :dnis="sessionInfo.sms.international"
-      :phone-label="model.phoneLabel"
+      :phone-label="model.phoneLabelSms"
       :name-label="model.nameLabel"
       :modal-text="model.smsModalText"
       :heading="model.smsText"

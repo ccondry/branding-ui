@@ -10,6 +10,7 @@ const brandConfig = {
   menuTitle: 'Need Help?',
   chatMenuTitle: 'Now Chatting',
   phoneLabel: 'Your Phone Number',
+  phoneLabelSms: 'Your Phone Number (including the country code prefix, but without leading 0 or +)',
   nameLabel: 'Your Name',
   emailLabel: 'Your Email Address',
   subjectLabel: 'Subject',
