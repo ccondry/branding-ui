@@ -437,20 +437,6 @@ export default {
           ret.push(call)
         }
 
-        // voice call using QR code
-        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
-          // create an entry for each QR code button
-          for (const j of this.demoBaseConfig.callQr) {
-            ret.push({
-              icon: j.icon,
-              heading: j.heading,
-              subtext: j.subtext,
-              waitTime: j.waitTime,
-              click: () => this.clickCallQr(j)
-            })
-          }
-        }
-
         // voice callback
         if (
           channels.includes('callback') &&
@@ -469,6 +455,20 @@ export default {
           ret.push(email)
         }
         
+        // voice call using QR code
+        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
+          // create an entry for each QR code button
+          for (const j of this.demoBaseConfig.callQr) {
+            ret.push({
+              icon: j.icon,
+              heading: j.heading,
+              subtext: j.subtext,
+              waitTime: j.waitTime,
+              click: () => this.clickCallQr(j)
+            })
+          }
+        }
+
         // SMS
         if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
           if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
