@@ -47,7 +47,8 @@ const brandConfig = {
   smsIcon: 'message-processing',
   smsHeading: 'Text Us Live',
   // smsText: '{0}',
-  smsText: 'An expert will text with you live',
+  // smsText: 'An expert will text with you live',
+  smsText: 'Text with one of our experts',
   smsWaitTime: '1 min wait time',
   smsModalText: `Enter your mobile phone number and we will text you.
     Reply to begin texting with one of our experts.`,
@@ -55,7 +56,8 @@ const brandConfig = {
   // sms bot
   smsBotEnabled: true,
   smsBotIcon: 'message-processing',
-  smsBotHeading: 'Text with Bot',
+  // smsBotHeading: 'Text with Bot',
+  smsBotHeading: 'Message an Expert on SMS',
   // smsBotText: '{0}',
   smsBotText: 'Text with an AI-driven chat bot',
   smsBotWaitTime: 'No wait time',
@@ -107,7 +109,8 @@ const brandConfig = {
   // task
   taskEnabled: true,
   taskIcon: 'clipboard-check',
-  taskHeading: 'Request',
+  // taskHeading: 'Request',
+  taskHeading: 'Send a Request',
   taskText: 'An expert will handle your task',
   taskWaitTime: '',
   taskOptions: [{

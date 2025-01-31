@@ -446,40 +446,6 @@ export default {
           ret.push(callback)
         }
 
-        // email
-        if (
-          channels.includes('email') &&
-          this.multichannelOptions.includes('email') &&
-          this.model.emailEnabled
-        ) {
-          ret.push(email)
-        }
-        
-        // voice call using QR code
-        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
-          // create an entry for each QR code button
-          for (const j of this.demoBaseConfig.callQr) {
-            ret.push({
-              icon: j.icon,
-              heading: j.heading,
-              subtext: j.subtext,
-              waitTime: j.waitTime,
-              click: () => this.clickCallQr(j)
-            })
-          }
-        }
-
-        // SMS
-        if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
-          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
-            // direct SMS to agent, no chat bot
-            ret.push(sms)
-          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
-            // SMS bot
-            ret.push(smsBot)
-          }
-        }
-
         // chat
         if (
           // if demo has chat
@@ -523,6 +489,40 @@ export default {
               // add Chat Translation option
               ret.push(chatTranslation)
             }
+          }
+        }
+
+        // email
+        if (
+          channels.includes('email') &&
+          this.multichannelOptions.includes('email') &&
+          this.model.emailEnabled
+        ) {
+          ret.push(email)
+        }
+        
+        // voice call using QR code
+        if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
+          // create an entry for each QR code button
+          for (const j of this.demoBaseConfig.callQr) {
+            ret.push({
+              icon: j.icon,
+              heading: j.heading,
+              subtext: j.subtext,
+              waitTime: j.waitTime,
+              click: () => this.clickCallQr(j)
+            })
+          }
+        }
+
+        // SMS
+        if (channels.includes('sms') && this.multichannelOptions.includes('sms')) {
+          if (this.model.smsEnabled && !this.demoConfig.chatBotEnabled) {
+            // direct SMS to agent, no chat bot
+            ret.push(sms)
+          } else if (this.model.smsBotEnabled && this.demoConfig.chatBotEnabled) {
+            // SMS bot
+            ret.push(smsBot)
           }
         }
 
