@@ -112,7 +112,7 @@ const brandConfig = {
   // taskHeading: 'Request',
   taskHeading: 'Send a Request',
   taskText: 'An expert will handle your task',
-  taskWaitTime: '',
+  taskWaitTime: 'No wait time',
   taskOptions: [{
     text: 'Report a Problem'
   }],
