@@ -85,6 +85,7 @@ const brandConfig = {
   callModal2RingLabel: '2Ring',
   callModalSalesforceLabel: 'Salesforce',
   callModalCcaiLabel: 'CCAI',
+  callModalGoogleEsLabel: 'Google ES',
   callModalGoogleCxLabel: 'Google CX',
   callModalAiAgentLabel: 'AI Agent',
   callModalAgentAnswersLabel: 'Agent Answers',
