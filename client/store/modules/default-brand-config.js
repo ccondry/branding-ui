@@ -85,6 +85,9 @@ const brandConfig = {
   callModal2RingLabel: '2Ring',
   callModalSalesforceLabel: 'Salesforce',
   callModalCcaiLabel: 'CCAI',
+  callModalGoogleCxLabel: 'Google CX',
+  callModalAiAgentLabel: 'AI Agent',
+  callModalAgentAnswersLabel: 'Agent Answers',
   // call QR
   callQrIcon: 'phone',
   callQrHeading: 'Call Us',
