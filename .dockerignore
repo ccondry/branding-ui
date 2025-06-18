@@ -1,0 +1,13 @@
+/dist
+node_modules
+npm-debug.log
+# ignore .env if it exists - environment vars should come from container now
+.env
+/helm/
+# ignore dcloud mm server deployment files
+/update.sh
+/systemd.service
+/cron.example
+/visudo.example
+# ignore test code
+/test
