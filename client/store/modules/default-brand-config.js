@@ -87,7 +87,8 @@ const brandConfig = {
   callModalCcaiLabel: 'CCAI',
   callModalGoogleEsLabel: 'Google ES',
   callModalGoogleCxLabel: 'Google CX',
-  callModalAiAgentLabel: 'AI Agent',
+  callModalAiAgentLabel: 'Scripted AI Agent',
+  callModalAiAgentAutonomousLabel: 'Autonomous AI Agent',
   callModalAgentAnswersLabel: 'Agent Answers',
   // call QR
   callQrIcon: 'phone',
