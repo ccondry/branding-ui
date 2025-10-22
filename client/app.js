@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Buefy from 'buefy'
 import App from './App.vue'
 import store from './store'
-import * as filters from './filters'
 
 import 'buefy/dist/buefy.css'
 
