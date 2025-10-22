@@ -75,7 +75,9 @@ export default {
       'demoBaseConfig'
     ]),
     countries () {
-      return Array.from(new Set(this.demoBaseConfig.call.map(n => n.country)))
+      const didCountries = this.demoBaseConfig.call.map(n => n.country)
+      const validCountries = didCountries.filter(v => v && v.trim())
+      return Array.from(new Set(validCountries))
     },
     numbers () {
       // returns the phone numbers to display
