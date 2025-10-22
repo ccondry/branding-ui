@@ -1,5 +1,5 @@
-import { Toast } from 'buefy/dist/components/toast'
-import queryString from 'query-string'
+import { ToastProgrammatic as Toast } from 'buefy'
+import { addUrlQueryParams } from '../../utils/index.js'
 
 const getters = {
   // ECE chat entry point ID
@@ -59,10 +59,8 @@ const actions = {
       data2: 'Finance Quote'
     }
     console.log('popCconeChatWindow - starting chat with query =', query)
-    // make a URL-friendly query string from JSON data
-    const qs = queryString.stringify(query)
-    // build the URL
-    const url = `https://mm-static.cxdemo.net/ccone-chat.html?${qs}`
+    // build the URL with query
+    const url = addUrlQueryParams('https://mm-static.cxdemo.net/ccone-chat.html', query)
     console.log('popCconeChatWindow - starting chat with full url =', url)
 
     // pop the chat window

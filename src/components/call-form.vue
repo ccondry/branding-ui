@@ -19,12 +19,21 @@
         </table>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">
-          {{ cancelButton }}
-        </button>
-        <button class="button is-success" @click="$parent.close()">
-          {{ okButton }}
-        </button>
+        <div>
+          <b-select v-if="countries.length > 1" v-model="country">
+            <option v-for="c of countries" :key="c" :value="c">
+              {{ c }}
+            </option>
+          </b-select>
+        </div>
+        <div style="display: flex;">
+          <button class="button" type="button" @click="$parent.close()">
+            {{ cancelButton }}
+          </button>
+          <button class="button is-success" @click="$parent.close()">
+            {{ okButton }}
+          </button>
+        </div>
       </footer>
     </div>
   </form>
@@ -41,6 +50,13 @@ export default {
       required: true
     }
   },
+
+  data () {
+    return {
+      country: 'US',
+    }
+  },
+
   computed: {
     ...mapGetters([
       'sessionInfo',
@@ -58,6 +74,9 @@ export default {
       'isWebexV6',
       'demoBaseConfig'
     ]),
+    countries () {
+      return Array.from(new Set(this.demoBaseConfig.call.map(n => n.country)))
+    },
     numbers () {
       // returns the phone numbers to display
       // return only main number for upstream
@@ -85,6 +104,13 @@ export default {
         const extension = fillOption(v.extension, 'sessionConfig', this.sessionConfig)
 
         return {label, number, extension}
+      }).filter(v => {
+        // if there are more than 1 countries in DID list, filter the DIDs to
+        // the currently selected country
+        if (this.countries.length > 1) {
+          return v.country === this.country
+        }
+        return true
       })
     },
     okButton () {
@@ -109,7 +135,27 @@ export default {
         return this.sessionInfo.phone.international
       }
     }
-  }
+  },
+
+  watch: {
+    countries (val) {
+      // if there are more than 1 countries in DID list
+      if (val.length <= 1) {
+        return
+      }
+      // and the countries do not include the default 'US'
+      if (val.includes('US')) {
+        return
+      }
+      // try to find the first valid country string to set as the default
+      for (let v of val) {
+        if (typeof v === 'string' && v.length > 0) {
+          this.country = val[0]
+          return
+        }
+      }
+    }
+  },
 }
 </script>
 
@@ -119,7 +165,7 @@ export default {
 }
 .modal-card-foot {
   // pull the footer buttons to the right
-  justify-content: flex-end !important;
+  justify-content: space-between !important;
 }
 .phone-list {
   td {

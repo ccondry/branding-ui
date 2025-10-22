@@ -477,8 +477,8 @@ export default {
             // add Chat Bot option
             ret.push(chatBot)
             if (
-              // if chat translation is enabled in the demo base config 
-              this.demoBaseConfig.channels.includes('chatTranslation') && 
+              // if chat translation is enabled in the demo base config
+              this.demoBaseConfig.channels.includes('chatTranslation') &&
               // and chat translation is enabled in current multichannel
               this.multichannelOptions.includes('chatTranslation') &&
               // and multichannel is set to ECE
@@ -500,7 +500,7 @@ export default {
         ) {
           ret.push(email)
         }
-        
+
         // voice call using QR code
         if (this.demoUsesCallQr && Array.isArray(this.demoBaseConfig.callQr)) {
           // create an entry for each QR code button
@@ -609,7 +609,7 @@ export default {
     sessionInfoError (val) {
       if (!val) {
         // network error?
-        this.$dialog.alert({
+        this.$buefy.dialog.alert({
           title: 'Error Retrieving dCloud Session Info',
           message: `There was an error retrieving your dCloud
           session information. Please refresh the page to try again, or
@@ -629,7 +629,7 @@ export default {
       } else {
         // other error - display message
         // display error message
-        this.$dialog.alert({
+        this.$buefy.dialog.alert({
           title: 'Error Retrieving dCloud Session Info',
           message: `There was an error retrieving your dCloud
           session information. Please refresh the page to try again, or
@@ -645,6 +645,7 @@ export default {
           iconPack: 'mdi'
         })
       }
+      this.showSessionInfoModal = true
     },
     brandConfig (val) {
       // brand config loaded
@@ -1141,7 +1142,7 @@ export default {
       console.log('clickSms', event)
       // open the SMS modal
       this.showSmsModal = true
-      // this.$dialog.prompt({
+      // this.$buefy.dialog.prompt({
       //   message: `Enter your mobile number and we will text you`,
       //   inputAttrs: {
       //     placeholder: 'Enter your mobile phone number'
@@ -1291,7 +1292,7 @@ export default {
           if (this.userId) {
             // instant demo, userId is set, but no brand configured
             // display error message
-            this.$dialog.alert({
+            this.$buefy.dialog.alert({
               title: 'No Brand Configured',
               message: `Your instant demo configuration does not have a vertical
                 selected. Please select one on the
@@ -1310,7 +1311,7 @@ export default {
           }
         } else {
           // scheduled demo, but brand not configured - show error message
-          this.$dialog.alert({
+          this.$buefy.dialog.alert({
             title: 'dCloud Session Not Configured',
             message: `Your dCloud session doesn't have a vertical configured. Please
               choose one from the

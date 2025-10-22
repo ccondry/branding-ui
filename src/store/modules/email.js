@@ -1,5 +1,4 @@
-// import { ToastProgrammatic as Toast } from 'buefy'
-import { Toast } from 'buefy/dist/components/toast'
+import { ToastProgrammatic as Toast } from 'buefy'
 
 const getters = {
 }

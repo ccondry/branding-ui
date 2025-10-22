@@ -98,8 +98,8 @@ export default {
       default: ''
     },
     sessionInfoError: {
-      type: String,
-      default: ''
+      type: Object,
+      default: null
     }
   },
 

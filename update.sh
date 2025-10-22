@@ -16,29 +16,21 @@ else
     echo "running npm install"
     npm i
     if [ $? -eq 0 ]; then
-      echo "running npm rebuild node-sass..."
-      npm rebuild node-sass
+      echo "running npm run build..."
+      npm run build
       if [ $? -eq 0 ]; then
-        echo "running npm run build..."
-        npm run build
-        if [ $? -eq 0 ]; then
-          echo "npm build successful"
-          #echo "removing old web files"
-          #rm -rf /var/www/html/
-          echo "copying new web files"
-          cp -rf dist/* /var/www/html/brand/
-        else
-          echo "npm failed to run build script"
-        fi
+        echo "npm build successful"
+        #echo "removing old web files"
+        #rm -rf /var/www/html/
+        echo "copying new web files"
+        cp -rf dist/* /var/www/html/brand/
       else
-        echo "npm rebuild node-sass failed"
+        echo "npm failed to run build script"
       fi
     else
       echo "failed npm install"
     fi
   else
     echo "failed to pull repo"
-    echo "trying to remove package-lock.json and try on next iteration"
-    rm package-lock.json
   fi
 fi

@@ -1,8 +1,7 @@
-FROM public.ecr.aws/docker/library/node:18-alpine AS builder
+FROM public.ecr.aws/docker/library/node:22-alpine AS builder
 
 WORKDIR /app
 COPY . .
-ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm install && npm run build
 
 FROM public.ecr.aws/nginx/nginx:mainline-alpine

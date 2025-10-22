@@ -1,4 +1,7 @@
-import axios from 'axios'
+// sleep / noop
+export const sleep = function (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 // helper function to append query parameters to a URL for fetch
 export const addUrlQueryParams = function (endpoint, params) {
@@ -20,36 +23,79 @@ export const addUrlQueryParams = function (endpoint, params) {
   return url
 }
 
-export const load = function (endpoint, query) {
-  console.log('GET', endpoint)
-  const options = {
-    params: query
+export async function load (endpoint, query) {
+  const url = addUrlQueryParams(endpoint, query)
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+  if (response.ok) {
+    return await response.json()
+  } else {
+    const e = new Error(`${response.status} - ${await response.text()}`)
+    e.status = response.status
+    throw e
   }
-  return axios.get(endpoint, options)
 }
 
-export const put = function (endpoint, query, data) {
-  const options = {
-    params: query
+export async function put (endpoint, query, data) {
+  const url = addUrlQueryParams(endpoint, query)
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'PUT',
+    body: JSON.stringify(data)
+  })
+  if (response.ok) {
+    return await response.json()
+  } else {
+    const e = new Error(`${response.status} - ${await response.text()}`)
+    e.status = response.status
+    throw e
   }
-  return axios.put(endpoint, data, options)
 }
 
-export const post = function (endpoint, query, data) {
-  const options = {
-    params: query
+export async function post (endpoint, query, data) {
+  const url = addUrlQueryParams(endpoint, query)
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  if (response.ok) {
+    return await response.json()
+  } else {
+    const e = new Error(`${response.status} - ${await response.text()}`)
+    e.status = response.status
+    throw e
   }
-  return axios.post(endpoint, data, options)
 }
 
-export const httpDelete = async function (endpoint, query) {
-  const options = {
-    params: query
+export async function httpDelete (endpoint, query) {
+  const url = addUrlQueryParams(endpoint, query)
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
+  })
+  if (response.ok) {
+    return await response.json()
+  } else {
+    const e = new Error(`${response.status} - ${await response.text()}`)
+    e.status = response.status
+    throw e
   }
-  return axios.delete(endpoint, options)
 }
 
-export const formatUnicorn = function () {
+export function formatUnicorn () {
   // first arg is the string
   let str = arguments[0]
   for (let i in arguments) {
@@ -62,7 +108,7 @@ export const formatUnicorn = function () {
   return str
 }
 
-export const fillOption = function (value, storeName, store) {
+export function fillOption (value, storeName, store) {
   try {
     // don't operate on non-string values
     if (typeof value !== 'string') {
@@ -98,7 +144,7 @@ export const fillOption = function (value, storeName, store) {
         // store or store value did not exist
         console.log('required option not found in', storeName, ':', v1key)
         // required but did not exist - return 400
-        throw Error(`Required parameter ${v1key} did not exist in ${storeName}.`)
+        throw new Error(`Required parameter ${v1key} did not exist in ${storeName}.`)
         // search for any more store values to loop on after this one
       }
     }

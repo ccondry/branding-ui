@@ -1,6 +1,6 @@
 import * as types from '../mutation-types'
 import {load} from '../../utils'
-import { Toast } from 'buefy/dist/components/toast'
+import { ToastProgrammatic as Toast } from 'buefy'
 import Vue from 'vue'
 import defaultBrandConfig from './default-brand-config'
 
@@ -292,7 +292,7 @@ const actions = {
       }
       const response = await load(getters.endpoints.session, query)
       console.log('load dcloud session info:', response)
-      commit(types.SET_SESSION_INFO, response.data)
+      commit(types.SET_SESSION_INFO, response)
       // set error to null to remove UI error messages
       commit(types.SET_SESSION_INFO_ERROR, null)
       if (showNotification) {
@@ -308,7 +308,7 @@ const actions = {
       //   message: 'load dCloud session info failed: ' + e.message,
       //   type: 'is-danger'
       // })
-      commit(types.SET_SESSION_INFO_ERROR, e.response)
+      commit(types.SET_SESSION_INFO_ERROR, {status: e.status, data: e.message})
     } finally {
       dispatch('setLoading', {group: 'dcloud', type: 'sessionInfo', value: false})
     }
@@ -322,7 +322,7 @@ const actions = {
       }
       const response = await load(getters.endpoints.brand, query)
       console.log('load dcloud brand configuration for', getters.brand, response)
-      commit(types.SET_BRAND_CONFIG, response.data)
+      commit(types.SET_BRAND_CONFIG, response)
       if (showNotification) {
         Toast.open({
           message: 'load dCloud brand configuration for ' + getters.brand + ' succeeded',

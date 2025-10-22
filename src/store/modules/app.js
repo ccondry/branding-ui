@@ -1,6 +1,5 @@
 import * as types from '../mutation-types'
-// import {ToastProgrammatic as Toast} from 'buefy'
-import { Toast } from 'buefy/dist/components/toast'
+import { ToastProgrammatic as Toast } from 'buefy'
 import { addUrlQueryParams, load, put, post, httpDelete} from '../../utils'
 import Vue from 'vue'
 
