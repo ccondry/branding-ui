@@ -6,7 +6,7 @@
           {{ heading }}
         </p>
       </header>
-      <section class="modal-card-body">
+      <section class="modal-card-body" style="min-width: 22rem">
         <table class="phone-list">
           <tr v-for="(number, index) of numbers" :key="index">
             <td>{{ number.label }}</td>
