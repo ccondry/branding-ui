@@ -105,14 +105,19 @@ export default {
         // replace variables like ${sessionConfig.queueId}
         const extension = fillOption(v.extension, 'sessionConfig', this.sessionConfig)
 
-        return {label, number, extension}
+        return {
+          label,
+          number,
+          extension,
+          country: v.country
+        }
       }).filter(v => {
         // if there are more than 1 countries in DID list, filter the DIDs to
         // the currently selected country
-        if (this.countries.length > 1) {
-          return v.country === this.country
+        if (this.countries.length <= 1) {
+          return true
         }
-        return true
+        return v.country === this.country
       })
     },
     okButton () {
