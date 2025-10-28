@@ -1002,7 +1002,7 @@ export default {
         this.showChatModal = true
       } else if (this.isCjpWebex) {
         // do nothing - should not be here
-      } else if (this.isUccx && this.demoConfig.uccxBubbleChat === true) {
+      } else if (this.isUccx) {
         // UCCX and bubble chat is enabled
         // use bubble chat!
         let smHost
