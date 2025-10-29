@@ -86,18 +86,8 @@ const getters = {
       return false
     }
   },
-  // is this a CJP demo?
-  isCjp: (state) => state.datacenter.toLowerCase() === 'cjp',
-  // is this a CJP CCOne demo?
-  isCjpCcone: (state) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'ccone',
-  // is this a CJP Webex Sandbox Spark Chat demo?
-  isCjpWebex: (state) => state.datacenter.toLowerCase() === 'cjp' && state.sessionId.toLowerCase() === 'webex',
-  // is this a CWCC Abilene demo on the Cisco TSA tenant?
-  isTsaCwcc: (state) => state.datacenter.toLowerCase() === 'cwcc' && state.sessionId.toLowerCase().startsWith('tsa'),
   // is this a the Custom Stack 1 Webex Demo?
   isWebexCustom: state => state.datacenter.toLowerCase() === 'webex' && state.sessionId.toLowerCase() === 'custom',
-  // is this an RCDN (Compete Lab) demo?
-  isRcdn: (state) => state.datacenter.toLowerCase() === 'rcdn',
   // is this an instant demo?
   isInstantDemo: (state, getters) => getters.sessionInfo.instant === true,
   // is the configured multichannel type Upstream Works?
@@ -134,22 +124,6 @@ const getters = {
   isCwccV1: (state, getters) => {
     try {
       return getters.sessionInfo.demo.toLowerCase() === 'cwcc' && state.sessionInfo.version.toLowerCase() === 'v1'
-    } catch (e) {
-      return false
-    }
-  },
-  // is this Webex CC v3 Production (Abilene) demo?
-  isWebexV3Prod: (state, getters) => {
-    try {
-      return getters.sessionInfo.demo.toLowerCase() === 'webex' && state.sessionInfo.version.toLowerCase() === 'v3prod'
-    } catch (e) {
-      return false
-    }
-  },
-  // is this Webex CC v4 Production (Abilene) demo?
-  isWebexV4Prod: (state, getters) => {
-    try {
-      return getters.sessionInfo.demo.toLowerCase() === 'webex' && state.sessionInfo.version.toLowerCase() === 'v4prod'
     } catch (e) {
       return false
     }

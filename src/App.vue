@@ -301,25 +301,18 @@ export default {
       'demoUsesInboundVoice',
       'demoUsesCallQr',
       'hasSessionInfo',
-      'isCjp',
-      'isCjpCcone',
-      'isCjpWebex',
       'isCwcc',
       'isCwccV1',
       'isEce',
       'isInstantDemo',
       // 'isMsDynamics',
       'isPcce',
-      'isRcdn',
       // 'isServiceNow',
       'isSfdc',
-      'isTsaCwcc',
       'isUccx',
       'isUpstream',
       'isWebexCustom',
       'isWebexConnect',
-      'isWebexV3Prod',
-      'isWebexV4Prod',
       'isWebexV6',
       'isPcceWebexConnect',
       'sessionInfo',
@@ -981,8 +974,8 @@ export default {
       setQueryStringParameter('email', this.email)
       // close the modal
       this.showChatModal = false
-      if (this.isCjpCcone || this.isCwccV1) {
-        // CJP CCOne and CWCC v1 (R10)
+      if (this.isCwccV1) {
+        // CWCC v1 (R10)
         // pop CJP CCone chat window
         this.popCconeChatWindow(data)
       } else if (this.isUpstream) {
@@ -995,14 +988,9 @@ export default {
       console.log('clickChat', event)
       if (this.isUpstream) {
         this.showChatModal = true
-      } else if (this.isCjpCcone) {
-        // show chat modal for cjp
-        this.showChatModal = true
       } else if (this.isCwccV1) {
         // show chat modal for CWCC v1 demo (R10)
         this.showChatModal = true
-      } else if (this.isCjpWebex) {
-        // do nothing - should not be here
       } else if (
         // UCCX demo
         this.isUccx &&
@@ -1010,14 +998,10 @@ export default {
         (this.demoMajorVersion >= 15 || this.demoConfig.uccxBubbleChat === true)
       ) {
         // use bubble chat!
-        let smHost
-        if (this.isRcdn) {
-          // RCDN Compete Lab demo
-          smHost = 'chat.cdxdemo.net'
-        } else {
-          // smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
-          smHost = 'sm2-uccx.dcloud.cisco.com'
-        }
+        // smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
+        // use internal address, UCCX bubble chat doesn't work through tunnel
+        // or proxy
+        const smHost = 'sm2-uccx.dcloud.cisco.com'
         console.log('sessionConfig', this.sessionConfig)
         const widgetId = this.sessionConfig.widgetId || '3'
         console.log('opening bubble chat with smHost =', smHost)
@@ -1099,13 +1083,10 @@ export default {
           // docked chat
           this.startEceDockedChat()
         } else {
-        // no docked chat - pop ECE chat window
+          // no docked chat - pop ECE chat window
           this.popEceChatWindow()
         }
       } else if (
-        this.isTsaCwcc ||
-        this.isWebexV3Prod ||
-        this.isWebexV4Prod ||
         this.isPcceWebexConnect
       ) {
         // we should not be here. these chats should be started by clicking
@@ -1262,7 +1243,7 @@ export default {
         } catch (e) {
           console.log('failed to format call number:', e)
         }
-      } else if (this.isCwccV1 || this.isWebexV3Prod || this.isWebexV4Prod) {
+      } else if (this.isCwccV1) {
         // CWCC v1/v2 demo, or Webex CC v3 demo
         const formattedCallNumber = formatUnicorn(this.model.callText, this.cwccDid)
         this.$set(this.model, 'callText', formattedCallNumber)
@@ -1276,14 +1257,12 @@ export default {
           console.log('failed to format call number:', e)
         }
 
-        // set SMS number using template, if this is not CJP demo
-        if (!this.isCjp) {
-          try {
-            const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
-            this.$set(this.model, 'smsText', formattedSmsNumber)
-          } catch (e) {
-            console.log('failed to format call number and sms number:', e)
-          }
+        // set SMS number using template
+        try {
+          const formattedSmsNumber = formatUnicorn(this.model.smsText, this.sessionInfo.sms.international)
+          this.$set(this.model, 'smsText', formattedSmsNumber)
+        } catch (e) {
+          console.log('failed to format call number and sms number:', e)
         }
       }
     },
@@ -1339,22 +1318,7 @@ export default {
           console.log('init Webex Connect chat')
           // init webex connect chat for webex connect demo
           window.initWebexConnectChat()
-        } else if (this.isCjpWebex) {
-          console.log('init Spark Care chat')
-          // init CJP chat from Webex Sandbox (old spark care chat)
-          window.initSparkCareChat(this.sessionConfig.orgId, this.sessionConfig.templateId)
-        } else if (this.isTsaCwcc) {
-          console.log('init Webex chat')
-          // this is for the Cisco TSA tenants on Webex Contact Center Abilene
-          window.initWebexChat({
-            async: typeof this.sessionConfig.async === 'boolean' ? this.sessionConfig.async : true,
-            CiscoAppId: this.sessionConfig.CiscoAppId || 'cisco-chat-bubble-app',
-            appPrefix: this.sessionConfig.appPrefix,
-            DC: this.sessionConfig.DC || 'appstaging.ciscoccservice.com',
-            orgId: this.sessionConfig.orgId || '83f66514-200c-47cd-8310-4a5711e7b356',
-            templateId: this.sessionConfig.templateId || 'ce28a900-a8bc-11e9-9dce-53872d5a6b64'
-          })
-        } else if (this.isWebexV3Prod || this.isWebexV4Prod || this.isWebexCustom) {
+        } else if (this.isWebexCustom) {
           console.log('init Webex chat')
           // Webex v3 production Abilene tenant for dCloud
           // are they using IMI Connect?
