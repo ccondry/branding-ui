@@ -994,10 +994,10 @@ export default {
       } else if (
         // UCCX demo
         this.isUccx &&
-        // and version 15.x or higher, or has bubble chat enabled in vertical
-        (this.demoMajorVersion >= 15 || this.demoConfig.uccxBubbleChat === true)
+        // and version 15.x or higher, or has chat bot disabled in vertical
+        (this.demoMajorVersion >= 15 || this.chatBotEnabled === false)
       ) {
-        // use bubble chat!
+        // use UCCX bubble chat!
         // smHost = this.datacenter + '-' + this.sessionId + '.tunnel.cc-dcloud.com'
         // use internal address, UCCX bubble chat doesn't work through tunnel
         // or proxy
