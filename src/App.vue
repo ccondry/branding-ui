@@ -335,6 +335,7 @@ export default {
       'dids',
       'cwccDid',
       'demoVersion',
+      'demoMajorVersion',
       'multichannelOptions',
       'currentMultichannel'
     ]),
@@ -1002,8 +1003,12 @@ export default {
         this.showChatModal = true
       } else if (this.isCjpWebex) {
         // do nothing - should not be here
-      } else if (this.isUccx) {
-        // UCCX and bubble chat is enabled
+      } else if (
+        // UCCX demo
+        this.isUccx &&
+        // and version 15.x or higher, or has bubble chat enabled in vertical
+        (this.demoMajorVersion >= 15 || this.demoConfig.uccxBubbleChat === true)
+      ) {
         // use bubble chat!
         let smHost
         if (this.isRcdn) {

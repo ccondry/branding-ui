@@ -189,6 +189,14 @@ const getters = {
   demoVersion: state => {
     return state.sessionInfo.version
   },
+  // numerical major version number of this demo, such as 12 or 15
+  demoMajorVersion: state => {
+    try {
+      return Number.parseInt(state.sessionInfo.version.slice(0, 2))
+    } catch (e) {
+      return 0
+    }
+  },
   demoBaseConfig: state => {
     return state.demoBaseConfig
   },
