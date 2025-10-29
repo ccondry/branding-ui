@@ -4,6 +4,24 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2025.10.29-1
+
+### Fixes
+* **Chat:** Use UCCX bubble chat instead of sparky chat with no bot when UCCX
+version < 15 and chat bot is disabled (ignore docked chat branding setting).
+
+
+# 2025.10.29
+
+### Updates
+* **System:** Remove support for deprecated demos: CJP, RCDN lab, TSA CWCC,
+WxCC v3, and WxCC v4.
+* **Chat:** Only use bubble chat for UCCX versions after 12.x.
+* **Call:** Add country selection to filter phone numbers based on country, if
+the demo config has phone numbers configured in more than 1 country.
+* **System:** Replace Webpack build with Rollup.
+
+
 # 2024.7.29
 
 ### Updates
