@@ -449,7 +449,6 @@ export default {
           // and is not webex connect demo (which uses separate chat UI)
           !this.isWebexConnect
         ) {
-          // show either chat or chatbot option
           // if chat is enabled in the vertical and multichannel is upstream
           if (this.model.chatEnabled && this.isUpstream) {
             // add Chat Live option
