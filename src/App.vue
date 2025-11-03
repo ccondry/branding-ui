@@ -463,6 +463,12 @@ export default {
             // add Chat Live option
             ret.push(chat)
           } else if (
+            // UCCX version 15 or higher
+            this.isUccx && this.demoMajorVersion >= 15
+          ) {
+            // only use Chat Live option
+            ret.push(chat)
+          } else if (
             // if vertical has chat bot enabled
             this.model.chatBotEnabled &&
             // and the demo has chat bot enabled
