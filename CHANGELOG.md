@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2025.11.3
+
+### Fixes
+* **Chat:** Always show the "Chat Live" chat option for UCCX version 15 and
+and higher.
+
+
 # 2025.10.29-1
 
 ### Fixes
