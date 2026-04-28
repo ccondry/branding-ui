@@ -4,6 +4,13 @@ Version numbers are dates in semver-compatible YYYY.MM.DD-X format, where X
 is an optional revision number for that day.
 
 
+# 2026.4.28
+
+### Fixes
+* **System:** Fix QR modals, and some other modal and toasts that no longer
+opened.
+
+
 # 2025.11.3
 
 ### Fixes
