@@ -822,7 +822,7 @@ export default {
         return
       } catch (e) {
         console.log('initEceDockedChat failed:', e.message)
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: `Failed to load Chat Live. Please make sure you are
           connected to the demo VPN.`,
           type: 'is-danger',
@@ -1158,7 +1158,7 @@ export default {
       console.log('clickCallQr', option)
       // open the call QR modal
       // this.showCallQrModal = true
-      this.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         component: CallQrForm,
         hasModalCard: true,
@@ -1206,7 +1206,7 @@ export default {
         window.eGain.cobrowse.startCobrowse()
       } else {
         console.log('failed to start cobrowse - window.eGain and document.eGain are undefined.')
-        this.$toast.open({
+        this.$buefy.toast.open({
           duration: 8000,
           message: `eGain Cobrowse library failed to load. If you are using a
           browser outside of the demo workstation, please make sure you are
@@ -1348,7 +1348,7 @@ export default {
             await window.initWebexConnectChat()
             console.log('successfully loaded Webex Connect widget library')
           } catch (e) {
-            this.$toast.open({
+            this.$buefy.toast.open({
               duration: 15000,
               message: `Webex Connect chat widget failed to load: ${e.message}`,
               type: 'is-danger'
